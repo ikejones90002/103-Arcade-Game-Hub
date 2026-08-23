@@ -466,6 +466,11 @@
         ? "Focus suggestion: " + weak.label + " (" + weak.score + "% mastery)."
         : "Keep exploring new worlds.";
     }
+    if (context === "ask") {
+      return weak
+        ? "Try a short practice on " + weak.label + ". Read slowly and say the sounds out loud."
+        : "Pick a world at your grade and finish one lesson — small steps add up!";
+    }
     return "I'm your reading coach. Play, read, and grow!";
   }
 

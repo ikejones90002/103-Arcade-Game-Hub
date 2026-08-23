@@ -45,8 +45,12 @@
         <span id="stat-stars">Stars: 0</span>
         <span id="stat-challenge">Challenge: 0/3</span>
       </div>
-      <div class="wq-coach" id="coach-banner"><strong>Coach:</strong> <span id="coach-text">Welcome!</span></div>
+      <div class="wq-coach" id="coach-banner">
+        <strong>Coach:</strong> <span id="coach-text">Welcome!</span>
+        <span class="ai-status" id="ai-status" title="AI coach status">· local</span>
+      </div>
       <div class="tab-row">
+        <button id="btn-ask-ai" class="btn secondary" type="button">Ask AI Coach</button>
         <button id="btn-review-toggle" class="btn secondary hidden" type="button">Review earlier skills</button>
         <button id="btn-placement" class="btn secondary" type="button">Placement</button>
         <button id="btn-parent" class="btn secondary" type="button">Parent</button>
@@ -116,6 +120,7 @@
         <button id="try-again" class="btn secondary" type="button">Try again</button>
       </div>
       <div class="actions">
+        <button id="btn-ai-hint" class="btn secondary" type="button">AI Hint</button>
         <button id="quit-lesson" class="btn secondary" type="button">Exit lesson</button>
       </div>
     </section>
@@ -212,11 +217,13 @@
 
   <script src="wordquest-content.js"></script>
   <script src="wordquest-engine.js"></script>
+  <script src="wordquest-ai.js"></script>
   <script>
 (function () {
   "use strict";
 
   const Content = window.WQContent;
+  const AI = window.WQAI;
   const Engine = window.WQEngine;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -411,13 +418,56 @@
     });
   }
 
+  function updateAiStatusBadge() {
+    const el = document.getElementById("ai-status");
+    const askBtn = document.getElementById("btn-ask-ai");
+    const hintBtn = document.getElementById("btn-ai-hint");
+    if (!el || !AI) return;
+    const st = AI.getStatus();
+    if (!st.checked) {
+      el.textContent = "· checking…";
+      return;
+    }
+    if (st.available) {
+      el.textContent = "· AI ready";
+      el.classList.add("ai-on");
+      if (askBtn) askBtn.disabled = false;
+      if (hintBtn) hintBtn.disabled = false;
+    } else {
+      el.textContent = "· local coach";
+      el.classList.remove("ai-on");
+    }
+  }
+
+  function setCoachText(text, source) {
+    const el = document.getElementById("coach-text");
+    if (!el) return;
+    el.textContent = text || "";
+    if (source === "openai") {
+      const badge = document.getElementById("ai-status");
+      if (badge) {
+        badge.textContent = "· AI";
+        badge.classList.add("ai-on");
+      }
+    }
+  }
+
+  function refreshCoachBanner(preferAi) {
+    const local = Engine.coachMessage(profile, "map");
+    setCoachText(local, "local");
+    if (!preferAi || !AI || !profile.coachEnabled) return;
+    AI.coach(profile, "map").then(function (res) {
+      if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+    });
+  }
+
   function refreshHeaderStats() {
     Engine.ensureChallengeWeek(profile);
     document.getElementById("stat-xp").textContent = "XP: " + profile.xp;
     document.getElementById("stat-stars").textContent = "Stars: " + profile.stars;
     document.getElementById("stat-challenge").textContent =
       "Challenge: " + profile.personalBest.challengeProgress + "/" + profile.personalBest.challengeTarget;
-    document.getElementById("coach-text").textContent = Engine.coachMessage(profile, "map");
+    refreshCoachBanner(false);
     document.getElementById("player-name").value = profile.name || "";
     const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
     document.getElementById("grade-badge").textContent = profile.gradeBandSet
@@ -428,6 +478,7 @@
     reviewBtn.classList.toggle("hidden", !hasReview);
     reviewBtn.textContent = profile.reviewModeEnabled ? "Hide earlier skills" : "Review earlier skills";
     applyFrameClass();
+    updateAiStatusBadge();
   }
 
   function buildWorldTile(region, accessState) {
@@ -1166,11 +1217,12 @@
 
   function renderExport() {
     document.getElementById("export-box").value = Engine.exportProfile(profile);
+    const aiSt = AI ? AI.getStatus() : { available: false };
     document.getElementById("classroom-coach").innerHTML =
       "<strong>Classroom challenge (self):</strong> " + Engine.coachMessage(profile, "map") +
       " Best weekly lessons: " + (profile.personalBest.weeklyReads || 0) +
       ". Coach is " + (profile.coachEnabled ? "on" : "off") +
-      ". (Future: teacher accounts & AI API sit on top of this engine.)";
+      ". AI API: " + (aiSt.available ? "connected (" + (aiSt.model || "model") + ")" : "not configured — set OPENAI_API_KEY on Vercel") + ".";
   }
 
   /* Nav bindings */
@@ -1198,6 +1250,58 @@
     }
     if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
     else { renderWorldMap(); showScreen("map"); }
+  };
+  document.getElementById("btn-ask-ai").onclick = function () {
+    playSfx("click");
+    if (!profile.coachEnabled) {
+      showOverlay({ title: "Coach off", message: "Turn the coach on in Export / classroom settings first.", button: "OK" });
+      return;
+    }
+    const btn = document.getElementById("btn-ask-ai");
+    btn.disabled = true;
+    setCoachText("Thinking…", "local");
+    const local = Engine.coachMessage(profile, "ask") || Engine.coachMessage(profile, "map");
+    if (!AI) {
+      setCoachText(local, "local");
+      btn.disabled = false;
+      return;
+    }
+    AI.coach(profile, "ask").then(function (res) {
+      if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+      else {
+        setCoachText(local || "Keep reading — you are doing great!", "local");
+        if ((res && res.error === "missing_key") || (AI.getStatus() && !AI.getStatus().available)) {
+          showOverlay({
+            title: "AI not configured",
+            message: "Add OPENAI_API_KEY in Vercel Environment Variables, redeploy, then try again. Local coach still works offline.",
+            button: "OK"
+          });
+        }
+      }
+      btn.disabled = false;
+      updateAiStatusBadge();
+    });
+  };
+  document.getElementById("btn-ai-hint").onclick = function () {
+    playSfx("click");
+    if (!currentItem) return;
+    const btn = document.getElementById("btn-ai-hint");
+    btn.disabled = true;
+    const fallback = "Look at the whole sentence or picture, then eliminate options that do not fit.";
+    if (!AI) {
+      showOverlay({ title: "Hint", message: fallback, button: "OK" });
+      btn.disabled = false;
+      return;
+    }
+    AI.hint(profile, currentItem).then(function (res) {
+      showOverlay({
+        title: res && res.ok ? "AI Hint" : "Hint",
+        message: (res && res.ok && res.message) ? res.message : fallback,
+        button: "OK"
+      });
+      btn.disabled = false;
+      updateAiStatusBadge();
+    });
   };
   document.getElementById("btn-change-grade").onclick = function () {
     playSfx("click");
@@ -1327,6 +1431,12 @@
   updateMuteUi();
   renderLeaderboard();
   renderWorldMap();
+  if (AI && AI.checkHealth) {
+    AI.checkHealth().then(function () {
+      updateAiStatusBadge();
+      refreshCoachBanner(true);
+    });
+  }
   if (!profile.gradeBandSet) {
     renderGradePicker();
     showScreen("grade");

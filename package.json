@@ -1,0 +1,13 @@
+{
+  "name": "103-arcade-game-hub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "103 Arcade Game Hub — static games + Vercel AI coach API",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

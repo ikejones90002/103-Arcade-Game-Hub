@@ -29,7 +29,30 @@ Word Quest is the hub’s reading title: a **Reading World** map with nine regio
 
 **Grade-based access:** On first launch, pick grades 1–9 (preschool through ~6th–7th). Your grade opens that world on the map. Younger worlds stay hidden unless you tap **Review earlier skills** (or a parent enables review in the Parent panel). Worlds above your grade stay locked until the **Placement** quiz shows readiness or a parent moves grade up. Node order inside each world is unchanged (finish prior node to unlock the next).
 
-**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds); grade picker; placement quiz; skill bars; adaptive remediation; parent panel with grade controls; cosmetics; profile export/import; weekly self-challenge; rule-based reading coach. Cloud parent/teacher accounts, live multiplayer, and API AI remain future platform work.
+**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds); grade picker; placement quiz; skill bars; adaptive remediation; parent panel with grade controls; cosmetics; profile export/import; weekly self-challenge; rule-based reading coach; **optional OpenAI coach/hints via Vercel API** (`/api/coach`, `/api/hint`, `/api/health`).
+
+## Deploy on Vercel (frontend + API)
+
+This repo is ready for Vercel: static games under `docs/`, serverless API under `api/`.
+
+1. Import [ikejones90002/103-Arcade-Game-Hub](https://github.com/ikejones90002/103-Arcade-Game-Hub) in the [Vercel dashboard](https://vercel.com/new).
+2. Framework preset: **Other**. Root directory: repo root (default).
+3. Add Environment Variables (Production + Preview):
+
+| Variable | Required | Notes |
+|---|---|---|
+| `OPENAI_API_KEY` | Yes for AI | Your OpenAI secret key |
+| `OPENAI_MODEL` | No | Default `gpt-4o-mini` |
+| `AI_COACH_ENABLED` | No | Set `false` to disable AI even with a key |
+
+4. Deploy. Hub opens at `/` (rewritten to `docs/index.html`).
+5. Test endpoints:
+   - `GET /api/health` → `{ ok, aiConfigured, model }`
+   - `POST /api/coach` with JSON `{ "context": "ask", "profile": { "gradeBand": 3 } }`
+   - `POST /api/hint` with JSON `{ "activity": { "prompt": "The cat sat on the ___", "type": "sentence" } }`
+6. In **Word Quest**, use **Ask AI Coach** on the map and **AI Hint** during a lesson. Without a key, the local rule-based coach still works.
+
+Local API testing: `npx vercel dev` (after `vercel link`), with `.env.local` copied from `.env.example`.
 
 ## How to add a game later
 
