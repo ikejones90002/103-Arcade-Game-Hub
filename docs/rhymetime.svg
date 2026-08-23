@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="rtTitle">
+  <title id="rtTitle">RhymeTime</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M36 88 L70 88 L70 70 L108 110 L70 150 L70 132 L36 132 Z" fill="#001a1f" stroke="#00ffff" stroke-width="4" filter="url(#glow)"/>
+  <path d="M118 78 Q148 60 178 78 Q198 110 178 142 Q148 160 118 142 Q98 110 118 78 Z" fill="#120018" stroke="#ff00ff" stroke-width="3" filter="url(#glow)"/>
+  <rect x="128" y="96" width="52" height="28" rx="6" fill="#05050a" stroke="#ffff00" stroke-width="2"/>
+  <text x="154" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="800" fill="#ffff00">CAT</text>
+  <rect x="168" y="148" width="52" height="28" rx="6" fill="#05050a" stroke="#00ffff" stroke-width="2"/>
+  <text x="194" y="168" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="800" fill="#00ffff">HAT</text>
+</svg>

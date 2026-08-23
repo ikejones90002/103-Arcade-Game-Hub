@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 280" role="img" aria-labelledby="title">
+  <title id="title">SpellBuzz bee</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="bodyYellow" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffff66"/>
+      <stop offset="45%" stop-color="#ffcc00"/>
+      <stop offset="100%" stop-color="#ff8c00"/>
+    </linearGradient>
+    <linearGradient id="wingFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00ffff" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ff00ff" stop-opacity="0.18"/>
+    </linearGradient>
+    <pattern id="grid" width="6" height="6" patternUnits="userSpaceOnUse">
+      <path d="M6 0H0V6" fill="none" stroke="#00ffff" stroke-opacity="0.22" stroke-width="0.5"/>
+    </pattern>
+    <clipPath id="bodyClip">
+      <ellipse cx="120" cy="168" rx="46" ry="58"/>
+    </clipPath>
+    <clipPath id="headClip">
+      <circle cx="120" cy="96" r="44"/>
+    </clipPath>
+  </defs>
+
+  <!-- hover glow -->
+  <ellipse cx="120" cy="248" rx="46" ry="8" fill="#00ffff" opacity="0.18" filter="url(#softGlow)"/>
+
+  <!-- wings -->
+  <g filter="url(#softGlow)">
+    <ellipse cx="58" cy="148" rx="42" ry="28" fill="url(#wingFill)" stroke="#00ffff" stroke-width="3" transform="rotate(-22 58 148)"/>
+    <ellipse cx="182" cy="148" rx="42" ry="28" fill="url(#wingFill)" stroke="#ff00ff" stroke-width="3" transform="rotate(22 182 148)"/>
+  </g>
+  <path d="M28 168c6 6 14 8 22 6" fill="none" stroke="#00ffff" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+  <path d="M212 168c-6 6-14 8-22 6" fill="none" stroke="#ff00ff" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- body -->
+  <g filter="url(#glow)">
+    <ellipse cx="120" cy="168" rx="46" ry="58" fill="#140c00" stroke="#ffff00" stroke-width="3.5"/>
+    <g clip-path="url(#bodyClip)">
+      <rect x="74" y="118" width="92" height="18" fill="url(#bodyYellow)"/>
+      <rect x="74" y="136" width="92" height="16" fill="#05050a"/>
+      <rect x="74" y="152" width="92" height="18" fill="url(#bodyYellow)"/>
+      <rect x="74" y="170" width="92" height="16" fill="#05050a"/>
+      <rect x="74" y="186" width="92" height="18" fill="url(#bodyYellow)"/>
+      <rect x="74" y="204" width="92" height="30" fill="#05050a"/>
+      <rect x="74" y="118" width="92" height="116" fill="url(#grid)"/>
+    </g>
+    <ellipse cx="120" cy="168" rx="46" ry="58" fill="none" stroke="#ffff00" stroke-width="3.5"/>
+    <path d="M120 226 L113 244 L127 244 Z" fill="#00ffff" stroke="#00ffff" stroke-width="1"/>
+  </g>
+
+  <!-- antennae -->
+  <g fill="none" stroke="#ffff00" stroke-width="3" stroke-linecap="round" filter="url(#glow)">
+    <path d="M96 78 C86 54 74 46 68 40"/>
+    <path d="M144 78 C154 54 166 46 172 40"/>
+  </g>
+  <circle cx="66" cy="36" r="7" fill="#ff8c00" stroke="#ffff00" stroke-width="2" filter="url(#glow)"/>
+  <circle cx="174" cy="36" r="7" fill="#ff00ff" stroke="#00ffff" stroke-width="2" filter="url(#glow)"/>
+
+  <!-- head -->
+  <g filter="url(#glow)">
+    <circle cx="120" cy="96" r="44" fill="#0a0a12" stroke="#ffff00" stroke-width="3.5"/>
+    <circle cx="120" cy="96" r="44" fill="url(#bodyYellow)" fill-opacity="0.92"/>
+    <circle cx="120" cy="96" r="44" fill="url(#grid)"/>
+    <path d="M100 90 Q108 84 116 90" fill="none" stroke="#111018" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M124 90 Q132 84 140 90" fill="none" stroke="#111018" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M108 112 Q120 122 132 112" fill="none" stroke="#111018" stroke-width="3.5" stroke-linecap="round"/>
+    <ellipse cx="98" cy="108" rx="8" ry="5" fill="#ff00ff" opacity="0.55"/>
+    <ellipse cx="142" cy="108" rx="8" ry="5" fill="#ff00ff" opacity="0.55"/>
+  </g>
+</svg>

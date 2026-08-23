@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="ppTitle">
+  <title id="ppTitle">PatternPop</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="48" cy="120" r="22" fill="#1a0c00" stroke="#ff8c00" stroke-width="4" filter="url(#glow)"/>
+  <rect x="86" y="98" width="44" height="44" rx="6" fill="#120018" stroke="#ff00ff" stroke-width="4" filter="url(#glow)"/>
+  <path d="M156 142 L178 98 L200 142 Z" fill="#001a1f" stroke="#00ffff" stroke-width="4" filter="url(#glow)"/>
+  <text x="120" y="200" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="42" font-weight="800" fill="#ffff00" filter="url(#glow)">?</text>
+</svg>

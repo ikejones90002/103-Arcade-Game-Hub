@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="fmTitle">
+  <title id="fmTitle">FlipMatch</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <pattern id="grid" width="6" height="6" patternUnits="userSpaceOnUse">
+      <path d="M6 0H0V6" fill="none" stroke="#ff00ff" stroke-opacity="0.25" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <rect x="28" y="58" width="92" height="124" rx="12" fill="#1a0018" stroke="#ff00ff" stroke-width="4" transform="rotate(-12 74 120)" filter="url(#glow)"/>
+  <rect x="28" y="58" width="92" height="124" rx="12" fill="url(#grid)" transform="rotate(-12 74 120)"/>
+  <rect x="118" y="50" width="92" height="124" rx="12" fill="#001a1f" stroke="#00ffff" stroke-width="4" transform="rotate(10 164 112)" filter="url(#glow)"/>
+  <circle cx="164" cy="108" r="18" fill="none" stroke="#ffff00" stroke-width="4" transform="rotate(10 164 112)"/>
+  <circle cx="164" cy="108" r="6" fill="#ffff00" transform="rotate(10 164 112)"/>
+</svg>

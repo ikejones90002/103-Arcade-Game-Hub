@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>SpellBuzz — by 103 Software Solutions LLC</title>
+  <link rel="icon" href="bee.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-row">
+          <img src="bee.svg" class="bee-mark" alt="">
+          <h1>SpellBuzz</h1>
+        </div>
+        <p class="byline">Built by 103 Software Solutions LLC</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn secondary hub-link" href="index.html">103 Arcade</a>
+        <button id="mute" class="icon-btn" type="button" aria-label="Mute sounds" title="Mute sounds">🔊</button>
+      </div>
+    </div>
+
+    <section id="start-screen" class="card" aria-label="Start">
+      <div class="bee-wrap">
+        <img src="bee.svg" alt="SpellBuzz bee" class="bee hero">
+      </div>
+      <p class="howto">Welcome to SpellBuzz. Listen, then type the word. Pick a level for your grade.</p>
+      <div class="difficulty" role="group" aria-label="Difficulty">
+        <button id="easy" class="active" type="button">Easy<small>Grades K–1</small></button>
+        <button id="medium" type="button">Medium<small>Grades 2–3</small></button>
+        <button id="hard" type="button">Hard<small>Grades 4–6</small></button>
+      </div>
+      <button id="play" class="btn" type="button">Play</button>
+    </section>
+
+    <section id="play-screen" class="card hidden" aria-label="Game">
+      <div class="hud">
+        <div class="score" id="score">Score: 0</div>
+        <div class="lives" id="lives" aria-label="Lives remaining"></div>
+      </div>
+      <div class="streak" id="streak"></div>
+      <div class="level-badge" id="level-badge">Easy · Grades K–1</div>
+      <div class="bee-wrap">
+        <img src="bee.svg" alt="SpellBuzz bee" class="bee" id="bee">
+      </div>
+      <div class="timer" id="timer" aria-live="polite">Timer: 00</div>
+      <div class="blanks hidden" id="blanks" aria-hidden="true"></div>
+      <div class="hint-line hidden" id="hint-line"></div>
+      <input type="text" id="input" placeholder="Type the word" autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
+      <div class="actions">
+        <button id="speak" class="btn secondary" type="button" disabled>Repeat</button>
+        <button id="hint" class="btn secondary" type="button" disabled>Hint</button>
+        <button id="sentence" class="btn secondary hidden" type="button" disabled>Sentence</button>
+        <button id="submit" class="btn" type="button" disabled>Submit</button>
+      </div>
+    </section>
+
+    <div id="leaderboard">
+      <div class="lb-head">
+        <h3>Leaderboard</h3>
+        <button id="clear-lb" class="btn secondary hidden" type="button">Clear</button>
+      </div>
+      <div id="lb-body"></div>
+    </div>
+
+    <footer class="site-footer">
+      <img src="logo.png" alt="103 Software Solutions LLC">
+      <p>&copy; 2026 SpellBuzz. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <div id="celebrate" aria-hidden="true"></div>
+
+  <div id="confirm" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="overlay-card">
+      <h2 id="confirm-title">Clear leaderboard?</h2>
+      <p>This removes all saved scores on this device.</p>
+      <div class="actions">
+        <button id="confirm-no" class="btn secondary" type="button">Cancel</button>
+        <button id="confirm-yes" class="btn" type="button">Clear</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div class="overlay-card">
+      <h2 id="overlay-title"></h2>
+      <p id="overlay-msg"></p>
+      <div id="overlay-form" class="hidden">
+        <label for="name-input">Your name</label>
+        <input id="name-input" type="text" maxlength="16" placeholder="Your name" autocomplete="nickname">
+      </div>
+      <button id="overlay-btn" class="btn" type="button">Continue</button>
+    </div>
+  </div>
+
+  <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
+  <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+
+  <script>
+    const LEVELS = {
+      easy: { label: "Easy", grades: "Grades K–1", time: 25, rate: 0.65, hint: "free", blanks: true, sentence: false },
+      medium: { label: "Medium", grades: "Grades 2–3", time: 18, rate: 0.8, hint: "cost", blanks: false, sentence: false },
+      hard: { label: "Hard", grades: "Grades 4–6", time: 12, rate: 0.9, hint: "none", blanks: false, sentence: true }
+    };
+
+    const wordLists = {
+      easy: [
+        "cat", "dog", "sun", "hat", "bat", "pen", "map", "run", "red", "cup",
+        "book", "fish", "tree", "ball", "milk", "frog", "sock", "cake", "lamp", "star",
+        "car", "bus", "bed", "duck", "box", "goat", "kite", "moon", "nose", "soap",
+        "leaf", "king", "girl", "boy", "rice", "fork", "door", "feet", "hand",
+        "bee", "ant", "cow", "apple", "grape", "shoe", "rope", "net", "fan",
+        "train", "bell", "chair", "zip", "pot", "key", "ship", "pig", "jump", "play",
+        "look", "see", "big", "rain", "snow", "bird", "house", "baby", "walk", "help",
+        "blue", "green", "happy", "water", "food", "sit", "top", "fun"
+      ],
+      medium: [
+        "banana", "pencil", "window", "rocket", "planet", "purple", "school", "butter", "yellow", "camera",
+        "animal", "father", "mother", "sister", "brother", "friend", "garden", "cookie", "donkey", "chicken",
+        "bottle", "family", "candle", "toaster", "breeze", "circle", "zebra", "dancer", "market", "handle",
+        "pillow", "orange", "monkey", "puzzle", "drawer", "guitar", "flower", "letter", "tunnel",
+        "doctor", "hammer", "ladder", "jacket", "butterfly", "sandwich", "basket", "parrot", "bridge",
+        "carpet", "napkin", "helmet", "jungle", "vacuum", "gloves", "button", "kitten",
+        "birthday", "kitchen", "morning", "outside", "number", "winter", "summer", "picnic", "crayon", "backpack",
+        "recess", "hungry", "sleepy", "whisper", "teacher", "because"
+      ],
+      hard: [
+        "elephant", "whistle", "knight", "science", "pyramid", "brought", "through", "thought", "island", "adventure",
+        "machine", "library", "treasure", "weather", "building", "mystery", "volcano", "imagine", "capture",
+        "package", "jewelry", "refrigerator", "question", "squirrel", "calendar", "receipt", "clothing", "mountain",
+        "history", "mirror", "whenever", "explorer", "kangaroo", "penguin", "dinosaur", "plumber", "knuckle", "gnome",
+        "scissors", "autumn", "journey", "recycle", "character", "submarine", "musician", "caterpillar", "horizon", "airplane",
+        "triangle", "meadow", "crocodile", "dolphin", "astronaut", "dangerous", "medicine", "thunder", "cinnamon",
+        "neighbor", "enough", "although", "beautiful", "caught", "famous", "knowledge", "measure", "special", "weight",
+        "bicycle", "castle"
+      ]
+    };
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const muteBtn = document.getElementById("mute");
+    const startScreen = document.getElementById("start-screen");
+    const playScreen = document.getElementById("play-screen");
+    const input = document.getElementById("input");
+    const speakBtn = document.getElementById("speak");
+    const hintBtn = document.getElementById("hint");
+    const sentenceBtn = document.getElementById("sentence");
+    const submitBtn = document.getElementById("submit");
+    const scoreDisplay = document.getElementById("score");
+    const timerDisplay = document.getElementById("timer");
+    const streakDisplay = document.getElementById("streak");
+    const livesEl = document.getElementById("lives");
+    const blanksEl = document.getElementById("blanks");
+    const hintLine = document.getElementById("hint-line");
+    const bee = document.getElementById("bee");
+    const overlay = document.getElementById("overlay");
+    const overlayTitle = document.getElementById("overlay-title");
+    const overlayMsg = document.getElementById("overlay-msg");
+    const overlayForm = document.getElementById("overlay-form");
+    const overlayBtn = document.getElementById("overlay-btn");
+    const nameInput = document.getElementById("name-input");
+    const levelBadge = document.getElementById("level-badge");
+    const clearLbBtn = document.getElementById("clear-lb");
+    const confirmEl = document.getElementById("confirm");
+    const celebrateEl = document.getElementById("celebrate");
+    const PARTY_SCORE = 5;
+    const CHAMPION_SCORE = 10;
+    const diffBtns = {
+      easy: document.getElementById("easy"),
+      medium: document.getElementById("medium"),
+      hard: document.getElementById("hard")
+    };
+
+    let muted = localStorage.getItem("spellbee_mute") === "1";
+    let leaderboard = JSON.parse(localStorage.getItem("spellbee_lb") || "[]");
+    let currentDifficulty = "easy";
+    let word = "";
+    let score = 0;
+    let lives = 3;
+    let streak = 0;
+    let timer = null;
+    let timeLeft = 0;
+    let deck = [];
+    let hintUsed = false;
+    let speakCount = 0;
+    let audioCtx = null;
+    let overlayCallback = null;
+    let roundActive = false;
+
+    function reduceMotionOn() {
+      return reduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    }
+
+    function shuffle(list) {
+      const copy = list.slice();
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function unique(list) {
+      return [...new Set(list.map((w) => w.toLowerCase()))];
+    }
+    wordLists.easy = unique(wordLists.easy);
+    wordLists.medium = unique(wordLists.medium);
+    wordLists.hard = unique(wordLists.hard);
+
+    function getCtx() {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      if (!audioCtx) audioCtx = new Ctx();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    function tone(freq, duration, type, gain, startAt) {
+      if (muted) return;
+      try {
+        const ctx = getCtx();
+        if (!ctx) return;
+        const t = ctx.currentTime + (startAt || 0);
+        const osc = ctx.createOscillator();
+        const g = ctx.createGain();
+        osc.type = type || "sine";
+        osc.frequency.setValueAtTime(freq, t);
+        g.gain.setValueAtTime(gain || 0.07, t);
+        g.gain.exponentialRampToValueAtTime(0.001, t + duration);
+        osc.connect(g);
+        g.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + duration);
+      } catch (err) {}
+    }
+
+    function playMp3(id, volume) {
+      if (muted) return;
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        el.volume = volume == null ? 1 : volume;
+        el.currentTime = 0;
+        const p = el.play();
+        if (p && p.catch) p.catch(() => {});
+      } catch (err) {}
+    }
+
+    function playSfx(kind) {
+      if (muted) return;
+      if (kind === "click") tone(880, 0.05, "triangle", 0.05);
+      else if (kind === "buzz") {
+        tone(240, 0.18, "sawtooth", 0.04);
+        tone(310, 0.16, "square", 0.025, 0.04);
+        tone(190, 0.12, "sawtooth", 0.03, 0.1);
+      } else if (kind === "sparkle") {
+        tone(784, 0.12, "sine", 0.06);
+        tone(988, 0.12, "sine", 0.06, 0.08);
+        tone(1174, 0.18, "sine", 0.07, 0.16);
+      } else if (kind === "life") {
+        tone(330, 0.14, "triangle", 0.07);
+        tone(220, 0.2, "triangle", 0.07, 0.12);
+      } else if (kind === "fanfare") {
+        tone(523, 0.14, "square", 0.05);
+        tone(659, 0.14, "square", 0.05, 0.12);
+        tone(784, 0.14, "square", 0.05, 0.24);
+        tone(1046, 0.28, "square", 0.06, 0.36);
+      } else if (kind === "wrongBuzz") {
+        tone(140, 0.22, "sawtooth", 0.05);
+        tone(110, 0.28, "triangle", 0.04, 0.08);
+      }
+    }
+
+    function playSound(name) {
+      if (name === "correct") {
+        playMp3("snd-correct", 0.85);
+        if (streak >= 3) playSfx("sparkle");
+      } else if (name === "wrong") {
+        playMp3("snd-wrong", 0.45);
+        playSfx("wrongBuzz");
+      } else if (name === "tick") {
+        playMp3("snd-tick", 0.55);
+      } else {
+        playSfx(name);
+      }
+    }
+
+    function updateMuteUi() {
+      muteBtn.textContent = muted ? "🔇" : "🔊";
+      muteBtn.setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
+      muteBtn.title = muted ? "Unmute sounds" : "Mute sounds";
+    }
+
+    muteBtn.onclick = function () {
+      muted = !muted;
+      localStorage.setItem("spellbee_mute", muted ? "1" : "0");
+      updateMuteUi();
+      if (!muted) playSfx("click");
+    };
+
+    document.querySelectorAll("button").forEach((btn) => {
+      if (btn.id === "mute") return;
+      btn.addEventListener("click", () => playSfx("click"));
+    });
+
+    function sanitizeName(raw) {
+      return String(raw || "")
+        .replace(/<[^>]*>/g, "")
+        .replace(/[^\w\s'-]/g, "")
+        .trim()
+        .slice(0, 16);
+    }
+
+    function saveScore(name, value) {
+      const clean = sanitizeName(name);
+      if (!clean) return;
+      leaderboard.push({ name: clean, score: value, date: Date.now() });
+      leaderboard.sort((a, b) => b.score - a.score);
+      leaderboard = leaderboard.slice(0, 10);
+      localStorage.setItem("spellbee_lb", JSON.stringify(leaderboard));
+    }
+
+    function renderLeaderboard() {
+      const body = document.getElementById("lb-body");
+      body.replaceChildren();
+      clearLbBtn.classList.toggle("hidden", !leaderboard.length);
+      if (!leaderboard.length) {
+        const empty = document.createElement("p");
+        empty.className = "empty";
+        empty.textContent = "No scores yet. Play a round to get on the board!";
+        body.appendChild(empty);
+        return;
+      }
+      const list = document.createElement("ol");
+      leaderboard.forEach((entry) => {
+        const li = document.createElement("li");
+        li.textContent = entry.name + ": " + entry.score;
+        list.appendChild(li);
+      });
+      body.appendChild(list);
+    }
+
+    function clearLeaderboard() {
+      leaderboard = [];
+      localStorage.removeItem("spellbee_lb");
+      renderLeaderboard();
+    }
+
+    function setDifficulty(level) {
+      currentDifficulty = level;
+      for (const key in diffBtns) diffBtns[key].classList.remove("active");
+      diffBtns[level].classList.add("active");
+      const cfg = LEVELS[level];
+      levelBadge.textContent = cfg.label + " · " + cfg.grades;
+    }
+
+    diffBtns.easy.onclick = () => setDifficulty("easy");
+    diffBtns.medium.onclick = () => setDifficulty("medium");
+    diffBtns.hard.onclick = () => setDifficulty("hard");
+
+    function renderLives() {
+      livesEl.replaceChildren();
+      for (let i = 0; i < 3; i++) {
+        const heart = document.createElement("span");
+        heart.className = "life" + (i >= lives ? " gone" : "");
+        heart.textContent = "💛";
+        heart.setAttribute("aria-hidden", "true");
+        livesEl.appendChild(heart);
+      }
+      livesEl.setAttribute("aria-label", lives + " lives remaining");
+    }
+
+    function renderBlanks() {
+      const cfg = LEVELS[currentDifficulty];
+      if (!cfg.blanks || !word) {
+        blanksEl.classList.add("hidden");
+        blanksEl.textContent = "";
+        return;
+      }
+      blanksEl.classList.remove("hidden");
+      const shown = word.split("").map((ch, i) => (hintUsed && i === 0 ? ch.toUpperCase() : "_"));
+      blanksEl.textContent = shown.join(" ");
+    }
+
+    function renderHintLine() {
+      if (hintUsed && !LEVELS[currentDifficulty].blanks && word) {
+        hintLine.classList.remove("hidden");
+        hintLine.textContent = "Starts with " + word[0].toUpperCase();
+      } else {
+        hintLine.classList.add("hidden");
+        hintLine.textContent = "";
+      }
+    }
+
+    function updateHud() {
+      scoreDisplay.textContent = "Score: " + score;
+      streakDisplay.textContent = streak >= 2 ? "Streak: " + streak + " 🔥" : "";
+      renderLives();
+    }
+
+    function speakWord(slow) {
+      if (!word || !window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      const voice = new SpeechSynthesisUtterance(word);
+      const base = LEVELS[currentDifficulty].rate;
+      voice.rate = slow ? Math.max(0.45, base - 0.25) : base;
+      voice.pitch = 1;
+      voice.lang = "en-US";
+      speechSynthesis.speak(voice);
+    }
+
+    function speakSentence() {
+      if (!word || !window.speechSynthesis) return;
+      speechSynthesis.cancel();
+      const voice = new SpeechSynthesisUtterance(
+        "Here is that word in a sentence. Everyone wanted to learn the word " + word + "."
+      );
+      voice.rate = LEVELS[currentDifficulty].rate;
+      voice.pitch = 1;
+      voice.lang = "en-US";
+      speechSynthesis.speak(voice);
+    }
+
+    function buzzBee() {
+      if (reduceMotionOn()) return;
+      bee.classList.remove("buzz");
+      void bee.offsetWidth;
+      bee.classList.add("buzz");
+    }
+
+    function flashCard(kind) {
+      playScreen.classList.remove("ok", "bad", "shake");
+      playScreen.classList.add(kind === "ok" ? "ok" : "bad");
+      if (kind !== "ok" && !reduceMotionOn()) playScreen.classList.add("shake");
+      setTimeout(() => playScreen.classList.remove("ok", "bad", "shake"), 700);
+    }
+
+    function popScore() {
+      if (reduceMotionOn()) return;
+      scoreDisplay.classList.remove("pop");
+      void scoreDisplay.offsetWidth;
+      scoreDisplay.classList.add("pop");
+      const plus = document.createElement("div");
+      plus.className = "float-plus";
+      plus.textContent = "+1";
+      playScreen.appendChild(plus);
+      setTimeout(() => plus.remove(), 900);
+    }
+
+    function honeyConfetti() {
+      if (reduceMotionOn()) return;
+      const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+      for (let i = 0; i < 16; i++) {
+        const dot = document.createElement("span");
+        dot.className = "confetti";
+        dot.style.left = Math.random() * 90 + 5 + "%";
+        dot.style.background = colors[i % colors.length];
+        dot.style.animationDelay = Math.random() * 0.12 + "s";
+        playScreen.appendChild(dot);
+        setTimeout(() => dot.remove(), 1000);
+      }
+    }
+
+    function launchCelebration(level) {
+      if (reduceMotionOn()) return;
+      const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+      const big = level === "champion";
+      celebrateEl.replaceChildren();
+      const streamerCount = big ? 16 : 10;
+      const confettiCount = big ? 90 : 48;
+      for (let i = 0; i < streamerCount; i++) {
+        const ribbon = document.createElement("span");
+        ribbon.className = "streamer";
+        ribbon.style.left = (4 + i * (92 / Math.max(streamerCount - 1, 1))) + "%";
+        ribbon.style.height = 38 + Math.random() * 28 + "vh";
+        ribbon.style.background = "linear-gradient(180deg, " + colors[i % colors.length] + ", transparent)";
+        ribbon.style.color = colors[i % colors.length];
+        ribbon.style.animationDelay = (i * 0.07) + "s";
+        ribbon.style.animationDuration = 1.4 + Math.random() * 0.8 + "s";
+        celebrateEl.appendChild(ribbon);
+      }
+      for (let i = 0; i < confettiCount; i++) {
+        const bit = document.createElement("span");
+        bit.className = "party-confetti";
+        bit.style.left = Math.random() * 100 + "%";
+        bit.style.background = colors[i % colors.length];
+        bit.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+        bit.style.animationDelay = Math.random() * 0.7 + "s";
+        bit.style.width = 6 + Math.random() * 7 + "px";
+        bit.style.height = 10 + Math.random() * 10 + "px";
+        celebrateEl.appendChild(bit);
+      }
+      playSfx(big ? "fanfare" : "sparkle");
+      const hold = big ? 4800 : 3200;
+      setTimeout(() => {
+        if (celebrateEl.childElementCount) celebrateEl.replaceChildren();
+      }, hold);
+    }
+
+    function setPlaying(on) {
+      roundActive = on;
+      input.disabled = !on;
+      speakBtn.disabled = !on;
+      submitBtn.disabled = !on;
+      const cfg = LEVELS[currentDifficulty];
+      hintBtn.disabled = !on || cfg.hint === "none" || hintUsed;
+      hintBtn.classList.toggle("hidden", cfg.hint === "none");
+      sentenceBtn.classList.toggle("hidden", !cfg.sentence);
+      sentenceBtn.disabled = !on || !cfg.sentence;
+      if (on) input.focus();
+    }
+
+    function startTimer() {
+      if (timer) clearInterval(timer);
+      timeLeft = LEVELS[currentDifficulty].time;
+      timerDisplay.classList.remove("urgent");
+      timerDisplay.textContent = "Timer: " + timeLeft;
+      timer = setInterval(() => {
+        timeLeft--;
+        if (timeLeft <= 5) {
+          timerDisplay.classList.add("urgent");
+          playSound("tick");
+        }
+        timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + Math.max(timeLeft, 0);
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          handleMiss("Time's up! The word was " + word + ".");
+        }
+      }, 1000);
+    }
+
+    function stopTimer() {
+      if (timer) clearInterval(timer);
+      timer = null;
+      timerDisplay.classList.remove("urgent");
+    }
+
+    function nextWord() {
+      const list = wordLists[currentDifficulty];
+      if (!deck.length) deck = shuffle(list.slice());
+      word = deck.pop();
+      hintUsed = false;
+      speakCount = 0;
+      input.value = "";
+      renderBlanks();
+      renderHintLine();
+      setPlaying(true);
+      buzzBee();
+      playSfx("buzz");
+      speakWord(false);
+      startTimer();
+    }
+
+    function startRound() {
+      getCtx();
+      score = 0;
+      lives = 3;
+      streak = 0;
+      deck = shuffle(wordLists[currentDifficulty].slice());
+      startScreen.classList.add("hidden");
+      playScreen.classList.remove("hidden");
+      updateHud();
+      nextWord();
+    }
+
+    function showOverlay(opts) {
+      overlayTitle.textContent = opts.title;
+      overlayMsg.textContent = opts.message;
+      overlayBtn.textContent = opts.button || "Continue";
+      overlayForm.classList.toggle("hidden", !opts.askName);
+      overlay.classList.remove("hidden");
+      overlayCallback = opts.onContinue || null;
+      if (opts.askName) {
+        nameInput.value = "";
+        nameInput.focus();
+      } else {
+        overlayBtn.focus();
+      }
+    }
+
+    function hideOverlay() {
+      overlay.classList.add("hidden");
+      const cb = overlayCallback;
+      overlayCallback = null;
+      if (cb) cb();
+    }
+
+    overlayBtn.onclick = function () {
+      if (!overlayForm.classList.contains("hidden")) {
+        const name = sanitizeName(nameInput.value) || "Player";
+        saveScore(name, score);
+        renderLeaderboard();
+      }
+      hideOverlay();
+    };
+
+    function goHome() {
+      if (window.speechSynthesis) speechSynthesis.cancel();
+      stopTimer();
+      word = "";
+      roundActive = false;
+      playScreen.classList.add("hidden");
+      startScreen.classList.remove("hidden");
+      timerDisplay.textContent = "Timer: 00";
+    }
+
+    function endGame(extraMessage) {
+      setPlaying(false);
+      stopTimer();
+      const champion = score >= CHAMPION_SCORE;
+      const party = score >= PARTY_SCORE;
+      if (champion) launchCelebration("champion");
+      else if (party) launchCelebration("milestone");
+      playSfx("fanfare");
+      const points = "You scored " + score + " point" + (score === 1 ? "" : "s") + ".";
+      showOverlay({
+        title: champion ? "Champion!" : "SpellBuzz over!",
+        message: (extraMessage ? extraMessage + " " : "") + points + " Add your name to the leaderboard.",
+        button: "Save score",
+        askName: true,
+        onContinue: goHome
+      });
+    }
+
+    function handleMiss(message) {
+      if (!roundActive) return;
+      roundActive = false;
+      stopTimer();
+      setPlaying(false);
+      streak = 0;
+      lives--;
+      updateHud();
+      flashCard("bad");
+      if (lives > 0) {
+        playSfx("life");
+        playSound("wrong");
+        showOverlay({
+          title: "Oops!",
+          message: message + " Lives left: " + lives + ".",
+          button: "Next word",
+          onContinue: nextWord
+        });
+      } else {
+        playSound("wrong");
+        endGame(message);
+      }
+    }
+
+    function handleCorrect() {
+      if (!roundActive) return;
+      roundActive = false;
+      stopTimer();
+      setPlaying(false);
+      score++;
+      streak++;
+      updateHud();
+      popScore();
+      honeyConfetti();
+      if (score === PARTY_SCORE || score === CHAMPION_SCORE || score === 15 || score === 20) {
+        launchCelebration(score >= CHAMPION_SCORE ? "champion" : "milestone");
+      }
+      flashCard("ok");
+      playSound("correct");
+      timerDisplay.textContent = "Correct!";
+      setTimeout(() => {
+        if (lives > 0) nextWord();
+      }, 900);
+    }
+
+    document.getElementById("play").onclick = startRound;
+
+    clearLbBtn.onclick = function () {
+      confirmEl.classList.remove("hidden");
+      document.getElementById("confirm-no").focus();
+    };
+    document.getElementById("confirm-no").onclick = function () {
+      confirmEl.classList.add("hidden");
+    };
+    document.getElementById("confirm-yes").onclick = function () {
+      clearLeaderboard();
+      confirmEl.classList.add("hidden");
+    };
+
+    speakBtn.onclick = function () {
+      speakCount++;
+      const slower = currentDifficulty === "easy" && speakCount > 1;
+      speakWord(slower);
+    };
+
+    hintBtn.onclick = function () {
+      if (!roundActive || hintUsed) return;
+      const cfg = LEVELS[currentDifficulty];
+      if (cfg.hint === "none") return;
+      hintUsed = true;
+      hintBtn.disabled = true;
+      if (cfg.hint === "cost") {
+        timeLeft = Math.max(1, timeLeft - 3);
+        timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + timeLeft;
+      }
+      renderBlanks();
+      renderHintLine();
+    };
+
+    sentenceBtn.onclick = function () {
+      speakSentence();
+    };
+
+    submitBtn.onclick = function () {
+      if (!roundActive || !word) return;
+      const userInput = input.value.trim().toLowerCase();
+      if (!userInput) return;
+      if (userInput === word.toLowerCase()) handleCorrect();
+      else handleMiss("Incorrect! The word was " + word + ".");
+    };
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !submitBtn.disabled) submitBtn.click();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      if (!confirmEl.classList.contains("hidden")) {
+        confirmEl.classList.add("hidden");
+        return;
+      }
+      if (!overlay.classList.contains("hidden")) overlayBtn.click();
+    });
+
+    nameInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") overlayBtn.click();
+    });
+
+    updateMuteUi();
+    renderLeaderboard();
+    setDifficulty("easy");
+  </script>
+</body>
+</html>

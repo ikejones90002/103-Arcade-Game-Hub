@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="wqTitle">
+  <title id="wqTitle">Word Quest</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="page" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#001a24"/>
+      <stop offset="100%" stop-color="#1a0030"/>
+    </linearGradient>
+    <pattern id="grid" width="6" height="6" patternUnits="userSpaceOnUse">
+      <path d="M6 0H0V6" fill="none" stroke="#00ffff" stroke-opacity="0.22" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+  <path d="M40 70 L120 50 L200 70 L200 190 L120 170 L40 190 Z" fill="url(#page)" stroke="#ffff00" stroke-width="3.5" filter="url(#glow)"/>
+  <path d="M40 70 L120 50 L200 70 L200 190 L120 170 L40 190 Z" fill="url(#grid)"/>
+  <path d="M120 50 L120 170" fill="none" stroke="#00ffff" stroke-width="3"/>
+  <path d="M70 88 L108 80" fill="none" stroke="#ff00ff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M70 108 L108 100" fill="none" stroke="#ff00ff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M132 80 L172 88" fill="none" stroke="#00ffff" stroke-width="3" stroke-linecap="round"/>
+  <path d="M132 100 L172 108" fill="none" stroke="#00ffff" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="120" cy="36" r="14" fill="#05050a" stroke="#ff8c00" stroke-width="3" filter="url(#glow)"/>
+  <path d="M120 28 L123 34 L130 35 L124 39 L126 46 L120 42 L114 46 L116 39 L110 35 L117 34 Z" fill="#ffff00"/>
+</svg>

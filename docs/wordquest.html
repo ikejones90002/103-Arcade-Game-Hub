@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Word Quest — Reading World — 103 Software Solutions LLC</title>
+  <link rel="icon" href="wordquest.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-row">
+          <img src="wordquest.svg" class="bee-mark" id="brand-mark" alt="">
+          <div>
+            <h1>Word Quest</h1>
+            <p class="wq-sub">Reading World</p>
+          </div>
+        </div>
+        <p class="byline">Built by 103 Software Solutions LLC</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn secondary hub-link" href="index.html">103 Arcade</a>
+        <button id="mute" class="icon-btn" type="button" aria-label="Mute sounds" title="Mute sounds">🔊</button>
+      </div>
+    </div>
+
+    <!-- Home / world map -->
+    <section id="map-screen" class="card" aria-label="Reading World map">
+      <div class="bee-wrap" id="hero-wrap">
+        <img src="wordquest.svg" alt="Word Quest" class="bee hero">
+      </div>
+      <p class="howto">A reading adventure that grows with you. Explore worlds, complete challenges, earn XP.</p>
+      <div class="wq-profile-row">
+        <label class="visually-hidden" for="player-name">Player name</label>
+        <input id="player-name" type="text" maxlength="16" placeholder="Your name" autocomplete="nickname">
+        <button id="save-name" class="btn secondary" type="button">Save</button>
+        <button id="btn-change-grade" class="btn secondary" type="button">Change grade</button>
+      </div>
+      <p class="grade-badge" id="grade-badge">Grade: not set</p>
+      <div class="wq-stats">
+        <span id="stat-xp">XP: 0</span>
+        <span id="stat-stars">Stars: 0</span>
+        <span id="stat-challenge">Challenge: 0/3</span>
+      </div>
+      <div class="wq-coach" id="coach-banner"><strong>Coach:</strong> <span id="coach-text">Welcome!</span></div>
+      <div class="tab-row">
+        <button id="btn-review-toggle" class="btn secondary hidden" type="button">Review earlier skills</button>
+        <button id="btn-placement" class="btn secondary" type="button">Placement</button>
+        <button id="btn-parent" class="btn secondary" type="button">Parent</button>
+        <button id="btn-rewards" class="btn secondary" type="button">Rewards</button>
+        <button id="btn-export" class="btn secondary" type="button">Export</button>
+      </div>
+      <div class="world-map" id="world-map" role="list"></div>
+      <div class="world-map review-map hidden" id="review-map" role="list" aria-label="Review earlier skills"></div>
+      <div id="leaderboard">
+        <div class="lb-head">
+          <h3>Leaderboard</h3>
+          <button id="clear-lb" class="btn secondary hidden" type="button">Clear</button>
+        </div>
+        <div id="lb-body"></div>
+      </div>
+    </section>
+
+    <!-- World path -->
+    <section id="path-screen" class="card hidden" aria-label="World path">
+      <p class="howto" id="path-title">World</p>
+      <div class="wq-coach"><strong>Coach:</strong> <span id="path-coach"></span></div>
+      <div class="path-list" id="path-list"></div>
+      <div class="actions">
+        <button id="path-back" class="btn secondary" type="button">Back to map</button>
+      </div>
+    </section>
+
+    <!-- Node lessons -->
+    <section id="node-screen" class="card hidden" aria-label="Lessons">
+      <p class="howto" id="node-title">Node</p>
+      <div class="lesson-list" id="lesson-list"></div>
+      <div class="actions">
+        <button id="node-back" class="btn secondary" type="button">Back to path</button>
+      </div>
+    </section>
+
+    <!-- Play -->
+    <section id="play-screen" class="card hidden" aria-label="Lesson">
+      <div class="hud">
+        <div class="score" id="score">XP run: 0</div>
+        <div class="lives" id="lives" aria-label="Lives remaining"></div>
+      </div>
+      <div class="stars-row" id="stars"></div>
+      <div class="streak" id="streak"></div>
+      <div class="level-badge" id="level-badge">Lesson</div>
+      <div class="timer hidden" id="timer" aria-live="polite">Timer: 00</div>
+      <div class="progress-mini" id="act-progress">1 / 1</div>
+      <div class="build-emoji hidden" id="build-emoji"></div>
+      <div class="prompt-word" id="prompt"></div>
+      <div class="story-box hidden" id="story-box">
+        <span class="story-emoji" id="story-emoji"></span>
+        <div id="story-text"></div>
+        <div class="story-q" id="story-q"></div>
+      </div>
+      <div id="build-area" class="hidden">
+        <div class="build-slots" id="build-slots"></div>
+        <div class="build-tray" id="build-tray"></div>
+        <div class="actions">
+          <button id="build-check" class="btn" type="button">Check word</button>
+          <button id="build-clear" class="btn secondary" type="button">Clear</button>
+        </div>
+      </div>
+      <div id="choices" class="choice-grid hidden"></div>
+      <div class="actions" id="honor-actions">
+        <button id="speak" class="btn secondary" type="button">Speak</button>
+        <button id="got-it" class="btn" type="button">I got it</button>
+        <button id="try-again" class="btn secondary" type="button">Try again</button>
+      </div>
+      <div class="actions">
+        <button id="quit-lesson" class="btn secondary" type="button">Exit lesson</button>
+      </div>
+    </section>
+
+    <!-- Grade picker -->
+    <section id="grade-screen" class="card hidden" aria-label="Choose grade">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Pick your reading level</h2>
+      <p class="howto">Choose the grade that fits you. You will start there — younger worlds stay optional review.</p>
+      <div class="grade-grid" id="grade-grid"></div>
+      <div class="actions">
+        <button id="grade-use-placement" class="btn secondary" type="button">Use placement quiz instead</button>
+      </div>
+    </section>
+
+    <!-- Parent panel -->
+    <section id="parent-screen" class="card hidden" aria-label="Parent progress">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Parent / Teacher</h2>
+      <p class="howto" id="parent-summary">Progress on this device.</p>
+      <div class="wq-coach"><strong>Tip:</strong> <span id="parent-coach"></span></div>
+      <div class="skill-bars" id="skill-bars"></div>
+      <div id="parent-grade" class="parent-grade-panel"></div>
+      <div id="world-progress" class="muted"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="parent-back" class="btn secondary" type="button">Back</button>
+        <button id="reset-progress" class="btn secondary" type="button">Reset progress</button>
+      </div>
+    </section>
+
+    <!-- Rewards -->
+    <section id="rewards-screen" class="card hidden" aria-label="Rewards">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Rewards</h2>
+      <p class="howto">Spend XP on frames and stickers. Compete against your own weekly best.</p>
+      <div class="wq-stats">
+        <span id="reward-xp">XP: 0</span>
+        <span id="reward-stars">Stars: 0</span>
+      </div>
+      <div class="cosmetic-list" id="cosmetic-list"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="rewards-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    <!-- Export / import / classroom lite -->
+    <section id="export-screen" class="card hidden" aria-label="Export and classroom">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Export & Classroom</h2>
+      <p class="howto">Offline profile backup and a weekly self-challenge. Cloud accounts / AI API come later.</p>
+      <div class="wq-coach" id="classroom-coach"></div>
+      <textarea id="export-box" class="wq-export" readonly aria-label="Exported profile JSON"></textarea>
+      <div class="actions">
+        <button id="do-export" class="btn" type="button">Copy export</button>
+        <button id="do-import" class="btn secondary" type="button">Import paste</button>
+      </div>
+      <textarea id="import-box" class="wq-export" placeholder="Paste profile JSON here to import" aria-label="Import profile JSON"></textarea>
+      <div class="actions" style="margin-top:0.8rem;">
+        <button id="toggle-coach" class="btn secondary" type="button">Toggle coach</button>
+        <button id="export-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <img src="logo.png" alt="103 Software Solutions LLC">
+      <p>&copy; 2026 Word Quest. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
+    </footer>
+  </div>
+
+  <div id="celebrate" aria-hidden="true"></div>
+
+  <div id="confirm" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="overlay-card">
+      <h2 id="confirm-title">Are you sure?</h2>
+      <p id="confirm-msg">This cannot be undone on this device.</p>
+      <div class="actions">
+        <button id="confirm-no" class="btn secondary" type="button">Cancel</button>
+        <button id="confirm-yes" class="btn" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="overlay-title">
+    <div class="overlay-card">
+      <h2 id="overlay-title"></h2>
+      <p id="overlay-msg"></p>
+      <div id="overlay-form" class="hidden">
+        <label for="name-input">Your name</label>
+        <input id="name-input" type="text" maxlength="16" placeholder="Your name" autocomplete="nickname">
+      </div>
+      <button id="overlay-btn" class="btn" type="button">Continue</button>
+    </div>
+  </div>
+
+  <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
+  <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+
+  <script src="wordquest-content.js"></script>
+  <script src="wordquest-engine.js"></script>
+  <script>
+(function () {
+  "use strict";
+
+  const Content = window.WQContent;
+  const Engine = window.WQEngine;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  let profile = Engine.loadProfile();
+  Engine.ensureChallengeWeek(profile);
+  Engine.refreshUnlocks(profile);
+  Engine.saveProfile(profile);
+
+  let muted = localStorage.getItem("wordquest_mute") === "1";
+  let leaderboard = JSON.parse(localStorage.getItem("wordquest_lb") || "[]");
+  let audioCtx = null;
+  let overlayCallback = null;
+  let confirmCallback = null;
+  let currentWorldId = null;
+  let currentNodeId = null;
+  let currentLesson = null;
+  let activityQueue = [];
+  let activityIndex = 0;
+  let roundActive = false;
+  let currentItem = null;
+  let score = 0;
+  let lives = 3;
+  let streak = 0;
+  let stars = 0;
+  let timer = null;
+  let timeLeft = 0;
+  let buildPicked = [];
+  let lessonStartedAt = 0;
+  let placementMode = false;
+  let placementResults = [];
+  let screenStack = "map";
+
+  const muteBtn = document.getElementById("mute");
+  const mapScreen = document.getElementById("map-screen");
+  const pathScreen = document.getElementById("path-screen");
+  const nodeScreen = document.getElementById("node-screen");
+  const playScreen = document.getElementById("play-screen");
+  const parentScreen = document.getElementById("parent-screen");
+  const rewardsScreen = document.getElementById("rewards-screen");
+  const exportScreen = document.getElementById("export-screen");
+  const promptEl = document.getElementById("prompt");
+  const choicesEl = document.getElementById("choices");
+  const honorActions = document.getElementById("honor-actions");
+  const speakBtn = document.getElementById("speak");
+  const gotItBtn = document.getElementById("got-it");
+  const tryAgainBtn = document.getElementById("try-again");
+  const overlay = document.getElementById("overlay");
+  const overlayTitle = document.getElementById("overlay-title");
+  const overlayMsg = document.getElementById("overlay-msg");
+  const overlayForm = document.getElementById("overlay-form");
+  const overlayBtn = document.getElementById("overlay-btn");
+  const nameInput = document.getElementById("name-input");
+  const confirmEl = document.getElementById("confirm");
+  const celebrateEl = document.getElementById("celebrate");
+
+  function reduceMotionOn() {
+    return reduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+  function shuffle(list) {
+    const copy = list.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = copy[i]; copy[i] = copy[j]; copy[j] = t;
+    }
+    return copy;
+  }
+  function hideAllScreens() {
+    [mapScreen, pathScreen, nodeScreen, playScreen, parentScreen, rewardsScreen, exportScreen, document.getElementById("grade-screen")]
+      .forEach(function (el) { if (el) el.classList.add("hidden"); });
+  }
+  function showScreen(name) {
+    hideAllScreens();
+    screenStack = name;
+    if (name === "map") mapScreen.classList.remove("hidden");
+    else if (name === "path") pathScreen.classList.remove("hidden");
+    else if (name === "node") nodeScreen.classList.remove("hidden");
+    else if (name === "play") playScreen.classList.remove("hidden");
+    else if (name === "parent") parentScreen.classList.remove("hidden");
+    else if (name === "rewards") rewardsScreen.classList.remove("hidden");
+    else if (name === "export") exportScreen.classList.remove("hidden");
+    else if (name === "grade") document.getElementById("grade-screen").classList.remove("hidden");
+  }
+
+  function getCtx() {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    if (!audioCtx) audioCtx = new Ctx();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function tone(freq, duration, type, gain, startAt) {
+    if (muted) return;
+    try {
+      const ctx = getCtx();
+      if (!ctx) return;
+      const t = ctx.currentTime + (startAt || 0);
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(gain || 0.07, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + duration);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + duration);
+    } catch (err) {}
+  }
+  function playMp3(id, volume) {
+    if (muted) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    try {
+      el.volume = volume == null ? 1 : volume;
+      el.currentTime = 0;
+      const p = el.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (err) {}
+  }
+  function playSfx(kind) {
+    if (muted) return;
+    if (kind === "click") tone(880, 0.05, "triangle", 0.05);
+    else if (kind === "buzz") { tone(240, 0.16, "sawtooth", 0.04); tone(310, 0.12, "square", 0.02, 0.04); }
+    else if (kind === "sparkle") { tone(784, 0.12, "sine", 0.06); tone(1174, 0.18, "sine", 0.07, 0.12); }
+    else if (kind === "life") { tone(330, 0.14, "triangle", 0.07); tone(220, 0.2, "triangle", 0.07, 0.12); }
+    else if (kind === "fanfare") { tone(523, 0.12, "square", 0.05); tone(784, 0.14, "square", 0.05, 0.12); tone(1046, 0.24, "square", 0.06, 0.26); }
+    else if (kind === "wrongBuzz") tone(140, 0.22, "sawtooth", 0.05);
+  }
+  function playSound(name) {
+    if (name === "correct") { playMp3("snd-correct", 0.85); if (streak >= 3) playSfx("sparkle"); }
+    else if (name === "wrong") { playMp3("snd-wrong", 0.45); playSfx("wrongBuzz"); }
+    else if (name === "tick") playMp3("snd-tick", 0.55);
+    else playSfx(name);
+  }
+  function updateMuteUi() {
+    muteBtn.textContent = muted ? "🔇" : "🔊";
+    muteBtn.setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
+  }
+  muteBtn.onclick = function () {
+    muted = !muted;
+    localStorage.setItem("wordquest_mute", muted ? "1" : "0");
+    updateMuteUi();
+    if (!muted) playSfx("click");
+  };
+
+  function sanitizeName(raw) {
+    return String(raw || "").replace(/<[^>]*>/g, "").replace(/[^\w\s'-]/g, "").trim().slice(0, 16);
+  }
+  function saveScore(name, value) {
+    const clean = sanitizeName(name);
+    if (!clean) return;
+    leaderboard.push({ name: clean, score: value, date: Date.now() });
+    leaderboard.sort(function (a, b) { return b.score - a.score; });
+    leaderboard = leaderboard.slice(0, 10);
+    localStorage.setItem("wordquest_lb", JSON.stringify(leaderboard));
+  }
+  function renderLeaderboard() {
+    const body = document.getElementById("lb-body");
+    const clearLbBtn = document.getElementById("clear-lb");
+    body.replaceChildren();
+    clearLbBtn.classList.toggle("hidden", !leaderboard.length);
+    if (!leaderboard.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty";
+      empty.textContent = "No scores yet. Finish a lesson to get on the board!";
+      body.appendChild(empty);
+      return;
+    }
+    const list = document.createElement("ol");
+    leaderboard.forEach(function (entry) {
+      const li = document.createElement("li");
+      li.textContent = entry.name + ": " + entry.score;
+      list.appendChild(li);
+    });
+    body.appendChild(list);
+  }
+
+  function speakText(text) {
+    if (!text || !window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.75;
+    u.lang = "en-US";
+    speechSynthesis.speak(u);
+  }
+
+  function applyFrameClass() {
+    const wrap = document.getElementById("hero-wrap");
+    const mark = document.getElementById("brand-mark");
+    [wrap, mark].forEach(function (el) {
+      if (!el) return;
+      el.classList.remove("frame-leaf", "frame-sun", "frame-crown");
+      if (profile.equippedFrame) el.classList.add(profile.equippedFrame);
+    });
+  }
+
+  function refreshHeaderStats() {
+    Engine.ensureChallengeWeek(profile);
+    document.getElementById("stat-xp").textContent = "XP: " + profile.xp;
+    document.getElementById("stat-stars").textContent = "Stars: " + profile.stars;
+    document.getElementById("stat-challenge").textContent =
+      "Challenge: " + profile.personalBest.challengeProgress + "/" + profile.personalBest.challengeTarget;
+    document.getElementById("coach-text").textContent = Engine.coachMessage(profile, "map");
+    document.getElementById("player-name").value = profile.name || "";
+    const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
+    document.getElementById("grade-badge").textContent = profile.gradeBandSet
+      ? ("Grade " + profile.gradeBand + " · " + (band ? band.name : ""))
+      : "Grade: pick your level to start";
+    const reviewBtn = document.getElementById("btn-review-toggle");
+    const hasReview = (profile.gradeBand || 1) > 1;
+    reviewBtn.classList.toggle("hidden", !hasReview);
+    reviewBtn.textContent = profile.reviewModeEnabled ? "Hide earlier skills" : "Review earlier skills";
+    applyFrameClass();
+  }
+
+  function buildWorldTile(region, accessState) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "world-tile";
+    if (accessState === "your-level") btn.classList.add("active-world");
+    if (accessState === "review") btn.classList.add("review-tile");
+    if (accessState === "locked") btn.classList.add("locked-tile");
+    btn.setAttribute("role", "listitem");
+    const world = Content.getWorld(region.id);
+    const nodesDone = world ? Engine.countWorldNodesDone(profile, region.id) : 0;
+    const nodesTotal = world ? world.nodes.length : 0;
+    let badge = "";
+    if (accessState === "your-level") badge = '<span class="map-badge your-level">Your level</span>';
+    else if (accessState === "review") badge = '<span class="map-badge review">Review</span>';
+    else if (accessState === "early") badge = '<span class="map-badge early">Unlocked early</span>';
+    else if (accessState === "locked") badge = '<span class="lock">Higher grade</span>';
+    if (Content.isWorldPreview && Content.isWorldPreview(region.id)) {
+      badge += '<span class="map-badge preview">New</span>';
+    }
+    btn.innerHTML =
+      '<span class="icon" aria-hidden="true">' + region.icon + "</span>" +
+      '<span class="meta"><strong>L' + region.level + " · " + region.name + "</strong>" +
+      "<span>" + region.focus + " · " + region.age + "</span>" +
+      (accessState !== "locked" ? '<span class="progress-mini">' + nodesDone + "/" + nodesTotal + " nodes</span>" : "") +
+      badge + "</span>";
+    return btn;
+  }
+
+  function openRegion(region) {
+    playSfx("click");
+    openWorld(region.id, { startNode: region.startNode || null, highlightNode: region.startNode || null });
+  }
+
+  function renderWorldMap() {
+    const map = document.getElementById("world-map");
+    const reviewMap = document.getElementById("review-map");
+    map.replaceChildren();
+    reviewMap.replaceChildren();
+    Content.MAP_REGIONS.forEach(function (region) {
+      const accessState = Engine.getRegionAccessState(profile, region.level);
+      if (accessState === "review-hidden") return;
+      const btn = buildWorldTile(region, accessState);
+      if (accessState === "locked") {
+        btn.disabled = true;
+        btn.title = "Try Placement or ask a parent to move up a grade";
+      } else {
+        btn.onclick = function () { openRegion(region); };
+      }
+      if (accessState === "review") reviewMap.appendChild(btn);
+      else map.appendChild(btn);
+    });
+    reviewMap.classList.toggle("hidden", !profile.reviewModeEnabled || reviewMap.childElementCount === 0);
+    refreshHeaderStats();
+  }
+
+  function renderGradePicker() {
+    const grid = document.getElementById("grade-grid");
+    grid.replaceChildren();
+    Content.GRADE_BANDS.forEach(function (band) {
+      const region = Content.MAP_REGIONS.find(function (r) { return r.level === band.grade; });
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "grade-btn" + (profile.gradeBand === band.grade && profile.gradeBandSet ? " active" : "");
+      btn.innerHTML = "<strong>Grade " + band.grade + "</strong><span>" + band.age + "</span><small>" + band.name + "</small>";
+      btn.onclick = function () {
+        playSfx("click");
+        Engine.setGradeBand(profile, band.grade);
+        renderWorldMap();
+        showScreen("map");
+        showOverlay({
+          title: "Level set!",
+          message: "You are starting at " + band.name + ". Tap your world on the map to play. Use Review for earlier skills anytime.",
+          button: "Let's go"
+        });
+      };
+      grid.appendChild(btn);
+    });
+  }
+
+  function ensureGradeSelected() {
+    if (!profile.gradeBandSet) {
+      renderGradePicker();
+      showScreen("grade");
+      return false;
+    }
+    return true;
+  }
+
+  function openWorld(worldId, options) {
+    options = options || {};
+    currentWorldId = worldId;
+    const world = Content.getWorld(worldId);
+    if (!world) return;
+    if (!Engine.canPlayWorld(profile, worldId)) {
+      showOverlay({
+        title: "Not available",
+        message: "This world is above your grade. Try Placement or ask a parent to change grade.",
+        button: "OK"
+      });
+      return;
+    }
+    document.getElementById("path-title").textContent = world.icon + " " + world.name + " — " + world.focus;
+    document.getElementById("path-coach").textContent = Engine.coachMessage(profile, "map");
+    const list = document.getElementById("path-list");
+    list.replaceChildren();
+    world.nodes.forEach(function (node, idx) {
+      const unlocked = Engine.nodeUnlocked(profile, worldId, node.id, idx);
+      const done = !!profile.nodesCompleted[worldId + ":" + node.id];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "path-node" + (done ? " done" : "");
+      if (options.highlightNode && node.id === options.highlightNode) btn.classList.add("highlight-node");
+      btn.disabled = !unlocked;
+      btn.innerHTML =
+        '<span class="step">' + (done ? "✓" : (idx + 1)) + "</span>" +
+        '<span class="meta"><strong>' + node.name + "</strong><span>" + node.blurb +
+        (unlocked ? "" : " · complete prior node") + "</span></span>";
+      if (unlocked) {
+        btn.onclick = function () {
+          playSfx("click");
+          openNode(worldId, node.id);
+        };
+      }
+      list.appendChild(btn);
+    });
+    showScreen("path");
+    if (options.startNode) {
+      const target = list.querySelector(".highlight-node");
+      if (target) target.scrollIntoView({ block: "nearest", behavior: reduceMotionOn() ? "auto" : "smooth" });
+    }
+  }
+
+  function openNode(worldId, nodeId) {
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    const node = Content.getNode(worldId, nodeId);
+    if (!node) return;
+    document.getElementById("node-title").textContent = node.name + " — pick a lesson";
+    const list = document.getElementById("lesson-list");
+    list.replaceChildren();
+    node.lessons.forEach(function (lesson) {
+      const key = worldId + ":" + nodeId + ":" + lesson.id;
+      const done = !!profile.lessonsCompleted[key];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "lesson-btn" + (done ? " done" : "");
+      btn.innerHTML = lesson.title + "<small>" +
+        lesson.activities.length + " activities · +" + (lesson.reward && lesson.reward.xp || 0) + " XP" +
+        (done ? " · completed" : "") + "</small>";
+      btn.onclick = function () {
+        playSfx("click");
+        startLesson(worldId, nodeId, lesson.id);
+      };
+      list.appendChild(btn);
+    });
+    showScreen("node");
+  }
+
+  function startLesson(worldId, nodeId, lessonId) {
+    placementMode = false;
+    let lesson = Content.getLesson(worldId, nodeId, lessonId);
+    if (!lesson) return;
+    lesson = Engine.injectAdaptiveActivities(lesson, profile);
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    currentLesson = lesson;
+    activityQueue = lesson.activities.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    nextActivity();
+  }
+
+  function startPlacement() {
+    placementMode = true;
+    placementResults = [];
+    currentLesson = { id: "placement", title: "Placement", reward: { xp: 10, stars: 1 }, activities: Content.PLACEMENT_QUESTIONS };
+    activityQueue = Content.PLACEMENT_QUESTIONS.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    nextActivity();
+  }
+
+  function clearPlayUi() {
+    choicesEl.replaceChildren();
+    choicesEl.classList.add("hidden");
+    honorActions.classList.add("hidden");
+    document.getElementById("build-area").classList.add("hidden");
+    document.getElementById("story-box").classList.add("hidden");
+    document.getElementById("build-emoji").classList.add("hidden");
+    document.getElementById("timer").classList.add("hidden");
+    promptEl.textContent = "";
+    buildPicked = [];
+    currentItem = null;
+  }
+
+  function updateHud() {
+    document.getElementById("score").textContent = "XP run: " + score;
+    document.getElementById("streak").textContent = streak >= 2 ? "Streak: " + streak : "";
+    document.getElementById("stars").textContent = "Stars: " + "★".repeat(Math.min(5, stars)) + "☆".repeat(Math.max(0, 5 - stars));
+    document.getElementById("level-badge").textContent =
+      (placementMode ? "Placement" : (currentLesson && currentLesson.title) || "Lesson") +
+      (currentItem && currentItem.adaptive ? " · Boost" : "");
+    document.getElementById("act-progress").textContent = (activityIndex + 1) + " / " + Math.max(activityQueue.length, 1);
+    const livesEl = document.getElementById("lives");
+    livesEl.replaceChildren();
+    for (let i = 0; i < 3; i++) {
+      const heart = document.createElement("span");
+      heart.className = "life" + (i >= lives ? " gone" : "");
+      heart.textContent = "💛";
+      livesEl.appendChild(heart);
+    }
+  }
+
+  function startTimer(seconds) {
+    const timerDisplay = document.getElementById("timer");
+    if (timer) clearInterval(timer);
+    if (!seconds) {
+      timerDisplay.classList.add("hidden");
+      return;
+    }
+    timeLeft = seconds;
+    timerDisplay.classList.remove("hidden", "urgent");
+    timerDisplay.textContent = "Timer: " + timeLeft;
+    timer = setInterval(function () {
+      timeLeft--;
+      if (timeLeft <= 5) {
+        timerDisplay.classList.add("urgent");
+        playSound("tick");
+      }
+      timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + Math.max(timeLeft, 0);
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        handleMiss("Time's up!");
+      }
+    }, 1000);
+  }
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    document.getElementById("timer").classList.remove("urgent");
+  }
+
+  function nextActivity() {
+    clearPlayUi();
+    if (activityIndex >= activityQueue.length) {
+      finishLesson(true);
+      return;
+    }
+    const act = activityQueue[activityIndex];
+    currentItem = act;
+    roundActive = true;
+    updateHud();
+    playSfx("buzz");
+    renderActivity(act);
+  }
+
+  function renderActivity(act) {
+    const type = act.type;
+    if (type === "story") {
+      promptEl.textContent = act.prompt || "";
+      const box = document.getElementById("story-box");
+      box.classList.remove("hidden");
+      document.getElementById("story-emoji").textContent = (act.payload && act.payload.emoji) || "📖";
+      document.getElementById("story-text").textContent = (act.payload && act.payload.text) || "";
+      document.getElementById("story-q").textContent = (act.payload && act.payload.question) || "What happened?";
+      renderChoiceButtons(act.options || [], false);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(placementMode ? 40 : 35);
+      return;
+    }
+    if (type === "build") {
+      promptEl.textContent = act.prompt;
+      const emoji = document.getElementById("build-emoji");
+      emoji.textContent = (act.payload && act.payload.emoji) || "";
+      emoji.classList.toggle("hidden", !emoji.textContent);
+      setupBuild(act);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(placementMode ? 45 : 40);
+      return;
+    }
+    if (type === "picture") {
+      promptEl.textContent = act.prompt;
+      choicesEl.className = "pic-grid";
+      choicesEl.classList.remove("hidden");
+      (act.options || []).forEach(function (opt) {
+        const word = opt.word || opt;
+        const emoji = opt.emoji || word;
+        const btn = document.createElement("button");
+        btn.className = "btn pic-btn";
+        btn.type = "button";
+        btn.textContent = emoji;
+        btn.setAttribute("aria-label", word);
+        btn.onclick = function () { judgeResponse(word); };
+        choicesEl.appendChild(btn);
+      });
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(25);
+      return;
+    }
+    if (type === "letter" || type === "sound" || type === "sentence") {
+      promptEl.textContent = act.prompt;
+      renderChoiceButtons(act.options || [], true);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(type === "sentence" ? 30 : 20);
+      return;
+    }
+    /* sprint / action honor */
+    promptEl.textContent = act.prompt;
+    honorActions.classList.remove("hidden");
+    gotItBtn.classList.remove("hidden");
+    tryAgainBtn.classList.remove("hidden");
+    gotItBtn.textContent = type === "action" ? "I did it" : "I got it";
+    tryAgainBtn.textContent = type === "action" ? "Need help" : "Try again";
+    startTimer(type === "sprint" && String(act.prompt).indexOf(" ") !== -1 ? 20 : 12);
+  }
+
+  function renderChoiceButtons(options, asText) {
+    choicesEl.className = "choice-grid";
+    choicesEl.classList.remove("hidden");
+    shuffle(options).forEach(function (opt) {
+      const value = typeof opt === "object" && opt && opt.word != null ? opt.word : opt;
+      const label = typeof opt === "object" && opt && opt.emoji ? opt.emoji : value;
+      const btn = document.createElement("button");
+      btn.className = "btn choice-btn";
+      btn.type = "button";
+      btn.textContent = asText ? value : label;
+      btn.onclick = function () { judgeResponse(value); };
+      choicesEl.appendChild(btn);
+    });
+  }
+
+  function setupBuild(act) {
+    const area = document.getElementById("build-area");
+    const slots = document.getElementById("build-slots");
+    const tray = document.getElementById("build-tray");
+    area.classList.remove("hidden");
+    slots.replaceChildren();
+    tray.replaceChildren();
+    buildPicked = [];
+    const letters = (act.payload && act.payload.letters) ? act.payload.letters.slice() : String(act.answer || "").toUpperCase().split("");
+    letters.forEach(function () {
+      const slot = document.createElement("div");
+      slot.className = "build-slot empty";
+      slot.textContent = "_";
+      slots.appendChild(slot);
+    });
+    const distractors = shuffle(Content.LETTERS.filter(function (L) {
+      return letters.indexOf(L) === -1;
+    })).slice(0, Math.min(3, Math.max(0, 6 - letters.length)));
+    const trayLetters = shuffle(letters.concat(distractors));
+    trayLetters.forEach(function (L) {
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "build-tile";
+      tile.textContent = L;
+      tile.onclick = function () {
+        if (buildPicked.length >= letters.length) return;
+        buildPicked.push(L);
+        tile.disabled = true;
+        renderBuildSlots(letters.length);
+        playSfx("click");
+      };
+      tray.appendChild(tile);
+    });
+  }
+
+  function renderBuildSlots(len) {
+    const slots = document.getElementById("build-slots");
+    slots.replaceChildren();
+    for (let i = 0; i < len; i++) {
+      const slot = document.createElement("div");
+      slot.className = "build-slot" + (buildPicked[i] ? "" : " empty");
+      slot.textContent = buildPicked[i] || "_";
+      slots.appendChild(slot);
+    }
+  }
+
+  document.getElementById("build-clear").onclick = function () {
+    if (!currentItem || currentItem.type !== "build") return;
+    setupBuild(currentItem);
+  };
+  document.getElementById("build-check").onclick = function () {
+    if (!roundActive || !currentItem || currentItem.type !== "build") return;
+    judgeResponse(buildPicked.join("").toLowerCase());
+  };
+
+  function judgeResponse(value) {
+    if (!roundActive || !currentItem) return;
+    const result = Engine.evaluateActivity(currentItem, value);
+    if (result.correct) handleCorrect();
+    else handleMiss(result.message);
+  }
+
+  function flashCard(kind) {
+    playScreen.classList.remove("ok", "bad", "shake");
+    playScreen.classList.add(kind === "ok" ? "ok" : "bad");
+    if (kind !== "ok" && !reduceMotionOn()) playScreen.classList.add("shake");
+    setTimeout(function () { playScreen.classList.remove("ok", "bad", "shake"); }, 700);
+  }
+  function honeyConfetti() {
+    if (reduceMotionOn()) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+    for (let i = 0; i < 16; i++) {
+      const dot = document.createElement("span");
+      dot.className = "confetti";
+      dot.style.left = Math.random() * 90 + 5 + "%";
+      dot.style.background = colors[i % colors.length];
+      playScreen.appendChild(dot);
+      setTimeout(function () { dot.remove(); }, 1000);
+    }
+  }
+  function launchCelebration(kind) {
+    if (reduceMotionOn()) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+    const big = kind === "champion";
+    celebrateEl.replaceChildren();
+    for (let i = 0; i < (big ? 16 : 10); i++) {
+      const ribbon = document.createElement("span");
+      ribbon.className = "streamer";
+      ribbon.style.left = (4 + i * (92 / Math.max((big ? 16 : 10) - 1, 1))) + "%";
+      ribbon.style.height = 38 + Math.random() * 28 + "vh";
+      ribbon.style.background = "linear-gradient(180deg, " + colors[i % colors.length] + ", transparent)";
+      celebrateEl.appendChild(ribbon);
+    }
+    for (let i = 0; i < (big ? 90 : 48); i++) {
+      const bit = document.createElement("span");
+      bit.className = "party-confetti";
+      bit.style.left = Math.random() * 100 + "%";
+      bit.style.background = colors[i % colors.length];
+      bit.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+      celebrateEl.appendChild(bit);
+    }
+    playSfx(big ? "fanfare" : "sparkle");
+    setTimeout(function () { celebrateEl.replaceChildren(); }, big ? 4800 : 3200);
+  }
+
+  function showOverlay(opts) {
+    overlayTitle.textContent = opts.title;
+    overlayMsg.textContent = opts.message;
+    overlayBtn.textContent = opts.button || "Continue";
+    overlayForm.classList.toggle("hidden", !opts.askName);
+    overlay.classList.remove("hidden");
+    overlayCallback = opts.onContinue || null;
+    if (opts.askName) { nameInput.value = profile.name || ""; nameInput.focus(); }
+    else overlayBtn.focus();
+  }
+  function hideOverlay() {
+    overlay.classList.add("hidden");
+    const cb = overlayCallback;
+    overlayCallback = null;
+    if (cb) cb();
+  }
+  overlayBtn.onclick = function () {
+    if (!overlayForm.classList.contains("hidden")) {
+      const n = sanitizeName(nameInput.value) || profile.name || "Player";
+      profile.name = n;
+      Engine.saveProfile(profile);
+      saveScore(n, score + (profile.xp % 100));
+      renderLeaderboard();
+    }
+    hideOverlay();
+  };
+
+  function askConfirm(title, message, onYes) {
+    document.getElementById("confirm-title").textContent = title;
+    document.getElementById("confirm-msg").textContent = message;
+    confirmCallback = onYes;
+    confirmEl.classList.remove("hidden");
+    document.getElementById("confirm-no").focus();
+  }
+  document.getElementById("confirm-no").onclick = function () {
+    confirmEl.classList.add("hidden");
+    confirmCallback = null;
+  };
+  document.getElementById("confirm-yes").onclick = function () {
+    confirmEl.classList.add("hidden");
+    const cb = confirmCallback;
+    confirmCallback = null;
+    if (cb) cb();
+  };
+
+  function setPlayingOff() {
+    roundActive = false;
+    stopTimer();
+  }
+
+  function handleCorrect() {
+    if (!roundActive) return;
+    setPlayingOff();
+    score++;
+    streak++;
+    stars = Math.min(5, stars + 1);
+    if (placementMode && currentItem) {
+      placementResults.push({ tier: currentItem.tier || 1, correct: true });
+    }
+    Engine.afterActivityResult(profile, currentItem, true, streak);
+    updateHud();
+    honeyConfetti();
+    flashCard("ok");
+    playSound("correct");
+    document.getElementById("coach-text").textContent = Engine.coachMessage(profile, "correct", { streak: streak });
+    setTimeout(function () {
+      activityIndex++;
+      nextActivity();
+    }, 700);
+  }
+
+  function handleMiss(message) {
+    if (!roundActive) return;
+    setPlayingOff();
+    streak = 0;
+    lives--;
+    if (placementMode && currentItem) {
+      placementResults.push({ tier: currentItem.tier || 1, correct: false });
+    }
+    Engine.afterActivityResult(profile, currentItem, false, 0);
+    updateHud();
+    flashCard("bad");
+    playSound("wrong");
+    const coach = Engine.coachMessage(profile, "miss");
+    if (lives > 0) {
+      playSfx("life");
+      showOverlay({
+        title: "Oops!",
+        message: message + " " + coach + " Lives left: " + lives + ".",
+        button: "Next",
+        onContinue: function () {
+          activityIndex++;
+          nextActivity();
+        }
+      });
+    } else {
+      finishLesson(false, message);
+    }
+  }
+
+  function finishLesson(success, extraMessage) {
+    setPlayingOff();
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    const elapsed = Date.now() - lessonStartedAt;
+    Engine.addTime(profile, elapsed || Engine.estimateLessonMs(activityQueue.length));
+
+    if (placementMode) {
+      const placement = Engine.runPlacement(placementResults);
+      Engine.applyPlacement(profile, placement);
+      launchCelebration("milestone");
+      let msg = "Score " + placement.score + ". Suggested grade " + placement.tier + ": " +
+        (Engine.getGradeBandConfig(placement.tier) || {}).name + ".";
+      if (placement.earlyUnlockWorld) {
+        msg += " You also unlocked the next world early!";
+      }
+      showOverlay({
+        title: "Placement complete",
+        message: msg,
+        button: "Open map",
+        onContinue: function () {
+          placementMode = false;
+          renderWorldMap();
+          showScreen("map");
+        }
+      });
+      return;
+    }
+
+    if (success && currentLesson) {
+      const lessonKey = currentWorldId + ":" + currentNodeId + ":" + currentLesson.id;
+      Engine.applyReward(profile, currentLesson.reward, {
+        lessonKey: lessonKey,
+        streak: streak
+      });
+      Engine.markNodeCompleteIfReady(profile, currentWorldId, currentNodeId);
+      launchCelebration(score >= 8 ? "champion" : "milestone");
+      playSfx("fanfare");
+      const tip = Engine.coachMessage(profile, "lesson-complete");
+      showOverlay({
+        title: "Lesson complete!",
+        message: (extraMessage ? extraMessage + " " : "") +
+          "You earned XP and stars. " + tip,
+        button: "Save score",
+        askName: true,
+        onContinue: function () {
+          refreshHeaderStats();
+          openNode(currentWorldId, currentNodeId);
+        }
+      });
+    } else {
+      showOverlay({
+        title: "Lesson paused",
+        message: (extraMessage || "Out of lives.") + " Progress on skills was still saved. " +
+          Engine.coachMessage(profile, "miss"),
+        button: "Back",
+        onContinue: function () {
+          if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
+          else { renderWorldMap(); showScreen("map"); }
+        }
+      });
+    }
+  }
+
+  function renderParent() {
+    const report = Engine.parentReport(profile);
+    document.getElementById("parent-summary").textContent =
+      report.name + " · Grade " + report.gradeBand + " (" + report.gradeName + ") · " +
+      report.xp + " XP · " + report.stars + " stars · ~" + report.minutes + " min reading";
+    document.getElementById("parent-coach").textContent = report.coachTip;
+    const gradePanel = document.getElementById("parent-grade");
+    gradePanel.replaceChildren();
+    const gradeInfo = document.createElement("p");
+    gradeInfo.className = "muted";
+    gradeInfo.textContent = "Current grade: " + report.gradeBand + " · " + report.gradeLabel +
+      (report.reviewModeEnabled ? " · Review mode on" : "");
+    gradePanel.appendChild(gradeInfo);
+    const gradeActions = document.createElement("div");
+    gradeActions.className = "actions";
+    gradeActions.style.marginTop = "0.5rem";
+    const downBtn = document.createElement("button");
+    downBtn.className = "btn secondary";
+    downBtn.type = "button";
+    downBtn.textContent = "Move down (review)";
+    downBtn.disabled = report.gradeBand <= 1;
+    downBtn.onclick = function () {
+      Engine.bumpGradeDown(profile);
+      renderParent();
+      renderWorldMap();
+    };
+    const upBtn = document.createElement("button");
+    upBtn.className = "btn secondary";
+    upBtn.type = "button";
+    upBtn.textContent = "Move up a grade";
+    upBtn.disabled = report.gradeBand >= 9;
+    upBtn.onclick = function () {
+      Engine.bumpGradeUp(profile);
+      renderParent();
+      renderWorldMap();
+    };
+    const reviewBtn = document.createElement("button");
+    reviewBtn.className = "btn secondary";
+    reviewBtn.type = "button";
+    reviewBtn.textContent = report.reviewModeEnabled ? "Hide review worlds" : "Show review worlds";
+    reviewBtn.onclick = function () {
+      Engine.setReviewMode(profile, !profile.reviewModeEnabled);
+      renderParent();
+      renderWorldMap();
+    };
+    gradeActions.appendChild(downBtn);
+    gradeActions.appendChild(upBtn);
+    gradeActions.appendChild(reviewBtn);
+    gradePanel.appendChild(gradeActions);
+    const bars = document.getElementById("skill-bars");
+    bars.replaceChildren();
+    report.skills.forEach(function (s) {
+      const row = document.createElement("div");
+      row.className = "skill-row";
+      row.innerHTML =
+        "<label><span>" + s.label + (s.mastery ? " ✓" : "") + "</span><span>" + s.score + "%</span></label>" +
+        '<div class="skill-track"><div class="skill-fill" style="width:' + s.score + '%"></div></div>';
+      bars.appendChild(row);
+    });
+    const wp = document.getElementById("world-progress");
+    wp.replaceChildren();
+    report.worlds.forEach(function (w) {
+      const p = document.createElement("p");
+      p.className = "muted";
+      p.textContent = w.name + ": " + (w.unlocked ? (w.nodesDone + "/" + w.nodesTotal + " nodes") : "locked") +
+        (w.complete ? " · complete" : "");
+      wp.appendChild(p);
+    });
+    const recent = document.createElement("p");
+    recent.className = "muted";
+    recent.style.marginTop = "0.6rem";
+    recent.textContent = "Recent: " + (report.recent.length
+      ? report.recent.slice(0, 5).map(function (h) {
+          return (h.correct ? "✓" : "✗") + " " + (h.skill || h.type);
+        }).join(", ")
+      : "none yet");
+    wp.appendChild(recent);
+  }
+
+  function renderRewards() {
+    document.getElementById("reward-xp").textContent = "XP: " + profile.xp;
+    document.getElementById("reward-stars").textContent = "Stars: " + profile.stars;
+    const list = document.getElementById("cosmetic-list");
+    list.replaceChildren();
+    Engine.availableCosmetics(profile).forEach(function (c) {
+      const row = document.createElement("div");
+      row.className = "cosmetic-row";
+      const info = document.createElement("div");
+      info.innerHTML = "<strong>" + c.name + "</strong><div class='muted'>" +
+        (c.owned ? "Owned" : (c.unlocked ? ("Unlock for " + c.cost + " XP") : "Need more stars")) + "</div>";
+      const actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.gap = "0.35rem";
+      if (!c.owned && c.unlocked) {
+        const buy = document.createElement("button");
+        buy.className = "btn";
+        buy.type = "button";
+        buy.textContent = "Get";
+        buy.onclick = function () {
+          const res = Engine.unlockCosmetic(profile, c.id);
+          showOverlay({ title: res.ok ? "Unlocked!" : "Not yet", message: res.message, button: "OK", onContinue: renderRewards });
+        };
+        actions.appendChild(buy);
+      }
+      if (c.owned && c.id.indexOf("frame-") === 0) {
+        const eq = document.createElement("button");
+        eq.className = "btn secondary";
+        eq.type = "button";
+        eq.textContent = profile.equippedFrame === c.id ? "Equipped" : "Equip";
+        eq.onclick = function () {
+          profile.equippedFrame = profile.equippedFrame === c.id ? "" : c.id;
+          Engine.saveProfile(profile);
+          applyFrameClass();
+          renderRewards();
+        };
+        actions.appendChild(eq);
+      }
+      row.appendChild(info);
+      row.appendChild(actions);
+      list.appendChild(row);
+    });
+  }
+
+  function renderExport() {
+    document.getElementById("export-box").value = Engine.exportProfile(profile);
+    document.getElementById("classroom-coach").innerHTML =
+      "<strong>Classroom challenge (self):</strong> " + Engine.coachMessage(profile, "map") +
+      " Best weekly lessons: " + (profile.personalBest.weeklyReads || 0) +
+      ". Coach is " + (profile.coachEnabled ? "on" : "off") +
+      ". (Future: teacher accounts & AI API sit on top of this engine.)";
+  }
+
+  /* Nav bindings */
+  document.getElementById("save-name").onclick = function () {
+    profile.name = sanitizeName(document.getElementById("player-name").value);
+    Engine.saveProfile(profile);
+    playSfx("click");
+    refreshHeaderStats();
+  };
+  document.getElementById("path-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("node-back").onclick = function () {
+    openWorld(currentWorldId);
+  };
+  document.getElementById("quit-lesson").onclick = function () {
+    setPlayingOff();
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (placementMode) {
+      placementMode = false;
+      renderWorldMap();
+      showScreen("map");
+      return;
+    }
+    if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
+    else { renderWorldMap(); showScreen("map"); }
+  };
+  document.getElementById("btn-change-grade").onclick = function () {
+    playSfx("click");
+    renderGradePicker();
+    showScreen("grade");
+  };
+  document.getElementById("grade-use-placement").onclick = function () {
+    playSfx("click");
+    showScreen("map");
+    startPlacement();
+  };
+  document.getElementById("btn-review-toggle").onclick = function () {
+    playSfx("click");
+    Engine.setReviewMode(profile, !profile.reviewModeEnabled);
+    renderWorldMap();
+  };
+  document.getElementById("btn-placement").onclick = function () {
+    playSfx("click");
+    if (!ensureGradeSelected()) return;
+    startPlacement();
+  };
+  document.getElementById("btn-parent").onclick = function () {
+    playSfx("click");
+    renderParent();
+    showScreen("parent");
+  };
+  document.getElementById("btn-rewards").onclick = function () {
+    playSfx("click");
+    renderRewards();
+    showScreen("rewards");
+  };
+  document.getElementById("btn-export").onclick = function () {
+    playSfx("click");
+    renderExport();
+    showScreen("export");
+  };
+  document.getElementById("parent-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("rewards-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("export-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("reset-progress").onclick = function () {
+    askConfirm("Reset progress?", "This clears Reading World progress on this device (not the leaderboard).", function () {
+      profile = Engine.defaultProfile();
+      Engine.saveProfile(profile);
+      renderWorldMap();
+      showScreen("map");
+    });
+  };
+  document.getElementById("do-export").onclick = function () {
+    const text = Engine.exportProfile(profile);
+    document.getElementById("export-box").value = text;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showOverlay({ title: "Copied", message: "Profile JSON copied to clipboard.", button: "OK" });
+      }).catch(function () {
+        showOverlay({ title: "Export ready", message: "Copy the text from the box.", button: "OK" });
+      });
+    } else {
+      showOverlay({ title: "Export ready", message: "Copy the text from the box.", button: "OK" });
+    }
+  };
+  document.getElementById("do-import").onclick = function () {
+    try {
+      profile = Engine.importProfile(document.getElementById("import-box").value);
+      showOverlay({
+        title: "Imported",
+        message: "Profile loaded for " + (profile.name || "Player") + ".",
+        button: "OK",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
+    } catch (err) {
+      showOverlay({ title: "Import failed", message: "Could not read that JSON.", button: "OK" });
+    }
+  };
+  document.getElementById("toggle-coach").onclick = function () {
+    profile.coachEnabled = !profile.coachEnabled;
+    Engine.saveProfile(profile);
+    renderExport();
+  };
+
+  speakBtn.onclick = function () {
+    if (!currentItem) return;
+    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text);
+    else speakText(currentItem.speak || currentItem.prompt);
+  };
+  gotItBtn.onclick = function () {
+    if (!roundActive || !currentItem) return;
+    if (currentItem.type !== "sprint" && currentItem.type !== "action") return;
+    judgeResponse(true);
+  };
+  tryAgainBtn.onclick = function () {
+    if (!roundActive || !currentItem) return;
+    if (currentItem.type !== "sprint" && currentItem.type !== "action") return;
+    handleMiss("Keep trying. It was: " + (currentItem.answer || currentItem.prompt));
+  };
+
+  document.getElementById("clear-lb").onclick = function () {
+    askConfirm("Clear leaderboard?", "This removes all saved scores on this device.", function () {
+      leaderboard = [];
+      localStorage.removeItem("wordquest_lb");
+      renderLeaderboard();
+    });
+  };
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!confirmEl.classList.contains("hidden")) { confirmEl.classList.add("hidden"); return; }
+    if (!overlay.classList.contains("hidden")) overlayBtn.click();
+  });
+  nameInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") overlayBtn.click();
+  });
+
+  document.querySelectorAll("button").forEach(function (btn) {
+    if (btn.id === "mute") return;
+    btn.addEventListener("click", function () { /* soft click already on many handlers */ });
+  });
+
+  updateMuteUi();
+  renderLeaderboard();
+  renderWorldMap();
+  if (!profile.gradeBandSet) {
+    renderGradePicker();
+    showScreen("grade");
+  } else {
+    showScreen("map");
+  }
+})();
+  </script>
+</body>
+</html>
