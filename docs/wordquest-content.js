@@ -692,6 +692,119 @@
     ]
   };
 
+  /* Extra nodes to deepen upper worlds (~40+ activities each) */
+  vocabMap.nodes[1].lessons[1].reward = vocabMap.nodes[1].lessons[1].reward || { xp: 35, stars: 2 };
+  vocabMap.nodes[1].lessons[1].reward.unlock = "vocab-summit";
+  vocabMap.nodes.push({
+    id: "vocab-summit",
+    name: "Summit Words",
+    blurb: "Nuance & precision",
+    lessons: [
+      lesson("vm-summit-1", "Precise Words 1", ["vocabulary"], [
+        { type: "sentence", prompt: "Reluctant most nearly means ___", speak: "Reluctant means", answer: "unwilling", options: ["unwilling", "excited", "hungry"], skill: "vocabulary" },
+        { type: "sentence", prompt: "Scarce means ___", speak: "Scarce means", answer: "hard to find", options: ["hard to find", "very loud", "brand new"], skill: "vocabulary" },
+        { type: "sentence", prompt: "A polite refusal is still a ___", speak: "A polite refusal is", answer: "no", options: ["no", "yes", "maybe forever"], skill: "vocabulary" },
+        makeStoryAct({ title: "Sparse Forest", emoji: "🌲", text: "Trees grew sparse near the ridge. Hikers could see far because trunks were few and far between.", question: "Sparse means ___", answer: "few and spread out", options: ["few and spread out", "crowded", "invisible"] }),
+        makeStoryAct({ title: "Keen Listener", emoji: "👂", text: "Jordan was a keen listener. She noticed tiny changes in the guide's voice when the trail got risky.", question: "Keen most nearly means ___", answer: "sharp and alert", options: ["sharp and alert", "sleepy", "angry"] }),
+        { type: "sentence", prompt: "Abrupt means ___", speak: "Abrupt means", answer: "sudden", options: ["sudden", "slow", "colorful"], skill: "vocabulary" },
+        { type: "sentence", prompt: "To restore something is to ___", speak: "Restore means", answer: "bring it back", options: ["bring it back", "throw it away", "hide it forever"], skill: "vocabulary" }
+      ], { xp: 35, stars: 2 }),
+      lesson("vm-summit-2", "Precise Words 2", ["vocabulary", "comprehension"], [
+        makeStoryAct({ title: "Modest Hero", emoji: "🦸", text: "After the rescue, Kai stayed modest. He thanked the team and refused to take all the credit.", question: "Modest means ___", answer: "not boastful", options: ["not boastful", "very loud", "absent"] }),
+        makeStoryAct({ title: "Vital Supply", emoji: "💧", text: "Water was vital on the desert trail. Without it, the hikers could not continue safely.", question: "Vital means ___", answer: "necessary", options: ["necessary", "optional", "decorative"] }),
+        { type: "sentence", prompt: "To hesitate is to ___", speak: "Hesitate means", answer: "pause before acting", options: ["pause before acting", "run faster", "forget your name"], skill: "vocabulary" },
+        { type: "sentence", prompt: "A firm decision is ___", speak: "A firm decision is", answer: "strong and clear", options: ["strong and clear", "confused", "silent forever"], skill: "vocabulary" },
+        makeStoryAct({ title: "Meager Meal", emoji: "🥣", text: "Their meal was meager: one piece of bread shared three ways. Still, they ate gratefully.", question: "Meager means ___", answer: "very small amount", options: ["very small amount", "huge feast", "made of gold"] }),
+        makeStoryAct({ title: "Word Choice", emoji: "✍️", text: "The writer changed 'walked' to 'trudged' to show how tired the travelers felt.", question: "Why change the word?", answer: "to show more feeling", options: ["to show more feeling", "to make it shorter", "to hide the story"] }),
+        { type: "sentence", prompt: "Context clues help you ___", speak: "Context clues help you", answer: "figure out word meaning", options: ["figure out word meaning", "skip reading", "erase the page"], skill: "vocabulary" }
+      ], { xp: 40, stars: 2 })
+    ]
+  });
+
+  questHighlands.nodes[1].lessons[1].reward = questHighlands.nodes[1].lessons[1].reward || { xp: 40, stars: 2 };
+  questHighlands.nodes[1].lessons[1].reward.unlock = "highland-archive";
+  questHighlands.nodes.push({
+    id: "highland-archive",
+    name: "Archive Ridge",
+    blurb: "Compare & summarize",
+    lessons: [
+      lesson("qh-arch-1", "Compare Texts 1", ["comprehension"], [
+        makeStoryAct({ title: "Two Guides", emoji: "🧭", text: "Guide A listed every water stop. Guide B told stories about wildlife. Both helped hikers, but in different ways.", question: "How do the guides differ?", answer: "one focuses on logistics, one on stories", options: ["one focuses on logistics, one on stories", "both are identical", "neither helps"] }),
+        makeStoryAct({ title: "Short vs Long", emoji: "📄", text: "The short report named three facts. The long article explained why each fact mattered to the village.", question: "What does the long article add?", answer: "reasons and explanation", options: ["reasons and explanation", "only jokes", "blank pages"] }),
+        { type: "sentence", prompt: "A summary should be ___", speak: "A summary should be", answer: "short and cover main points", options: ["short and cover main points", "longer than the text", "random words"], skill: "comprehension" },
+        makeStoryAct({ title: "Cause Chain", emoji: "🔗", text: "Rain filled the creek. The creek flooded the path. The team took the high trail instead.", question: "What caused the team to change trails?", answer: "the flooded path", options: ["the flooded path", "a festival", "lost boots"] }),
+        makeStoryAct({ title: "Author Focus", emoji: "🎯", text: "One paragraph described gear. The next described teamwork. Together they explained a successful climb.", question: "What is the overall focus?", answer: "how preparation and teamwork helped", options: ["how preparation and teamwork helped", "only weather", "only lunch"] }),
+        { type: "sentence", prompt: "Sequence words like first, then, finally help you track ___", speak: "They help track", answer: "order of events", options: ["order of events", "font size", "cover art"], skill: "comprehension" },
+        makeStoryAct({ title: "Key Detail", emoji: "🔑", text: "Only one bridge could hold the heavy packs. The team waited until that bridge was clear.", question: "Which detail mattered most?", answer: "the bridge strength", options: ["the bridge strength", "the sky color", "a bird song"] })
+      ], { xp: 40, stars: 2 }),
+      lesson("qh-arch-2", "Compare Texts 2", ["comprehension"], [
+        makeStoryAct({ title: "Diary vs Map", emoji: "🗺️", text: "The diary told how the climb felt. The map showed distances and elevation. Readers used both.", question: "Why use both sources?", answer: "feelings and facts together", options: ["feelings and facts together", "to confuse readers", "maps are useless"] }),
+        { type: "sentence", prompt: "When two texts disagree, a careful reader ___", speak: "A careful reader", answer: "checks evidence in each", options: ["checks evidence in each", "picks the louder one", "stops reading"], skill: "comprehension" },
+        makeStoryAct({ title: "Headline Check", emoji: "📰", text: "The headline said 'Miracle Rescue.' The article showed a planned practice drill that went well.", question: "What should a reader notice?", answer: "headline tone vs article facts", options: ["headline tone vs article facts", "nothing important", "only the photos"] }),
+        makeStoryAct({ title: "Timeline", emoji: "⏱️", text: "Dawn: leave camp. Noon: reach ridge. Dusk: return with samples.", question: "What happened at noon?", answer: "they reached the ridge", options: ["they reached the ridge", "they slept", "they quit"] }),
+        { type: "sentence", prompt: "Paraphrasing means ___", speak: "Paraphrasing means", answer: "restating in your own words", options: ["restating in your own words", "copying exactly", "deleting the text"], skill: "comprehension" },
+        makeStoryAct({ title: "Audience", emoji: "👥", text: "A kids' magazine used short sentences. A science journal used precise terms for the same hike.", question: "Why do the styles differ?", answer: "different audiences", options: ["different audiences", "one is wrong", "hiking changed"] }),
+        makeStoryAct({ title: "Best Summary", emoji: "✅", text: "The team prepared carefully, adapted to weather, and returned with useful notes.", question: "This summary works because it ___", answer: "covers the main events", options: ["covers the main events", "lists every word", "ignores the climb"] })
+      ], { xp: 45, stars: 2 })
+    ]
+  });
+
+  inferencePeaks.nodes[1].lessons[1].reward = inferencePeaks.nodes[1].lessons[1].reward || { xp: 45, stars: 2 };
+  inferencePeaks.nodes[1].lessons[1].reward.unlock = "peak-summit";
+  inferencePeaks.nodes.push({
+    id: "peak-summit",
+    name: "Summit Signals",
+    blurb: "Subtle inference",
+    lessons: [
+      lesson("ip-sum-1", "Subtle Clues 1", ["inference"], [
+        makeStoryAct({ title: "Closed Curtains", emoji: "🪟", text: "At noon the curtains stayed shut and the porch light was still on. Newspapers piled by the door.", question: "What can you infer?", answer: "nobody has been home recently", options: ["nobody has been home recently", "a parade is inside", "it is midnight outside forever"] }),
+        makeStoryAct({ title: "Half Smile", emoji: "🙂", text: "Lee congratulated the winner with a half smile and looked away quickly.", question: "How might Lee feel?", answer: "polite but disappointed", options: ["polite but disappointed", "asleep", "invisible"] }),
+        { type: "sentence", prompt: "Sarcasm often means the speaker ___", speak: "Sarcasm often means", answer: "says the opposite of what they mean", options: ["says the opposite of what they mean", "never speaks", "only whispers"], skill: "inference" },
+        makeStoryAct({ title: "Packed Bag", emoji: "🧳", text: "A packed bag sat by the door with a bus ticket on top. The house key hung on its usual hook.", question: "What is likely about to happen?", answer: "someone is leaving for a trip", options: ["someone is leaving for a trip", "the bag is empty forever", "keys are broken"] }),
+        makeStoryAct({ title: "Quiet Classroom", emoji: "🏫", text: "Even the chatterboxes went silent when the principal entered with a clipboard.", question: "Why did the room go quiet?", answer: "students became careful or nervous", options: ["students became careful or nervous", "recess started", "the lights failed"] }),
+        { type: "sentence", prompt: "An implied idea is ___", speak: "An implied idea is", answer: "suggested but not stated directly", options: ["suggested but not stated directly", "printed in bold only", "always false"], skill: "inference" },
+        makeStoryAct({ title: "Warm Oven", emoji: "🍪", text: "The kitchen smelled like cinnamon. A warm oven light glowed and flour dusted the counter.", question: "What was happening?", answer: "someone was baking", options: ["someone was baking", "someone was swimming", "the house was empty of people forever"] })
+      ], { xp: 45, stars: 2 }),
+      lesson("ip-sum-2", "Subtle Clues 2", ["inference", "comprehension"], [
+        makeStoryAct({ title: "Two Texts", emoji: "📚", text: "Text A called the hike 'easy.' Text B listed steep cliffs and warnings. Both described the same trail.", question: "What should a reader conclude?", answer: "difficulty depends on viewpoint or audience", options: ["difficulty depends on viewpoint or audience", "the trail does not exist", "both texts are blank"] }),
+        { type: "sentence", prompt: "Character motivation is ___", speak: "Motivation is", answer: "the reason someone acts", options: ["the reason someone acts", "the font choice", "the page number"], skill: "inference" },
+        makeStoryAct({ title: "Skipped Lines", emoji: "📖", text: "The letter jumped from 'Dear Sam' to 'See you next month' with a torn middle. Ink smudges suggested water damage.", question: "What most likely happened to the letter?", answer: "part was damaged or lost", options: ["part was damaged or lost", "it was never written", "Sam invented mail"] }),
+        makeStoryAct({ title: "Changed Plans", emoji: "📅", text: "Yesterday the flyer said picnic. Today it says indoor games, and rain taps the window.", question: "Why did plans change?", answer: "weather", options: ["weather", "the flyer cannot change", "games dislike sun"] }),
+        { type: "sentence", prompt: "To infer theme from actions, look at ___", speak: "Look at", answer: "what characters do and learn", options: ["what characters do and learn", "only the cover color", "word count alone"], skill: "inference" },
+        makeStoryAct({ title: "Unspoken Thank You", emoji: "🎁", text: "No speech was given. Instead, the team left a repaired lantern on the guide's porch.", question: "What does the lantern suggest?", answer: "gratitude shown through action", options: ["gratitude shown through action", "anger at the guide", "the porch needed light only"] }),
+        makeStoryAct({ title: "Predict Next", emoji: "🔮", text: "Clouds thickened and thunder rolled closer. The leader pointed toward the shelter cave.", question: "What will likely happen next?", answer: "the team will take shelter", options: ["the team will take shelter", "they will start a parade", "they will ignore the storm"] })
+      ], { xp: 50, stars: 2 })
+    ]
+  });
+
+  crownLibrary.nodes[1].lessons[1].reward = crownLibrary.nodes[1].lessons[1].reward || { xp: 50, stars: 3 };
+  crownLibrary.nodes[1].lessons[1].reward.unlock = "royal-crown";
+  crownLibrary.nodes.push({
+    id: "royal-crown",
+    name: "Crown Chamber",
+    blurb: "Argue & evaluate",
+    lessons: [
+      lesson("cl-crown-1", "Argument Lab 1", ["criticalThinking"], [
+        makeStoryAct({ title: "Claim Check", emoji: "⚖️", text: "Claim: Parks improve health. Evidence: clinic visits dropped after new trails opened, according to a city report.", question: "Is the evidence relevant?", answer: "yes, it connects parks to health outcomes", options: ["yes, it connects parks to health outcomes", "no, it talks about unrelated food", "evidence never matters"] }),
+        { type: "sentence", prompt: "A counterclaim is ___", speak: "A counterclaim is", answer: "an opposing viewpoint", options: ["an opposing viewpoint", "a book title", "a silent page"], skill: "criticalThinking" },
+        makeStoryAct({ title: "Weak Support", emoji: "📉", text: "Someone claimed the lake was unsafe because 'my cousin said so once.' No tests or reports were cited.", question: "Why is this support weak?", answer: "it lacks checkable evidence", options: ["it lacks checkable evidence", "cousins cannot speak", "lakes are always safe"] }),
+        makeStoryAct({ title: "Purpose Shift", emoji: "🎭", text: "An ad used cheerful music to sell boots. A news piece used the same storm photos to warn about floods.", question: "How do purposes differ?", answer: "persuade to buy vs inform about risk", options: ["persuade to buy vs inform about risk", "both are identical", "neither has a purpose"] }),
+        { type: "sentence", prompt: "Evaluating a source means asking ___", speak: "Evaluating means asking", answer: "who wrote it and what proof they give", options: ["who wrote it and what proof they give", "only how long it is", "if the font is fancy"], skill: "criticalThinking" },
+        makeStoryAct({ title: "Quote in Context", emoji: "💬", text: "A poster quoted 'We must act now' from a scientist, but cut the next line: 'after reviewing the full data.'", question: "What problem does this create?", answer: "it may mislead by leaving out context", options: ["it may mislead by leaving out context", "quotes are illegal", "scientists cannot speak"] }),
+        { type: "sentence", prompt: "Logical reasoning connects ___", speak: "Logical reasoning connects", answer: "claims to evidence clearly", options: ["claims to evidence clearly", "random opinions only", "page numbers to titles"], skill: "criticalThinking" }
+      ], { xp: 50, stars: 3 }),
+      lesson("cl-crown-2", "Argument Lab 2", ["criticalThinking", "comprehension"], [
+        makeStoryAct({ title: "Two Conclusions", emoji: "🧠", text: "From the same test scores, Writer A concluded 'more tutoring helps.' Writer B concluded 'the test was unfair.'", question: "What does this show?", answer: "same data can support different claims", options: ["same data can support different claims", "data is useless", "only one writer can exist"] }),
+        { type: "sentence", prompt: "A rebuttal responds to ___", speak: "A rebuttal responds to", answer: "an opposing argument", options: ["an opposing argument", "the table of contents", "a blank page"], skill: "criticalThinking" },
+        makeStoryAct({ title: "Credibility", emoji: "🏅", text: "Article A lists authors, dates, and linked studies. Article B has no author and uses all-caps warnings.", question: "Which is more credible and why?", answer: "Article A, because it shows transparent sources", options: ["Article A, because it shows transparent sources", "Article B, because it is louder", "neither can be judged"] }),
+        makeStoryAct({ title: "Audience Appeal", emoji: "📣", text: "A flyer for teens used slang and memes. A city memo used formal terms for the same recycling plan.", question: "Why change the language?", answer: "to fit different audiences", options: ["to fit different audiences", "recycling changed meaning", "memes are required by law"] }),
+        { type: "sentence", prompt: "Critical thinkers revise views when ___", speak: "They revise when", answer: "stronger evidence appears", options: ["stronger evidence appears", "fonts change", "pages get longer"], skill: "criticalThinking" },
+        makeStoryAct({ title: "Crown Challenge", emoji: "👑", text: "The librarian asked readers to state a claim, cite two pieces of evidence, and answer one counterclaim before posting.", question: "What skill is practiced?", answer: "building a reasoned argument", options: ["building a reasoned argument", "avoiding all evidence", "guessing without reading"] }),
+        makeStoryAct({ title: "Synthesis", emoji: "🧩", text: "After reading a memoir and a chart, students combined both to explain how one storm affected a town.", question: "Synthesis here means ___", answer: "combining ideas from sources", options: ["combining ideas from sources", "deleting both sources", "reading titles only"] })
+      ], { xp: 55, stars: 3 })
+    ]
+  });
+
   /* Vision Level 2 sits inside Alphabet Forest; map still shows nine regions */
   const worldTeasers = [
     { id: "phonics-hatchery", level: 2, name: "Phonics Hatchery", focus: "Phonics & simple words", age: "Pre-K/K", icon: "🐣", aliasOf: "alphabet-forest" }
@@ -773,6 +886,101 @@
       options: ["excited", "sleepy", "broken"],
       skill: "vocabulary",
       tier: 4
+    },
+    {
+      type: "story",
+      prompt: "Detail Check",
+      speak: "The scouts waited for the mist to clear before climbing.",
+      answer: "they waited for better visibility",
+      options: ["they waited for better visibility", "they flew over the peak", "they sold the map"],
+      payload: { emoji: "🌫️", text: "The scouts waited for the mist to clear before climbing the ridge.", question: "What did the scouts do?" },
+      skill: "comprehension",
+      tier: 5
+    },
+    {
+      type: "sentence",
+      prompt: "Sturdy most nearly means ___",
+      speak: "Sturdy means",
+      answer: "strong",
+      options: ["strong", "tiny", "invisible"],
+      skill: "vocabulary",
+      tier: 5
+    },
+    {
+      type: "story",
+      prompt: "Main Idea",
+      speak: "Mira shared her bread so everyone could eat.",
+      answer: "sharing helped the team",
+      options: ["sharing helped the team", "bread was expensive", "hiking is impossible"],
+      payload: { emoji: "🍞", text: "After a long hike the team was hungry. Mira shared her bread so everyone could eat.", question: "What is the main idea?" },
+      skill: "comprehension",
+      tier: 6
+    },
+    {
+      type: "sentence",
+      prompt: "A detail supports the main idea by ___",
+      speak: "A detail supports by",
+      answer: "giving more information",
+      options: ["giving more information", "erasing the title", "ending the book"],
+      skill: "comprehension",
+      tier: 6
+    },
+    {
+      type: "story",
+      prompt: "Inference",
+      speak: "Alex stomped inside with dripping muddy boots.",
+      answer: "Alex walked through mud or rain",
+      options: ["Alex walked through mud or rain", "Alex baked cookies", "Alex never went outside"],
+      payload: { emoji: "🥾", text: "Alex stomped inside, boots dripping. A muddy trail led from the door to the sink.", question: "What most likely happened?" },
+      skill: "inference",
+      tier: 7
+    },
+    {
+      type: "sentence",
+      prompt: "If the text says 'her hands trembled,' she may feel ___",
+      speak: "She may feel",
+      answer: "nervous or scared",
+      options: ["nervous or scared", "made of stone", "always hungry"],
+      skill: "inference",
+      tier: 7
+    },
+    {
+      type: "story",
+      prompt: "Theme",
+      speak: "Lina learned the stars after her compass broke.",
+      answer: "Challenges can build new skills",
+      options: ["Challenges can build new skills", "Compasses are useless", "Stars are dangerous"],
+      payload: { emoji: "🧭", text: "Lina's compass cracked on day one. Instead of quitting, she learned the stars and led the group home.", question: "What is a theme of this passage?" },
+      skill: "criticalThinking",
+      tier: 8
+    },
+    {
+      type: "sentence",
+      prompt: "A strong argument usually includes ___",
+      speak: "A strong argument includes",
+      answer: "evidence and sources",
+      options: ["evidence and sources", "only loud opinions", "no facts"],
+      skill: "criticalThinking",
+      tier: 8
+    },
+    {
+      type: "sentence",
+      prompt: "Bias in a text means the author ___",
+      speak: "Bias means",
+      answer: "favors one side or view",
+      options: ["favors one side or view", "uses no words", "always jokes"],
+      skill: "criticalThinking",
+      tier: 9
+    },
+    {
+      type: "story",
+      prompt: "Evaluate",
+      speak: "The letter used flood data and photos as proof.",
+      answer: "to support the argument",
+      options: ["to support the argument", "to hide the river", "to sell shoes"],
+      payload: { emoji: "✉️", text: "The letter urged the town to plant trees. The writer used flood data and photos from other towns as proof.", question: "Why include data and photos?" },
+      skill: "criticalThinking",
+      tier: 9
     }
   ];
 

@@ -47,7 +47,9 @@
       remediationQueue: [],
       timeSpentMs: 0,
       coachEnabled: true,
-      exportVersion: 2
+      parentPin: "",
+      parentSessionUntil: 0,
+      exportVersion: 3
     };
   }
 
@@ -73,6 +75,8 @@
       merged.gradeBandSet = !!parsed.gradeBandSet;
       merged.reviewModeEnabled = !!parsed.reviewModeEnabled;
       merged.earlyUnlock = parsed.earlyUnlock || {};
+      merged.parentPin = typeof parsed.parentPin === "string" ? parsed.parentPin : "";
+      merged.parentSessionUntil = Number(parsed.parentSessionUntil) || 0;
       if (!merged.gradeBandSet && merged.placementDone) merged.gradeBandSet = true;
       return merged;
     } catch (err) {
@@ -311,14 +315,70 @@
     return profile;
   }
 
-  function nodeUnlocked(profile, worldId, nodeId, nodeIndex) {
+  function getPathNodes(worldId, pathStartNodeId) {
+    const world = global.WQContent && global.WQContent.getWorld(worldId);
+    if (!world) return [];
+    let startIndex = 0;
+    if (pathStartNodeId) {
+      const found = world.nodes.findIndex(function (n) { return n.id === pathStartNodeId; });
+      if (found >= 0) startIndex = found;
+    }
+    return world.nodes.slice(startIndex).map(function (node, pathIndex) {
+      return {
+        node: node,
+        worldIndex: startIndex + pathIndex,
+        pathIndex: pathIndex,
+        pathStartIndex: startIndex
+      };
+    });
+  }
+
+  function nodeUnlocked(profile, worldId, nodeId, nodeIndex, options) {
+    options = options || {};
     if (!canPlayWorld(profile, worldId)) return false;
     const world = global.WQContent.getWorld(worldId);
     if (!world) return false;
-    if (worldId === "alphabet-forest" && profile.gradeBand === 2 && nodeIndex <= 1) return true;
-    if (nodeIndex === 0) return true;
+    const pathStart = options.pathStartIndex != null ? options.pathStartIndex : 0;
+    if (nodeIndex < pathStart) return false;
+    if (nodeIndex === pathStart) return true;
     const prev = world.nodes[nodeIndex - 1];
     return !!(prev && profile.nodesCompleted[worldId + ":" + prev.id]);
+  }
+
+  function normalizePin(pin) {
+    return String(pin || "").replace(/\D/g, "").slice(0, 4);
+  }
+
+  function hasParentPin(profile) {
+    return normalizePin(profile.parentPin).length === 4;
+  }
+
+  function setParentPin(profile, pin) {
+    const clean = normalizePin(pin);
+    if (clean.length !== 4) return { ok: false, message: "PIN must be 4 digits." };
+    profile.parentPin = clean;
+    saveProfile(profile);
+    return { ok: true };
+  }
+
+  function verifyParentPin(profile, pin) {
+    return hasParentPin(profile) && normalizePin(profile.parentPin) === normalizePin(pin);
+  }
+
+  function parentSessionActive(profile) {
+    return Date.now() < (Number(profile.parentSessionUntil) || 0);
+  }
+
+  function unlockParentSession(profile, minutes) {
+    profile.parentSessionUntil = Date.now() + Math.max(1, minutes || 5) * 60 * 1000;
+    saveProfile(profile);
+    return profile;
+  }
+
+  function clearParentSession(profile) {
+    profile.parentSessionUntil = 0;
+    saveProfile(profile);
+    return profile;
   }
 
   function markNodeCompleteIfReady(profile, worldId, nodeId) {
@@ -408,24 +468,37 @@
   }
 
   function runPlacement(results) {
+    results = Array.isArray(results) ? results : [];
     let score = 0;
     let highTierCorrect = 0;
+    let answered = results.length;
     results.forEach(function (r) {
       if (r.correct) {
         score += r.tier || 1;
-        if ((r.tier || 1) >= 3) highTierCorrect += 1;
+        if ((r.tier || 1) >= 5) highTierCorrect += 1;
       }
     });
     let tier = 1;
-    if (score >= 18) tier = 6;
-    else if (score >= 14) tier = 5;
+    if (score >= 36) tier = 9;
+    else if (score >= 30) tier = 8;
+    else if (score >= 25) tier = 7;
+    else if (score >= 20) tier = 6;
+    else if (score >= 15) tier = 5;
     else if (score >= 11) tier = 4;
     else if (score >= 8) tier = 3;
     else if (score >= 5) tier = 2;
     else tier = 1;
+    const reliable = answered >= 4;
     const startWorld = worldIdForGrade(tier);
-    const earlyUnlockWorld = (highTierCorrect >= 2 && tier < 9) ? worldIdForGrade(tier + 1) : null;
-    return { startWorld: startWorld, tier: tier, score: score, earlyUnlockWorld: earlyUnlockWorld };
+    const earlyUnlockWorld = (reliable && highTierCorrect >= 2 && tier < 9) ? worldIdForGrade(tier + 1) : null;
+    return {
+      startWorld: startWorld,
+      tier: tier,
+      score: score,
+      answered: answered,
+      reliable: reliable,
+      earlyUnlockWorld: earlyUnlockWorld
+    };
   }
 
   function applyPlacement(profile, placement) {
@@ -548,7 +621,14 @@
     grantEarlyUnlock: grantEarlyUnlock,
     worldIdForGrade: worldIdForGrade,
     isWorldComplete: isWorldComplete,
+    getPathNodes: getPathNodes,
     nodeUnlocked: nodeUnlocked,
+    hasParentPin: hasParentPin,
+    setParentPin: setParentPin,
+    verifyParentPin: verifyParentPin,
+    parentSessionActive: parentSessionActive,
+    unlockParentSession: unlockParentSession,
+    clearParentSession: clearParentSession,
     markNodeCompleteIfReady: markNodeCompleteIfReady,
     countWorldNodesDone: countWorldNodesDone,
     availableCosmetics: availableCosmetics,

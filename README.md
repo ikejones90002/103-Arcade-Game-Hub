@@ -27,9 +27,9 @@ Word Quest is the hub’s reading title: a **Reading World** map with nine regio
 
 **Play loop:** Pick grade → map → world path → node lessons → activities → XP/stars → unlock next node.
 
-**Grade-based access:** On first launch, pick grades 1–9 (preschool through ~6th–7th). Your grade opens that world on the map. Younger worlds stay hidden unless you tap **Review earlier skills** (or a parent enables review in the Parent panel). Worlds above your grade stay locked until the **Placement** quiz shows readiness or a parent moves grade up. Node order inside each world is unchanged (finish prior node to unlock the next).
+**Grade-based access:** On first launch, pick a reading band (Preschool through ~6th–7th). Your band opens that world on the map. Younger worlds stay hidden unless you tap **Review earlier skills** (or a parent enables review in the Parent panel). Worlds above your band stay locked until **Placement** shows readiness or a parent moves the level up. **Phonics Hatchery** opens Alphabet Forest at Sound Grove (not Letter Camp). Parent grade/reset controls use a 4-digit PIN.
 
-**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds); grade picker; placement quiz; skill bars; adaptive remediation; parent panel with grade controls; cosmetics; profile export/import; weekly self-challenge; rule-based reading coach; **optional OpenAI coach/hints via Vercel API** (`/api/coach`, `/api/hint`, `/api/health`).
+**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds, 3 nodes each on 6–9); grade picker with age labels; placement quiz through band 9; skill bars; adaptive remediation; parent PIN + panel; cosmetics; profile export/import; weekly self-challenge; rule-based + optional OpenAI coach (ask, hint, miss/correct/lesson/parent tips via Vercel API).
 
 ## Deploy on Vercel (frontend + API)
 
@@ -52,7 +52,7 @@ This repo is ready for Vercel: static games under `docs/`, serverless API under 
    - `POST /api/hint` with JSON `{ "activity": { "prompt": "The cat sat on the ___", "type": "sentence" } }`
 6. In **Word Quest**, use **Ask AI Coach** on the map and **AI Hint** during a lesson. Without a key, the local rule-based coach still works.
 
-Local API testing: `npx vercel dev` (after `vercel link`), with `.env.local` copied from `.env.example`.
+Local API testing: copy `.env.example` to `.env.local` (Vercel CLI reads that), then `npx vercel dev`. A plain `.env` file is gitignored and is not used by Vercel hosting until you add the same keys in the project Environment Variables UI.
 
 ## How to add a game later
 

@@ -128,7 +128,7 @@
     <!-- Grade picker -->
     <section id="grade-screen" class="card hidden" aria-label="Choose grade">
       <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Pick your reading level</h2>
-      <p class="howto">Choose the grade that fits you. You will start there — younger worlds stay optional review.</p>
+      <p class="howto">Choose the band that fits you (Preschool through ~6th–7th). You start there — earlier worlds stay optional review.</p>
       <div class="grade-grid" id="grade-grid"></div>
       <div class="actions">
         <button id="grade-use-placement" class="btn secondary" type="button">Use placement quiz instead</button>
@@ -166,7 +166,7 @@
     <!-- Export / import / classroom lite -->
     <section id="export-screen" class="card hidden" aria-label="Export and classroom">
       <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Export & Classroom</h2>
-      <p class="howto">Offline profile backup and a weekly self-challenge. Cloud accounts / AI API come later.</p>
+      <p class="howto">Offline profile backup and weekly self-challenge. Optional AI coach runs through Vercel when OPENAI_API_KEY is set.</p>
       <div class="wq-coach" id="classroom-coach"></div>
       <textarea id="export-box" class="wq-export" readonly aria-label="Exported profile JSON"></textarea>
       <div class="actions">
@@ -195,6 +195,19 @@
       <div class="actions">
         <button id="confirm-no" class="btn secondary" type="button">Cancel</button>
         <button id="confirm-yes" class="btn" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="pin-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pin-title">
+    <div class="overlay-card">
+      <h2 id="pin-title">Parent PIN</h2>
+      <p id="pin-msg">Enter a 4-digit PIN.</p>
+      <label class="visually-hidden" for="pin-input">PIN</label>
+      <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="••••">
+      <div class="actions">
+        <button id="pin-cancel" class="btn secondary" type="button">Cancel</button>
+        <button id="pin-ok" class="btn" type="button">Continue</button>
       </div>
     </div>
   </div>
@@ -239,6 +252,7 @@
   let confirmCallback = null;
   let currentWorldId = null;
   let currentNodeId = null;
+  let currentPathOptions = null;
   let currentLesson = null;
   let activityQueue = [];
   let activityIndex = 0;
@@ -471,8 +485,8 @@
     document.getElementById("player-name").value = profile.name || "";
     const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
     document.getElementById("grade-badge").textContent = profile.gradeBandSet
-      ? ("Grade " + profile.gradeBand + " · " + (band ? band.name : ""))
-      : "Grade: pick your level to start";
+      ? ((band ? band.label : ("Band " + profile.gradeBand)) + " · " + (band ? band.name : ""))
+      : "Level: pick your reading band to start";
     const reviewBtn = document.getElementById("btn-review-toggle");
     const hasReview = (profile.gradeBand || 1) > 1;
     reviewBtn.classList.toggle("hidden", !hasReview);
@@ -511,7 +525,14 @@
 
   function openRegion(region) {
     playSfx("click");
-    openWorld(region.id, { startNode: region.startNode || null, highlightNode: region.startNode || null });
+    openWorld(region.id, {
+      regionName: region.name,
+      regionIcon: region.icon,
+      regionFocus: region.focus || "",
+      startNode: region.startNode || null,
+      pathFromStart: !!(region.startNode && region.mapKey === "phonics-hatchery"),
+      autoEnter: !!(region.startNode && region.mapKey === "phonics-hatchery")
+    });
   }
 
   function renderWorldMap() {
@@ -540,11 +561,10 @@
     const grid = document.getElementById("grade-grid");
     grid.replaceChildren();
     Content.GRADE_BANDS.forEach(function (band) {
-      const region = Content.MAP_REGIONS.find(function (r) { return r.level === band.grade; });
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "grade-btn" + (profile.gradeBand === band.grade && profile.gradeBandSet ? " active" : "");
-      btn.innerHTML = "<strong>Grade " + band.grade + "</strong><span>" + band.age + "</span><small>" + band.name + "</small>";
+      btn.innerHTML = "<strong>" + band.label + "</strong><span>" + band.age + "</span><small>" + band.name + "</small>";
       btn.onclick = function () {
         playSfx("click");
         Engine.setGradeBand(profile, band.grade);
@@ -552,7 +572,7 @@
         showScreen("map");
         showOverlay({
           title: "Level set!",
-          message: "You are starting at " + band.name + ". Tap your world on the map to play. Use Review for earlier skills anytime.",
+          message: "You are starting at " + band.name + " (" + band.label + "). Tap your world on the map to play. Use Review for earlier skills anytime.",
           button: "Let's go"
         });
       };
@@ -570,7 +590,15 @@
   }
 
   function openWorld(worldId, options) {
-    options = options || {};
+    options = options || currentPathOptions || {};
+    currentPathOptions = {
+      regionName: options.regionName || null,
+      regionIcon: options.regionIcon || null,
+      regionFocus: options.regionFocus || "",
+      startNode: options.startNode || null,
+      pathFromStart: !!options.pathFromStart,
+      autoEnter: !!options.autoEnter
+    };
     currentWorldId = worldId;
     const world = Content.getWorld(worldId);
     if (!world) return;
@@ -582,20 +610,27 @@
       });
       return;
     }
-    document.getElementById("path-title").textContent = world.icon + " " + world.name + " — " + world.focus;
+    const titleName = currentPathOptions.regionName || world.name;
+    const titleIcon = currentPathOptions.regionIcon || world.icon;
+    const titleFocus = currentPathOptions.regionFocus || world.focus;
+    document.getElementById("path-title").textContent = titleIcon + " " + titleName + " — " + titleFocus;
     document.getElementById("path-coach").textContent = Engine.coachMessage(profile, "map");
     const list = document.getElementById("path-list");
     list.replaceChildren();
-    world.nodes.forEach(function (node, idx) {
-      const unlocked = Engine.nodeUnlocked(profile, worldId, node.id, idx);
+    const pathStartId = currentPathOptions.pathFromStart ? currentPathOptions.startNode : null;
+    const pathNodes = Engine.getPathNodes(worldId, pathStartId);
+    const pathStartIndex = pathNodes.length ? pathNodes[0].pathStartIndex : 0;
+    pathNodes.forEach(function (entry) {
+      const node = entry.node;
+      const unlocked = Engine.nodeUnlocked(profile, worldId, node.id, entry.worldIndex, { pathStartIndex: pathStartIndex });
       const done = !!profile.nodesCompleted[worldId + ":" + node.id];
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "path-node" + (done ? " done" : "");
-      if (options.highlightNode && node.id === options.highlightNode) btn.classList.add("highlight-node");
+      if (currentPathOptions.startNode && node.id === currentPathOptions.startNode) btn.classList.add("highlight-node");
       btn.disabled = !unlocked;
       btn.innerHTML =
-        '<span class="step">' + (done ? "✓" : (idx + 1)) + "</span>" +
+        '<span class="step">' + (done ? "✓" : (entry.pathIndex + 1)) + "</span>" +
         '<span class="meta"><strong>' + node.name + "</strong><span>" + node.blurb +
         (unlocked ? "" : " · complete prior node") + "</span></span>";
       if (unlocked) {
@@ -607,7 +642,12 @@
       list.appendChild(btn);
     });
     showScreen("path");
-    if (options.startNode) {
+    if (currentPathOptions.autoEnter && currentPathOptions.startNode) {
+      currentPathOptions.autoEnter = false;
+      openNode(worldId, currentPathOptions.startNode);
+      return;
+    }
+    if (currentPathOptions.startNode) {
       const target = list.querySelector(".highlight-node");
       if (target) target.scrollIntoView({ block: "nearest", behavior: reduceMotionOn() ? "auto" : "smooth" });
     }
@@ -993,7 +1033,13 @@
     honeyConfetti();
     flashCard("ok");
     playSound("correct");
-    document.getElementById("coach-text").textContent = Engine.coachMessage(profile, "correct", { streak: streak });
+    const localCoach = Engine.coachMessage(profile, "correct", { streak: streak });
+    setCoachText(localCoach, "local");
+    if (AI && profile.coachEnabled) {
+      AI.coach(profile, "correct", { streak: streak }, currentItem).then(function (res) {
+        if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+      });
+    }
     setTimeout(function () {
       activityIndex++;
       nextActivity();
@@ -1012,20 +1058,29 @@
     updateHud();
     flashCard("bad");
     playSound("wrong");
-    const coach = Engine.coachMessage(profile, "miss");
-    if (lives > 0) {
-      playSfx("life");
-      showOverlay({
-        title: "Oops!",
-        message: message + " " + coach + " Lives left: " + lives + ".",
-        button: "Next",
-        onContinue: function () {
-          activityIndex++;
-          nextActivity();
-        }
+    const localCoach = Engine.coachMessage(profile, "miss");
+    function showMissOverlay(coachText) {
+      if (lives > 0) {
+        playSfx("life");
+        showOverlay({
+          title: "Oops!",
+          message: message + " " + coachText + " Lives left: " + lives + ".",
+          button: "Next",
+          onContinue: function () {
+            activityIndex++;
+            nextActivity();
+          }
+        });
+      } else {
+        finishLesson(false, message);
+      }
+    }
+    if (AI && profile.coachEnabled && !placementMode) {
+      AI.coach(profile, "miss", {}, currentItem).then(function (res) {
+        showMissOverlay((res && res.ok && res.message) ? res.message : localCoach);
       });
     } else {
-      finishLesson(false, message);
+      showMissOverlay(localCoach);
     }
   }
 
@@ -1037,10 +1092,32 @@
 
     if (placementMode) {
       const placement = Engine.runPlacement(placementResults);
+      if (!placement.reliable && !success) {
+        placementMode = false;
+        showOverlay({
+          title: "Placement paused",
+          message: "Not enough answers yet to place you reliably. Pick a reading level, or try Placement again when you are ready.",
+          button: "Choose level",
+          onContinue: function () {
+            if (!profile.gradeBandSet) {
+              renderGradePicker();
+              showScreen("grade");
+            } else {
+              renderWorldMap();
+              showScreen("map");
+            }
+          }
+        });
+        return;
+      }
       Engine.applyPlacement(profile, placement);
       launchCelebration("milestone");
-      let msg = "Score " + placement.score + ". Suggested grade " + placement.tier + ": " +
-        (Engine.getGradeBandConfig(placement.tier) || {}).name + ".";
+      const band = Engine.getGradeBandConfig(placement.tier) || {};
+      let msg = "Score " + placement.score + " from " + placement.answered + " answers. Suggested level: " +
+        (band.label || ("Band " + placement.tier)) + " — " + (band.name || "") + ".";
+      if (!placement.reliable) {
+        msg += " (Partial quiz — you can re-run Placement anytime.)";
+      }
       if (placement.earlyUnlockWorld) {
         msg += " You also unlocked the next world early!";
       }
@@ -1066,18 +1143,27 @@
       Engine.markNodeCompleteIfReady(profile, currentWorldId, currentNodeId);
       launchCelebration(score >= 8 ? "champion" : "milestone");
       playSfx("fanfare");
-      const tip = Engine.coachMessage(profile, "lesson-complete");
-      showOverlay({
-        title: "Lesson complete!",
-        message: (extraMessage ? extraMessage + " " : "") +
-          "You earned XP and stars. " + tip,
-        button: "Save score",
-        askName: true,
-        onContinue: function () {
-          refreshHeaderStats();
-          openNode(currentWorldId, currentNodeId);
-        }
-      });
+      const localTip = Engine.coachMessage(profile, "lesson-complete");
+      function showComplete(tip) {
+        showOverlay({
+          title: "Lesson complete!",
+          message: (extraMessage ? extraMessage + " " : "") +
+            "You earned XP and stars. " + tip,
+          button: "Save score",
+          askName: true,
+          onContinue: function () {
+            refreshHeaderStats();
+            openNode(currentWorldId, currentNodeId);
+          }
+        });
+      }
+      if (AI && profile.coachEnabled) {
+        AI.coach(profile, "lesson-complete").then(function (res) {
+          showComplete((res && res.ok && res.message) ? res.message : localTip);
+        });
+      } else {
+        showComplete(localTip);
+      }
     } else {
       showOverlay({
         title: "Lesson paused",
@@ -1092,18 +1178,74 @@
     }
   }
 
+  function withParentGate(action) {
+    if (Engine.parentSessionActive(profile)) {
+      action();
+      return;
+    }
+    const creating = !Engine.hasParentPin(profile);
+    const pinOverlay = document.getElementById("pin-overlay");
+    const pinInput = document.getElementById("pin-input");
+    document.getElementById("pin-title").textContent = creating ? "Create parent PIN" : "Parent PIN";
+    document.getElementById("pin-msg").textContent = creating
+      ? "Set a 4-digit PIN to protect grade changes and reset."
+      : "Enter your 4-digit parent PIN.";
+    pinInput.value = "";
+    pinOverlay.classList.remove("hidden");
+    pinInput.focus();
+
+    function cleanup() {
+      pinOverlay.classList.add("hidden");
+      document.getElementById("pin-ok").onclick = null;
+      document.getElementById("pin-cancel").onclick = null;
+    }
+
+    document.getElementById("pin-cancel").onclick = function () {
+      cleanup();
+    };
+    document.getElementById("pin-ok").onclick = function () {
+      const pin = pinInput.value;
+      if (creating) {
+        const res = Engine.setParentPin(profile, pin);
+        if (!res.ok) {
+          showOverlay({ title: "PIN needed", message: res.message, button: "OK" });
+          return;
+        }
+        Engine.unlockParentSession(profile, 10);
+        cleanup();
+        action();
+        return;
+      }
+      if (!Engine.verifyParentPin(profile, pin)) {
+        showOverlay({ title: "Wrong PIN", message: "That PIN did not match. Try again.", button: "OK" });
+        return;
+      }
+      Engine.unlockParentSession(profile, 10);
+      cleanup();
+      action();
+    };
+  }
+
   function renderParent() {
     const report = Engine.parentReport(profile);
     document.getElementById("parent-summary").textContent =
-      report.name + " · Grade " + report.gradeBand + " (" + report.gradeName + ") · " +
+      report.name + " · " + report.gradeLabel + " (" + report.gradeName + ") · " +
       report.xp + " XP · " + report.stars + " stars · ~" + report.minutes + " min reading";
     document.getElementById("parent-coach").textContent = report.coachTip;
+    if (AI && profile.coachEnabled) {
+      AI.coach(profile, "parent").then(function (res) {
+        if (res && res.ok && res.message) {
+          document.getElementById("parent-coach").textContent = res.message;
+        }
+      });
+    }
     const gradePanel = document.getElementById("parent-grade");
     gradePanel.replaceChildren();
     const gradeInfo = document.createElement("p");
     gradeInfo.className = "muted";
-    gradeInfo.textContent = "Current grade: " + report.gradeBand + " · " + report.gradeLabel +
-      (report.reviewModeEnabled ? " · Review mode on" : "");
+    gradeInfo.textContent = "Current level: " + report.gradeLabel + " · " + report.gradeName +
+      (report.reviewModeEnabled ? " · Review mode on" : "") +
+      (Engine.hasParentPin(profile) ? " · PIN on" : " · set a PIN to lock controls");
     gradePanel.appendChild(gradeInfo);
     const gradeActions = document.createElement("div");
     gradeActions.className = "actions";
@@ -1114,32 +1256,67 @@
     downBtn.textContent = "Move down (review)";
     downBtn.disabled = report.gradeBand <= 1;
     downBtn.onclick = function () {
-      Engine.bumpGradeDown(profile);
-      renderParent();
-      renderWorldMap();
+      withParentGate(function () {
+        Engine.bumpGradeDown(profile);
+        renderParent();
+        renderWorldMap();
+      });
     };
     const upBtn = document.createElement("button");
     upBtn.className = "btn secondary";
     upBtn.type = "button";
-    upBtn.textContent = "Move up a grade";
+    upBtn.textContent = "Move up a level";
     upBtn.disabled = report.gradeBand >= 9;
     upBtn.onclick = function () {
-      Engine.bumpGradeUp(profile);
-      renderParent();
-      renderWorldMap();
+      withParentGate(function () {
+        Engine.bumpGradeUp(profile);
+        renderParent();
+        renderWorldMap();
+      });
     };
     const reviewBtn = document.createElement("button");
     reviewBtn.className = "btn secondary";
     reviewBtn.type = "button";
     reviewBtn.textContent = report.reviewModeEnabled ? "Hide review worlds" : "Show review worlds";
     reviewBtn.onclick = function () {
-      Engine.setReviewMode(profile, !profile.reviewModeEnabled);
-      renderParent();
-      renderWorldMap();
+      withParentGate(function () {
+        Engine.setReviewMode(profile, !profile.reviewModeEnabled);
+        renderParent();
+        renderWorldMap();
+      });
+    };
+    const pinBtn = document.createElement("button");
+    pinBtn.className = "btn secondary";
+    pinBtn.type = "button";
+    pinBtn.textContent = Engine.hasParentPin(profile) ? "Change PIN" : "Set PIN";
+    pinBtn.onclick = function () {
+      withParentGate(function () {
+        const pinOverlay = document.getElementById("pin-overlay");
+        const pinInput = document.getElementById("pin-input");
+        document.getElementById("pin-title").textContent = "Set new PIN";
+        document.getElementById("pin-msg").textContent = "Enter a new 4-digit PIN.";
+        pinInput.value = "";
+        pinOverlay.classList.remove("hidden");
+        pinInput.focus();
+        document.getElementById("pin-cancel").onclick = function () {
+          pinOverlay.classList.add("hidden");
+        };
+        document.getElementById("pin-ok").onclick = function () {
+          const res = Engine.setParentPin(profile, pinInput.value);
+          pinOverlay.classList.add("hidden");
+          showOverlay({
+            title: res.ok ? "PIN saved" : "PIN not saved",
+            message: res.ok ? "Parent controls stay locked behind this PIN." : res.message,
+            button: "OK",
+            onContinue: renderParent
+          });
+        };
+      });
     };
     gradeActions.appendChild(downBtn);
     gradeActions.appendChild(upBtn);
     gradeActions.appendChild(reviewBtn);
+    gradeActions.appendChild(pinBtn);
     gradePanel.appendChild(gradeActions);
     const bars = document.getElementById("skill-bars");
     bars.replaceChildren();
@@ -1151,14 +1328,14 @@
         '<div class="skill-track"><div class="skill-fill" style="width:' + s.score + '%"></div></div>';
       bars.appendChild(row);
     });
-    const wp = document.getElementById("world-progress");
-    wp.replaceChildren();
+    const worldProgress = document.getElementById("world-progress");
+    worldProgress.replaceChildren();
     report.worlds.forEach(function (w) {
       const p = document.createElement("p");
       p.className = "muted";
       p.textContent = w.name + ": " + (w.unlocked ? (w.nodesDone + "/" + w.nodesTotal + " nodes") : "locked") +
         (w.complete ? " · complete" : "");
-      wp.appendChild(p);
+      worldProgress.appendChild(p);
     });
     const recent = document.createElement("p");
     recent.className = "muted";
@@ -1168,7 +1345,7 @@
           return (h.correct ? "✓" : "✗") + " " + (h.skill || h.type);
         }).join(", ")
       : "none yet");
-    wp.appendChild(recent);
+    worldProgress.appendChild(recent);
   }
 
   function renderRewards() {
@@ -1237,15 +1414,30 @@
     showScreen("map");
   };
   document.getElementById("node-back").onclick = function () {
-    openWorld(currentWorldId);
+    openWorld(currentWorldId, currentPathOptions || {});
   };
   document.getElementById("quit-lesson").onclick = function () {
     setPlayingOff();
     if (window.speechSynthesis) speechSynthesis.cancel();
     if (placementMode) {
       placementMode = false;
-      renderWorldMap();
-      showScreen("map");
+      placementResults = [];
+      showOverlay({
+        title: "Placement canceled",
+        message: profile.gradeBandSet
+          ? "No placement changes were saved."
+          : "Pick a reading level on the next screen, or try Placement again later.",
+        button: "OK",
+        onContinue: function () {
+          if (!profile.gradeBandSet) {
+            renderGradePicker();
+            showScreen("grade");
+          } else {
+            renderWorldMap();
+            showScreen("map");
+          }
+        }
+      });
       return;
     }
     if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
@@ -1325,8 +1517,10 @@
   };
   document.getElementById("btn-parent").onclick = function () {
     playSfx("click");
-    renderParent();
-    showScreen("parent");
+    withParentGate(function () {
+      renderParent();
+      showScreen("parent");
+    });
   };
   document.getElementById("btn-rewards").onclick = function () {
     playSfx("click");
@@ -1351,11 +1545,15 @@
     showScreen("map");
   };
   document.getElementById("reset-progress").onclick = function () {
-    askConfirm("Reset progress?", "This clears Reading World progress on this device (not the leaderboard).", function () {
-      profile = Engine.defaultProfile();
-      Engine.saveProfile(profile);
-      renderWorldMap();
-      showScreen("map");
+    withParentGate(function () {
+      askConfirm("Reset progress?", "This clears Reading World progress on this device (not the leaderboard).", function () {
+        const pin = profile.parentPin;
+        profile = Engine.defaultProfile();
+        if (pin) profile.parentPin = pin;
+        Engine.saveProfile(profile);
+        renderWorldMap();
+        showScreen("map");
+      });
     });
   };
   document.getElementById("do-export").onclick = function () {
