@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "child-01",
+      "name": "Explorer A",
+      "category": "avatar-base",
+      "path": "/assets/images/avatars/base/child-01.svg",
+      "layer": "body"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "child-02",
+      "name": "Explorer B",
+      "category": "avatar-base",
+      "path": "/assets/images/avatars/base/child-02.svg",
+      "layer": "body"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "child-03",
+      "name": "Explorer C",
+      "category": "avatar-base",
+      "path": "/assets/images/avatars/base/child-03.svg",
+      "layer": "body"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "hair-01",
+      "name": "Hair Wave",
+      "category": "avatar-hair",
+      "path": "/assets/images/avatars/hair/hair-01.svg",
+      "layer": "hair"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "hair-02",
+      "name": "Hair Flip",
+      "category": "avatar-hair",
+      "path": "/assets/images/avatars/hair/hair-02.svg",
+      "layer": "hair"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "hair-03",
+      "name": "Hair Sweep",
+      "category": "avatar-hair",
+      "path": "/assets/images/avatars/hair/hair-03.svg",
+      "layer": "hair"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "explorer",
+      "name": "Explorer Outfit",
+      "category": "avatar-outfit",
+      "path": "/assets/images/avatars/outfits/explorer.svg",
+      "layer": "outfit",
+      "unlock": {
+        "type": "default"
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "wizard",
+      "name": "Wizard Outfit",
+      "category": "avatar-outfit",
+      "path": "/assets/images/avatars/outfits/wizard.svg",
+      "layer": "outfit",
+      "unlock": {
+        "type": "stars",
+        "value": 5
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "scientist",
+      "name": "Scientist Outfit",
+      "category": "avatar-outfit",
+      "path": "/assets/images/avatars/outfits/scientist.svg",
+      "layer": "outfit",
+      "unlock": {
+        "type": "lessons",
+        "value": 4
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "knight",
+      "name": "Knight Outfit",
+      "category": "avatar-outfit",
+      "path": "/assets/images/avatars/outfits/knight.svg",
+      "layer": "outfit",
+      "unlock": {
+        "type": "boss"
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "glasses",
+      "name": "Glasses",
+      "category": "avatar-accessory",
+      "path": "/assets/images/avatars/accessories/glasses.svg",
+      "layer": "accessory",
+      "unlock": {
+        "type": "stars",
+        "value": 2
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "hat",
+      "name": "Adventure Hat",
+      "category": "avatar-accessory",
+      "path": "/assets/images/avatars/accessories/hat.svg",
+      "layer": "accessory",
+      "unlock": {
+        "type": "lessons",
+        "value": 2
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "backpack",
+      "name": "Backpack",
+      "category": "avatar-accessory",
+      "path": "/assets/images/avatars/accessories/backpack.svg",
+      "layer": "accessory",
+      "unlock": {
+        "type": "stars",
+        "value": 8
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "crown",
+      "name": "Crown",
+      "category": "avatar-accessory",
+      "path": "/assets/images/avatars/accessories/crown.svg",
+      "layer": "accessory",
+      "unlock": {
+        "type": "boss"
+      }
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "smile",
+      "name": "Smile",
+      "category": "avatar-expression",
+      "path": "/assets/images/avatars/expressions/smile.svg",
+      "layer": "expression"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "starter",
+      "name": "Starter Outfit",
+      "category": "avatar-outfit",
+      "path": "/assets/images/avatars/outfits/explorer.svg",
+      "layer": "outfit",
+      "unlock": {
+        "type": "default"
+      }
+    }
+  ]
+}

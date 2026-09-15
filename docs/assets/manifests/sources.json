@@ -1,0 +1,455 @@
+{
+  "version": 1,
+  "assets": {
+    "child-01": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/base/child-01.svg",
+      "category": "avatar-base"
+    },
+    "child-02": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/base/child-02.svg",
+      "category": "avatar-base"
+    },
+    "child-03": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/base/child-03.svg",
+      "category": "avatar-base"
+    },
+    "hair-01": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/hair/hair-01.svg",
+      "category": "avatar-hair"
+    },
+    "hair-02": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/hair/hair-02.svg",
+      "category": "avatar-hair"
+    },
+    "hair-03": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/hair/hair-03.svg",
+      "category": "avatar-hair"
+    },
+    "explorer": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/outfits/explorer.svg",
+      "category": "avatar-outfit"
+    },
+    "wizard": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/outfits/wizard.svg",
+      "category": "avatar-outfit"
+    },
+    "scientist": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/outfits/scientist.svg",
+      "category": "avatar-outfit"
+    },
+    "knight": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/outfits/knight.svg",
+      "category": "avatar-outfit"
+    },
+    "glasses": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/accessories/glasses.svg",
+      "category": "avatar-accessory"
+    },
+    "hat": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/accessories/hat.svg",
+      "category": "avatar-accessory"
+    },
+    "backpack": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/accessories/backpack.svg",
+      "category": "avatar-accessory"
+    },
+    "crown": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/accessories/crown.svg",
+      "category": "avatar-accessory"
+    },
+    "smile": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/expressions/smile.svg",
+      "category": "avatar-expression"
+    },
+    "starter": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/avatars/outfits/explorer.svg",
+      "category": "avatar-outfit"
+    },
+    "book-owl": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/reading/book-owl.svg",
+      "category": "companion"
+    },
+    "story-fox": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/reading/story-fox.svg",
+      "category": "companion"
+    },
+    "word-rabbit": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/reading/word-rabbit.svg",
+      "category": "companion"
+    },
+    "page-dragon": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/reading/page-dragon.svg",
+      "category": "companion"
+    },
+    "buzzbee": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/spelling/buzzbee.svg",
+      "category": "companion"
+    },
+    "letter-owl": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/spelling/letter-owl.svg",
+      "category": "companion"
+    },
+    "sound-fox": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/spelling/sound-fox.svg",
+      "category": "companion"
+    },
+    "word-frog": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/spelling/word-frog.svg",
+      "category": "companion"
+    },
+    "number-turtle": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/math/number-turtle.svg",
+      "category": "companion"
+    },
+    "countbot": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/math/countbot.svg",
+      "category": "companion"
+    },
+    "fraction-fox": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/math/fraction-fox.svg",
+      "category": "companion"
+    },
+    "equation-dragon": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/companions/math/equation-dragon.svg",
+      "category": "companion"
+    },
+    "reading-stage-0": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/reading/stage-0-sprout.svg",
+      "category": "world-stage"
+    },
+    "reading-stage-1": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/reading/stage-1-forest.svg",
+      "category": "world-stage"
+    },
+    "reading-stage-2": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/reading/stage-2-village.svg",
+      "category": "world-stage"
+    },
+    "reading-stage-3": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/reading/stage-3-kingdom.svg",
+      "category": "world-stage"
+    },
+    "spelling-stage-0": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/spelling/stage-0-meadow.svg",
+      "category": "world-stage"
+    },
+    "spelling-stage-1": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/spelling/stage-1-workshop.svg",
+      "category": "world-stage"
+    },
+    "spelling-stage-2": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/spelling/stage-2-village.svg",
+      "category": "world-stage"
+    },
+    "spelling-stage-3": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/spelling/stage-3-castle.svg",
+      "category": "world-stage"
+    },
+    "math-stage-0": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/math/stage-0-clearing.svg",
+      "category": "world-stage"
+    },
+    "math-stage-1": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/math/stage-1-forest.svg",
+      "category": "world-stage"
+    },
+    "math-stage-2": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/math/stage-2-village.svg",
+      "category": "world-stage"
+    },
+    "math-stage-3": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/worlds/math/stage-3-peaks.svg",
+      "category": "world-stage"
+    },
+    "correct": {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "path": "/assets/audio/ui/correct.mp3",
+      "category": "learning"
+    },
+    "error-soft": {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "path": "/assets/audio/ui/error-soft.mp3",
+      "category": "learning"
+    },
+    "tick": {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "path": "/assets/audio/ui/tick.mp3",
+      "category": "ui"
+    },
+    "click": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "select": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "back": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "open": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "close": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "almost": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "hint": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "try-again": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "streak": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "mastery": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "star": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "xp": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "unlock": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "companion": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "badge": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "level-up": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "reward": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "complete": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "sparkle": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "world"
+    },
+    "magic": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "world"
+    },
+    "fanfare": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "rewards"
+    },
+    "life": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "buzz": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "ui"
+    },
+    "wrongBuzz": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "learning"
+    },
+    "boss-intro": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "boss"
+    },
+    "boss-success": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "boss"
+    },
+    "boss-retry": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "boss"
+    },
+    "create": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "lab"
+    },
+    "save": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "lab"
+    },
+    "discover": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": null,
+      "category": "lab"
+    },
+    "sparkle-icon": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/ui/sparkle.svg",
+      "category": "ui"
+    },
+    "star-badge": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/images/badges/star-badge.svg",
+      "category": "badge"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="240" height="120" fill="none">
+  <rect width="240" height="120" rx="12" fill="#b8e8ff"/>
+  <ellipse cx="120" cy="110" rx="110" ry="24" fill="#88aa66"/>
+  <circle cx="200" cy="28" r="16" fill="#ffff00" opacity=".9"/>
+  <rect x="70" y="60" width="40" height="40" fill="#f4f7ff" stroke="#1a1a28" stroke-width="2"/><path d="M65 60 L90 40 L115 60" fill="#ff8c00" stroke="#1a1a28" stroke-width="2"/>
+  <text x="120" y="64" text-anchor="middle" font-size="14" font-family="Segoe UI,sans-serif" fill="#1a1a28" font-weight="700">Village</text>
+</svg>

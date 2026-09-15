@@ -1,8 +1,34 @@
-const SYSTEM_PROMPT =
-  "You are a warm, brief reading coach for kids (preschool through 7th grade) in Word Quest Reading World. " +
-  "Reply in 1–2 short kid-friendly sentences. Encourage effort. Never shame. " +
-  "Do not reveal quiz answers. Do not use markdown or emojis unless the user already used them. " +
-  "Keep language simple for the child's grade.";
+function systemPromptFor(subject) {
+  const s = subject || "reading";
+  if (s === "spelling") {
+    return (
+      "You are a warm, brief spelling coach for kids (preschool through 7th grade) in Spelling World. " +
+      "Reply in 1–2 short kid-friendly sentences. Encourage effort. Never shame. " +
+      "Do not reveal the correct spelling or letters of the answer. Give sound/pattern strategies only. " +
+      "Do not use markdown. Keep language simple for the child's grade."
+    );
+  }
+  if (s === "math") {
+    return (
+      "You are a warm, brief math coach for kids (preschool through 7th grade) in Math World. " +
+      "Reply in 1–2 short kid-friendly sentences. Encourage effort. Never shame. " +
+      "Do not reveal the numeric answer. Give strategies (count on, break apart, draw, estimate). " +
+      "Do not use markdown. Keep language simple for the child's grade."
+    );
+  }
+  return (
+    "You are a warm, brief reading coach for kids (preschool through 7th grade) in Word Quest Reading World. " +
+    "Reply in 1–2 short kid-friendly sentences. Encourage effort. Never shame. " +
+    "Do not reveal quiz answers. Do not use markdown or emojis unless the user already used them. " +
+    "Keep language simple for the child's grade."
+  );
+}
+
+function subjectLabel(subject) {
+  if (subject === "spelling") return "spelling";
+  if (subject === "math") return "math";
+  return "reading";
+}
 
 function skillSummary(skills) {
   if (!skills || typeof skills !== "object") return "none";
@@ -14,13 +40,16 @@ function skillSummary(skills) {
 }
 
 function buildUserPrompt(body) {
+  const subject = body.subject || "reading";
   const context = body.context || "map";
   const profile = body.profile || {};
   const activity = body.activity || null;
   const extra = body.extra || {};
+  const label = subjectLabel(subject);
   const lines = [
+    "Subject: " + label,
     "Context: " + context,
-    "Player name: " + (profile.name || "Reader"),
+    "Player name: " + (profile.name || "Player"),
     "Grade band: " + (profile.gradeBand || 1),
     "XP: " + (profile.xp || 0) + ", stars: " + (profile.stars || 0),
     "Skills (0–100): " + skillSummary(profile.skills),
@@ -33,16 +62,16 @@ function buildUserPrompt(body) {
       "Skill focus: " + (activity.skill || "general")
     );
   }
-  if (context === "miss") lines.push("The child just missed an item. Encourage and give a gentle strategy tip.");
+  if (context === "miss") lines.push("The child just missed an item. Encourage and give a gentle " + label + " strategy tip.");
   if (context === "correct") lines.push("The child answered correctly. Celebrate briefly. Streak: " + (extra.streak || 0));
-  if (context === "lesson-complete") lines.push("The child finished a lesson. Suggest what to practice next.");
+  if (context === "lesson-complete") lines.push("The child finished a lesson. Suggest what to practice next in " + label + ".");
   if (context === "map") lines.push("The child is on the world map. Motivate the weekly challenge.");
-  if (context === "parent") lines.push("Write a short tip for a parent/teacher about next focus skills.");
-  if (context === "ask") lines.push("The child tapped Ask AI Coach. Give one helpful reading tip for their level.");
+  if (context === "parent") lines.push("Write a short tip for a parent/teacher about next " + label + " focus skills.");
+  if (context === "ask") lines.push("The child tapped Ask AI Coach. Give one helpful " + label + " tip for their level.");
   return lines.join("\n");
 }
 
-async function callOpenAI(userPrompt) {
+async function callOpenAI(systemPrompt, userPrompt) {
   const key = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -56,7 +85,7 @@ async function callOpenAI(userPrompt) {
       temperature: 0.7,
       max_tokens: 120,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ]
     })
@@ -115,7 +144,7 @@ module.exports = async function handler(req, res) {
   body = body || {};
 
   try {
-    const message = await callOpenAI(buildUserPrompt(body));
+    const message = await callOpenAI(systemPromptFor(body.subject), buildUserPrompt(body));
     if (!message) {
       return res.status(502).json({ ok: false, error: "Empty AI response", code: "empty" });
     }

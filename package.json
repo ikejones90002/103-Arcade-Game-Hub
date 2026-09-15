@@ -5,7 +5,10 @@
   "description": "103 Arcade Game Hub — static games + Vercel AI coach API",
   "scripts": {
     "dev": "vercel dev",
-    "start": "vercel dev"
+    "start": "vercel dev",
+    "assets:svgs": "node scripts/assets/generate-starter-svgs.js",
+    "assets:manifest": "node scripts/assets/generate-manifest.js",
+    "assets:validate": "node scripts/assets/validate.js"
   },
   "engines": {
     "node": ">=18"

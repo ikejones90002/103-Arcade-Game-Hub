@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 120" width="240" height="120" fill="none">
+  <rect width="240" height="120" rx="12" fill="#9ad4ff"/>
+  <ellipse cx="120" cy="110" rx="110" ry="24" fill="#668866"/>
+  <circle cx="200" cy="28" r="16" fill="#ffff00" opacity=".9"/>
+  <rect x="90" y="45" width="60" height="55" fill="#b9c0d4" stroke="#1a1a28" stroke-width="2"/><rect x="100" y="25" width="14" height="25" fill="#b9c0d4" stroke="#1a1a28" stroke-width="2"/><rect x="126" y="25" width="14" height="25" fill="#b9c0d4" stroke="#1a1a28" stroke-width="2"/><path d="M100 25 L107 12 L114 25" fill="#ff00ff"/><path d="M126 25 L133 12 L140 25" fill="#00ffff"/>
+  <text x="120" y="64" text-anchor="middle" font-size="14" font-family="Segoe UI,sans-serif" fill="#1a1a28" font-weight="700">Kingdom</text>
+</svg>

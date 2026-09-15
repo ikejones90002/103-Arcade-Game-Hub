@@ -1064,7 +1064,336 @@
     ]
   };
 
+
+  const COMPANIONS = [
+  {
+    "id": "book-owl",
+    "assetId": "book-owl",
+    "name": "Book Owl",
+    "emoji": "🦉",
+    "unlock": "first-lesson",
+    "lines": {
+      "correct": "Owl: Wise choice!",
+      "miss": "Owl: Let's look again together.",
+      "complete": "Owl: I found a clue!",
+      "boss": "Owl: You read like a champion!"
+    }
+  },
+  {
+    "id": "story-fox",
+    "assetId": "story-fox",
+    "name": "Story Fox",
+    "emoji": "🦊",
+    "unlock": "lessons",
+    "unlockAt": 4,
+    "lines": {
+      "correct": "Fox: That detail sparkled!",
+      "miss": "Fox: Try another trail.",
+      "complete": "Fox: Onward through the pages!",
+      "boss": "Fox: The story is safe!"
+    }
+  },
+  {
+    "id": "word-rabbit",
+    "assetId": "word-rabbit",
+    "name": "Word Rabbit",
+    "emoji": "🐰",
+    "unlock": "stars",
+    "unlockAt": 6,
+    "lines": {
+      "correct": "Rabbit: Hop-yes!",
+      "miss": "Rabbit: Soft landing—try again.",
+      "complete": "Rabbit: Another page hopped!",
+      "boss": "Rabbit: Mastery hop!"
+    }
+  },
+  {
+    "id": "page-dragon",
+    "assetId": "page-dragon",
+    "name": "Page Dragon",
+    "emoji": "🐉",
+    "unlock": "boss",
+    "lines": {
+      "correct": "Dragon: Roar of approval!",
+      "miss": "Dragon: Breathe, then try.",
+      "complete": "Dragon: Treasure unlocked!",
+      "boss": "Dragon: You bested me kindly!"
+    }
+  }
+];
+  const MISSIONS = {
+  "alphabet-forest:letter-camp:lc-a-e": {
+    "title": "Meet the Letters",
+    "blurb": "The forest needs its first alphabet friends.",
+    "emoji": "🌲"
+  },
+  "alphabet-forest:sound-grove:sg-1": {
+    "title": "Sound Quest",
+    "blurb": "Help the owl hear beginning sounds.",
+    "emoji": "🦉"
+  }
+};
+  const BOSSES = {
+  "alphabet-forest:story-trail": {
+    "title": "The Story Dragon",
+    "blurb": "Answer a few questions to protect the forest tales.",
+    "emoji": "🐉",
+    "reward": {
+      "xp": 20,
+      "stars": 2
+    },
+    "activities": [
+      {
+        "type": "letter",
+        "prompt": "Find the letter S",
+        "speak": "S",
+        "answer": "S",
+        "options": [
+          "S",
+          "A",
+          "T",
+          "M"
+        ],
+        "skill": "letterRecognition"
+      },
+      {
+        "type": "sound",
+        "prompt": "What letter starts SUN?",
+        "speak": "Sun",
+        "answer": "S",
+        "options": [
+          "S",
+          "B",
+          "C",
+          "D"
+        ],
+        "skill": "phonics"
+      },
+      {
+        "type": "sentence",
+        "prompt": "The ___ can run.",
+        "speak": "dog",
+        "answer": "dog",
+        "options": [
+          "dog",
+          "dig",
+          "dot"
+        ],
+        "skill": "comprehension"
+      }
+    ]
+  }
+};
+  const WORLD_STAGES = {
+  "alphabet-forest": [
+    {
+      "icon": "🌱",
+      "label": "Story Sprout"
+    },
+    {
+      "icon": "🌲",
+      "label": "Story Forest"
+    },
+    {
+      "icon": "🏡",
+      "label": "Book Village"
+    },
+    {
+      "icon": "📚",
+      "label": "Library Grove"
+    },
+    {
+      "icon": "🏰",
+      "label": "Story Kingdom"
+    }
+  ],
+  "cvc-meadow": [
+    {
+      "icon": "🌱",
+      "label": "Word Seeds"
+    },
+    {
+      "icon": "🌼",
+      "label": "CVC Meadow"
+    },
+    {
+      "icon": "🏡",
+      "label": "Sentence Farm"
+    },
+    {
+      "icon": "🏰",
+      "label": "Word Keep"
+    }
+  ],
+  "sight-word-town": [
+    {
+      "icon": "🌱",
+      "label": "Tiny Town"
+    },
+    {
+      "icon": "🏘️",
+      "label": "Sight Word Town"
+    },
+    {
+      "icon": "🏙️",
+      "label": "Fluent City"
+    },
+    {
+      "icon": "🏰",
+      "label": "Sight Castle"
+    }
+  ],
+  "fluency-castle": [
+    {
+      "icon": "🌱",
+      "label": "Slow Stream"
+    },
+    {
+      "icon": "🌊",
+      "label": "Reading River"
+    },
+    {
+      "icon": "🏰",
+      "label": "Fluency Castle"
+    },
+    {
+      "icon": "👑",
+      "label": "Flow Throne"
+    }
+  ],
+  "vocabulary-map": [
+    {
+      "icon": "🌱",
+      "label": "Word Trails"
+    },
+    {
+      "icon": "🗺️",
+      "label": "Vocabulary Map"
+    },
+    {
+      "icon": "🏞️",
+      "label": "Meaning Valley"
+    },
+    {
+      "icon": "🏰",
+      "label": "Lexicon Keep"
+    }
+  ],
+  "quest-highlands": [
+    {
+      "icon": "🌱",
+      "label": "Campfire"
+    },
+    {
+      "icon": "⛰️",
+      "label": "Quest Highlands"
+    },
+    {
+      "icon": "🏔️",
+      "label": "Detail Peaks"
+    },
+    {
+      "icon": "🏰",
+      "label": "Summit Hall"
+    }
+  ],
+  "inference-peaks": [
+    {
+      "icon": "🌱",
+      "label": "Clue Camp"
+    },
+    {
+      "icon": "🔮",
+      "label": "Inference Peaks"
+    },
+    {
+      "icon": "🏔️",
+      "label": "Insight Ridge"
+    },
+    {
+      "icon": "🏰",
+      "label": "Oracle Tower"
+    }
+  ],
+  "crown-library": [
+    {
+      "icon": "🌱",
+      "label": "Quiet Stacks"
+    },
+    {
+      "icon": "📚",
+      "label": "Crown Library"
+    },
+    {
+      "icon": "🏛️",
+      "label": "Analysis Hall"
+    },
+    {
+      "icon": "👑",
+      "label": "Crown Chamber"
+    }
+  ]
+};
+  const LAB_PROMPTS = [
+  "Write a tiny story about a dragon who lost a book.",
+  "Invent a hero and one problem they must solve.",
+  "Describe a magical library in three sentences."
+];
+  const DAILY_POOL = [
+  {
+    "type": "letter",
+    "prompt": "Find the letter M",
+    "speak": "M",
+    "answer": "M",
+    "options": [
+      "M",
+      "N",
+      "W",
+      "A"
+    ],
+    "skill": "letterRecognition"
+  },
+  {
+    "type": "sound",
+    "prompt": "What letter starts MAP?",
+    "speak": "Map",
+    "answer": "M",
+    "options": [
+      "M",
+      "P",
+      "S",
+      "T"
+    ],
+    "skill": "phonics"
+  },
+  {
+    "type": "sentence",
+    "prompt": "I see a ___.",
+    "speak": "cat",
+    "answer": "cat",
+    "options": [
+      "cat",
+      "cup",
+      "cap"
+    ],
+    "skill": "comprehension"
+  },
+  {
+    "type": "sprint",
+    "prompt": "The sun is up.",
+    "speak": "The sun is up.",
+    "answer": "The sun is up.",
+    "skill": "fluency"
+  }
+];
+
   global.WQContent = {
+    COMPANIONS: COMPANIONS,
+    MISSIONS: MISSIONS,
+    BOSSES: BOSSES,
+    WORLD_STAGES: WORLD_STAGES,
+    LAB_PROMPTS: LAB_PROMPTS,
+    DAILY_POOL: DAILY_POOL,
     LETTERS: LETTERS,
     LETTER_SOUNDS: LETTER_SOUNDS,
     CVC_WORDS: CVC_WORDS,

@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "worlds": {
+    "reading": [
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "reading-stage-0",
+        "name": "Story Sprout",
+        "category": "world-stage",
+        "world": "reading",
+        "stageIndex": 0,
+        "path": "/assets/images/worlds/reading/stage-0-sprout.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "reading-stage-1",
+        "name": "Story Forest",
+        "category": "world-stage",
+        "world": "reading",
+        "stageIndex": 1,
+        "path": "/assets/images/worlds/reading/stage-1-forest.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "reading-stage-2",
+        "name": "Book Village",
+        "category": "world-stage",
+        "world": "reading",
+        "stageIndex": 2,
+        "path": "/assets/images/worlds/reading/stage-2-village.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "reading-stage-3",
+        "name": "Story Kingdom",
+        "category": "world-stage",
+        "world": "reading",
+        "stageIndex": 3,
+        "path": "/assets/images/worlds/reading/stage-3-kingdom.svg"
+      }
+    ],
+    "spelling": [
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "spelling-stage-0",
+        "name": "Sound Meadow",
+        "category": "world-stage",
+        "world": "spelling",
+        "stageIndex": 0,
+        "path": "/assets/images/worlds/spelling/stage-0-meadow.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "spelling-stage-1",
+        "name": "Word Workshop",
+        "category": "world-stage",
+        "world": "spelling",
+        "stageIndex": 1,
+        "path": "/assets/images/worlds/spelling/stage-1-workshop.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "spelling-stage-2",
+        "name": "Word Town",
+        "category": "world-stage",
+        "world": "spelling",
+        "stageIndex": 2,
+        "path": "/assets/images/worlds/spelling/stage-2-village.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "spelling-stage-3",
+        "name": "Pattern Castle",
+        "category": "world-stage",
+        "world": "spelling",
+        "stageIndex": 3,
+        "path": "/assets/images/worlds/spelling/stage-3-castle.svg"
+      }
+    ],
+    "math": [
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "math-stage-0",
+        "name": "Quiet Clearing",
+        "category": "world-stage",
+        "world": "math",
+        "stageIndex": 0,
+        "path": "/assets/images/worlds/math/stage-0-clearing.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "math-stage-1",
+        "name": "Count Forest",
+        "category": "world-stage",
+        "world": "math",
+        "stageIndex": 1,
+        "path": "/assets/images/worlds/math/stage-1-forest.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "math-stage-2",
+        "name": "Number Village",
+        "category": "world-stage",
+        "world": "math",
+        "stageIndex": 2,
+        "path": "/assets/images/worlds/math/stage-2-village.svg"
+      },
+      {
+        "source": "generated",
+        "license": "proprietary",
+        "id": "math-stage-3",
+        "name": "Equation Peaks",
+        "category": "world-stage",
+        "world": "math",
+        "stageIndex": 3,
+        "path": "/assets/images/worlds/math/stage-3-peaks.svg"
+      }
+    ]
+  }
+}

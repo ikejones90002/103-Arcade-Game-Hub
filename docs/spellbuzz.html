@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#000000">
-  <title>SpellBuzz — by 103 Software Solutions LLC</title>
+  <title>SpellBuzz — Spelling World — 103 Software Solutions LLC</title>
   <link rel="icon" href="bee.svg" type="image/svg+xml">
   <link rel="stylesheet" href="theme.css">
 </head>
@@ -13,8 +13,11 @@
     <div class="topbar">
       <div class="brand">
         <div class="brand-row">
-          <img src="bee.svg" class="bee-mark" alt="">
-          <h1>SpellBuzz</h1>
+          <img src="bee.svg" class="bee-mark" id="brand-mark" alt="">
+          <div>
+            <h1>SpellBuzz</h1>
+            <p class="wq-sub">Spelling World</p>
+          </div>
         </div>
         <p class="byline">Built by 103 Software Solutions LLC</p>
       </div>
@@ -24,48 +27,210 @@
       </div>
     </div>
 
-    <section id="start-screen" class="card" aria-label="Start">
-      <div class="bee-wrap">
-        <img src="bee.svg" alt="SpellBuzz bee" class="bee hero">
+    <!-- Home / world map -->
+    <section id="map-screen" class="card" aria-label="Spelling World map">
+      <div class="bee-wrap" id="hero-wrap">
+        <img src="bee.svg" alt="SpellBuzz" class="bee hero">
       </div>
-      <p class="howto">Welcome to SpellBuzz. Listen, then type the word. Pick a level for your grade.</p>
-      <div class="difficulty" role="group" aria-label="Difficulty">
-        <button id="easy" class="active" type="button">Easy<small>Grades K–1</small></button>
-        <button id="medium" type="button">Medium<small>Grades 2–3</small></button>
-        <button id="hard" type="button">Hard<small>Grades 4–6</small></button>
+      <p class="howto">A spelling adventure that grows with you. Explore worlds, sound out words, earn XP.</p>
+      <div class="wq-profile-row">
+        <label class="visually-hidden" for="player-name">Player name</label>
+        <input id="player-name" type="text" maxlength="16" placeholder="Your name" autocomplete="nickname">
+        <button id="save-name" class="btn secondary" type="button">Save</button>
+        <button id="btn-change-grade" class="btn secondary" type="button">Change grade</button>
       </div>
-      <button id="play" class="btn" type="button">Play</button>
+      <p class="grade-badge" id="grade-badge">Grade: not set</p>
+      <div class="wq-stats">
+        <span id="stat-xp">XP: 0</span>
+        <span id="stat-stars">Stars: 0</span>
+        <span id="stat-challenge">Challenge: 0/3</span>
+      </div>
+      <div class="wq-coach" id="coach-banner">
+        <strong>Coach:</strong> <span id="coach-text">Welcome!</span>
+        <span class="ai-status" id="ai-status" title="AI coach status">· local</span>
+      </div>
+      <div class="tab-row">
+        <button id="btn-ask-ai" class="btn secondary" type="button">Ask AI Coach</button>
+        <button id="btn-review-toggle" class="btn secondary hidden" type="button">Review earlier skills</button>
+        <button id="btn-placement" class="btn secondary" type="button">Placement</button>
+        <button id="btn-parent" class="btn secondary" type="button">Parent</button>
+        <button id="btn-rewards" class="btn secondary" type="button">Rewards</button>
+        <button id="btn-export" class="btn secondary" type="button">Export</button>
+      </div>
+      
+      <div class="engage-bar" id="engage-bar">
+        <div class="engage-avatar"><div class="asset-avatar" id="avatar-mount" aria-hidden="true"></div><span id="avatar-label">Explorer</span></div>
+        <div class="engage-companion"><div class="asset-companion" id="companion-mount" aria-hidden="true"></div><span id="companion-label">No companion yet</span></div>
+      </div>
+      <div class="world-map" id="world-map" role="list"></div>
+      <div class="stage-art hidden" id="stage-art" aria-hidden="true"></div>
+      <p class="stage-strip" id="stage-strip"><strong>World growth:</strong> <span id="stage-text">Begin your adventure</span></p>
+      <button type="button" class="next-mission" id="next-mission-card" aria-label="Start next mission">
+        <div class="nm-label">Next Mission</div>
+        <div class="nm-title" id="nm-title">Pick a level to begin</div>
+        <div class="nm-blurb" id="nm-blurb">Your next adventure will appear here.</div>
+      </button>
+
+      <div class="engage-actions">
+        <button id="btn-daily" class="btn secondary" type="button">Today's Adventure</button>
+        <button id="btn-lab" class="btn secondary" type="button">Secret Lab</button>
+        <button id="btn-companions" class="btn secondary" type="button">Companions</button>
+      </div>
+
+      <div class="world-map review-map hidden" id="review-map" role="list" aria-label="Review earlier skills"></div>
+      <div id="leaderboard">
+        <div class="lb-head">
+          <h3>Leaderboard</h3>
+          <button id="clear-lb" class="btn secondary hidden" type="button">Clear</button>
+        </div>
+        <div id="lb-body"></div>
+      </div>
     </section>
 
-    <section id="play-screen" class="card hidden" aria-label="Game">
+    <!-- World path -->
+    <section id="path-screen" class="card hidden" aria-label="World path">
+      <p class="howto" id="path-title">World</p>
+      <div class="wq-coach"><strong>Coach:</strong> <span id="path-coach"></span></div>
+      <div class="path-list" id="path-list"></div>
+      <div class="actions">
+        <button id="path-back" class="btn secondary" type="button">Back to map</button>
+      </div>
+    </section>
+
+    <!-- Node lessons -->
+    <section id="node-screen" class="card hidden" aria-label="Lessons">
+      <p class="howto" id="node-title">Node</p>
+      <div class="lesson-list" id="lesson-list"></div>
+      <div class="actions">
+        <button id="node-back" class="btn secondary" type="button">Back to path</button>
+      </div>
+    </section>
+
+    <!-- Play -->
+    <section id="play-screen" class="card hidden" aria-label="Lesson">
+      <div class="mission-banner hidden" id="mission-banner"></div>
+      <div class="companion-line" id="companion-line"></div>
       <div class="hud">
-        <div class="score" id="score">Score: 0</div>
+        <div class="score" id="score">XP run: 0</div>
         <div class="lives" id="lives" aria-label="Lives remaining"></div>
       </div>
+      <div class="stars-row" id="stars"></div>
       <div class="streak" id="streak"></div>
-      <div class="level-badge" id="level-badge">Easy · Grades K–1</div>
-      <div class="bee-wrap">
-        <img src="bee.svg" alt="SpellBuzz bee" class="bee" id="bee">
+      <div class="level-badge" id="level-badge">Lesson</div>
+      <div class="timer hidden" id="timer" aria-live="polite">Timer: 00</div>
+      <div class="progress-mini" id="act-progress">1 / 1</div>
+      <div class="build-emoji hidden" id="build-emoji"></div>
+      <div class="prompt-word" id="prompt"></div>
+      <div class="story-box hidden" id="story-box">
+        <span class="story-emoji" id="story-emoji"></span>
+        <div id="story-text"></div>
+        <div class="story-q" id="story-q"></div>
       </div>
-      <div class="timer" id="timer" aria-live="polite">Timer: 00</div>
-      <div class="blanks hidden" id="blanks" aria-hidden="true"></div>
-      <div class="hint-line hidden" id="hint-line"></div>
-      <input type="text" id="input" placeholder="Type the word" autocomplete="off" autocapitalize="off" spellcheck="false" disabled>
+      <div id="build-area" class="hidden">
+        <div class="build-slots" id="build-slots"></div>
+        <div class="build-tray" id="build-tray"></div>
+        <div class="actions">
+          <button id="build-check" class="btn" type="button">Check word</button>
+          <button id="build-clear" class="btn secondary" type="button">Clear</button>
+        </div>
+      </div>
+      <div id="choices" class="choice-grid hidden"></div>
+      <div id="answer-area" class="hidden" style="width:100%;margin:0.6rem 0;">
+        <label class="visually-hidden" for="answer-input">Your answer</label>
+        <input id="answer-input" type="text" autocomplete="off" autocapitalize="none" spellcheck="false"
+          style="width:100%;max-width:320px;padding:12px;border-radius:12px;border:1px solid var(--magenta);background:#05050a;color:var(--ink);font-size:1.2rem;text-align:center;">
+        <div class="actions" style="margin-top:0.5rem;">
+          <button id="answer-submit" class="btn" type="button">Check</button>
+        </div>
+      </div>
+      <div class="actions" id="honor-actions">
+        <button id="speak" class="btn secondary" type="button">Speak</button>
+        <button id="got-it" class="btn" type="button">I got it</button>
+        <button id="try-again" class="btn secondary" type="button">Try again</button>
+      </div>
       <div class="actions">
-        <button id="speak" class="btn secondary" type="button" disabled>Repeat</button>
-        <button id="hint" class="btn secondary" type="button" disabled>Hint</button>
-        <button id="sentence" class="btn secondary hidden" type="button" disabled>Sentence</button>
-        <button id="submit" class="btn" type="button" disabled>Submit</button>
+        <button id="btn-ai-hint" class="btn secondary" type="button">AI Hint</button>
+        <button id="quit-lesson" class="btn secondary" type="button">Exit lesson</button>
       </div>
     </section>
 
-    <div id="leaderboard">
-      <div class="lb-head">
-        <h3>Leaderboard</h3>
-        <button id="clear-lb" class="btn secondary hidden" type="button">Clear</button>
+    <!-- Grade picker -->
+    <section id="grade-screen" class="card hidden" aria-label="Choose grade">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Pick your spelling level</h2>
+      <p class="howto">Choose the band that fits you (Preschool through ~6th–7th). You start there — earlier worlds stay optional review.</p>
+      <div class="grade-grid" id="grade-grid"></div>
+      <div class="actions">
+        <button id="grade-use-placement" class="btn secondary" type="button">Use placement quiz instead</button>
       </div>
-      <div id="lb-body"></div>
-    </div>
+    </section>
+
+    <!-- Parent panel -->
+    <section id="parent-screen" class="card hidden" aria-label="Parent progress">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Parent / Teacher</h2>
+      <p class="howto" id="parent-summary">Progress on this device.</p>
+      <div class="wq-coach"><strong>Tip:</strong> <span id="parent-coach"></span></div>
+      <div class="skill-bars" id="skill-bars"></div>
+      <div id="parent-grade" class="parent-grade-panel"></div>
+      <div id="world-progress" class="muted"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="parent-back" class="btn secondary" type="button">Back</button>
+        <button id="reset-progress" class="btn secondary" type="button">Reset progress</button>
+      </div>
+    </section>
+
+    <!-- Rewards -->
+    <section id="rewards-screen" class="card hidden" aria-label="Rewards">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Rewards</h2>
+      <p class="howto">Spend XP on frames and stickers. Compete against your own weekly best.</p>
+      <div class="wq-stats">
+        <span id="reward-xp">XP: 0</span>
+        <span id="reward-stars">Stars: 0</span>
+      </div>
+      <div class="cosmetic-list" id="cosmetic-list"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="rewards-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    <!-- Export / import / classroom lite -->
+    <section id="export-screen" class="card hidden" aria-label="Export and classroom">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Export & Classroom</h2>
+      <p class="howto">Offline profile backup and weekly self-challenge. Optional AI coach runs through Vercel when OPENAI_API_KEY is set.</p>
+      <div class="wq-coach" id="classroom-coach"></div>
+      <textarea id="export-box" class="wq-export" readonly aria-label="Exported profile JSON"></textarea>
+      <div class="actions">
+        <button id="do-export" class="btn" type="button">Copy export</button>
+        <button id="do-import" class="btn secondary" type="button">Import paste</button>
+      </div>
+      <textarea id="import-box" class="wq-export" placeholder="Paste profile JSON here to import" aria-label="Import profile JSON"></textarea>
+      <div class="actions" style="margin-top:0.8rem;">
+        <button id="toggle-coach" class="btn secondary" type="button">Toggle coach</button>
+        <button id="export-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    
+    <section id="lab-screen" class="card hidden" aria-label="Secret Lab">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Secret Lab</h2>
+      <p class="howto" id="lab-prompt">Create something with what you learned.</p>
+      <textarea id="lab-input" class="lab-box" maxlength="800" placeholder="Create here..."></textarea>
+      <div class="actions">
+        <button id="lab-save" class="btn" type="button">Save creation</button>
+        <button id="lab-back" class="btn secondary" type="button">Back</button>
+      </div>
+      <div id="lab-list" class="muted" style="width:100%;margin-top:0.8rem;text-align:left;"></div>
+    </section>
+
+    <section id="companions-screen" class="card hidden" aria-label="Companions">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Companions</h2>
+      <p class="howto">Learning friends unlock as you grow. Equip one for encouragement.</p>
+      <div id="companions-list" class="cosmetic-list"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="companions-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    <div id="celebration-toast" class="celebration-toast" aria-live="polite"></div>
 
     <footer class="site-footer">
       <img src="logo.png" alt="103 Software Solutions LLC">
@@ -77,11 +242,24 @@
 
   <div id="confirm" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
     <div class="overlay-card">
-      <h2 id="confirm-title">Clear leaderboard?</h2>
-      <p>This removes all saved scores on this device.</p>
+      <h2 id="confirm-title">Are you sure?</h2>
+      <p id="confirm-msg">This cannot be undone on this device.</p>
       <div class="actions">
         <button id="confirm-no" class="btn secondary" type="button">Cancel</button>
-        <button id="confirm-yes" class="btn" type="button">Clear</button>
+        <button id="confirm-yes" class="btn" type="button">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="pin-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pin-title">
+    <div class="overlay-card">
+      <h2 id="pin-title">Parent PIN</h2>
+      <p id="pin-msg">Enter a 4-digit PIN.</p>
+      <label class="visually-hidden" for="pin-input">PIN</label>
+      <input id="pin-input" type="password" inputmode="numeric" maxlength="4" autocomplete="one-time-code" placeholder="••••">
+      <div class="actions">
+        <button id="pin-cancel" class="btn secondary" type="button">Cancel</button>
+        <button id="pin-ok" class="btn" type="button">Continue</button>
       </div>
     </div>
   </div>
@@ -98,646 +276,1777 @@
     </div>
   </div>
 
-  <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
-  <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
-  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+  <audio id="snd-correct" src="assets/audio/ui/correct.mp3" preload="auto"></audio>
+  <audio id="snd-wrong" src="assets/audio/ui/error-soft.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="assets/audio/ui/tick.mp3" preload="auto"></audio>
 
+  <script src="spellbuzz-content.js"></script>
+  <script src="spellbuzz-engine.js"></script>
+  <script src="arcade-assets.js"></script>
+  <script src="arcade-ai.js"></script>
   <script>
-    const LEVELS = {
-      easy: { label: "Easy", grades: "Grades K–1", time: 25, rate: 0.65, hint: "free", blanks: true, sentence: false },
-      medium: { label: "Medium", grades: "Grades 2–3", time: 18, rate: 0.8, hint: "cost", blanks: false, sentence: false },
-      hard: { label: "Hard", grades: "Grades 4–6", time: 12, rate: 0.9, hint: "none", blanks: false, sentence: true }
-    };
+(function () {
+  "use strict";
 
-    const wordLists = {
-      easy: [
-        "cat", "dog", "sun", "hat", "bat", "pen", "map", "run", "red", "cup",
-        "book", "fish", "tree", "ball", "milk", "frog", "sock", "cake", "lamp", "star",
-        "car", "bus", "bed", "duck", "box", "goat", "kite", "moon", "nose", "soap",
-        "leaf", "king", "girl", "boy", "rice", "fork", "door", "feet", "hand",
-        "bee", "ant", "cow", "apple", "grape", "shoe", "rope", "net", "fan",
-        "train", "bell", "chair", "zip", "pot", "key", "ship", "pig", "jump", "play",
-        "look", "see", "big", "rain", "snow", "bird", "house", "baby", "walk", "help",
-        "blue", "green", "happy", "water", "food", "sit", "top", "fun"
-      ],
-      medium: [
-        "banana", "pencil", "window", "rocket", "planet", "purple", "school", "butter", "yellow", "camera",
-        "animal", "father", "mother", "sister", "brother", "friend", "garden", "cookie", "donkey", "chicken",
-        "bottle", "family", "candle", "toaster", "breeze", "circle", "zebra", "dancer", "market", "handle",
-        "pillow", "orange", "monkey", "puzzle", "drawer", "guitar", "flower", "letter", "tunnel",
-        "doctor", "hammer", "ladder", "jacket", "butterfly", "sandwich", "basket", "parrot", "bridge",
-        "carpet", "napkin", "helmet", "jungle", "vacuum", "gloves", "button", "kitten",
-        "birthday", "kitchen", "morning", "outside", "number", "winter", "summer", "picnic", "crayon", "backpack",
-        "recess", "hungry", "sleepy", "whisper", "teacher", "because"
-      ],
-      hard: [
-        "elephant", "whistle", "knight", "science", "pyramid", "brought", "through", "thought", "island", "adventure",
-        "machine", "library", "treasure", "weather", "building", "mystery", "volcano", "imagine", "capture",
-        "package", "jewelry", "refrigerator", "question", "squirrel", "calendar", "receipt", "clothing", "mountain",
-        "history", "mirror", "whenever", "explorer", "kangaroo", "penguin", "dinosaur", "plumber", "knuckle", "gnome",
-        "scissors", "autumn", "journey", "recycle", "character", "submarine", "musician", "caterpillar", "horizon", "airplane",
-        "triangle", "meadow", "crocodile", "dolphin", "astronaut", "dangerous", "medicine", "thunder", "cinnamon",
-        "neighbor", "enough", "although", "beautiful", "caught", "famous", "knowledge", "measure", "special", "weight",
-        "bicycle", "castle"
-      ]
-    };
+  const Content = window.SBContent;
+  const Engine = window.SBEngine;
+  const AI = window.ArcadeAI.createClient({
+    subject: "spelling",
+    getEngine: function () { return Engine; }
+  });
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const Assets = window.ArcadeAssets;
+  const ASSET_SUBJECT = "spelling";
+  if (Assets) Assets.load();
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const muteBtn = document.getElementById("mute");
-    const startScreen = document.getElementById("start-screen");
-    const playScreen = document.getElementById("play-screen");
-    const input = document.getElementById("input");
-    const speakBtn = document.getElementById("speak");
-    const hintBtn = document.getElementById("hint");
-    const sentenceBtn = document.getElementById("sentence");
-    const submitBtn = document.getElementById("submit");
-    const scoreDisplay = document.getElementById("score");
-    const timerDisplay = document.getElementById("timer");
-    const streakDisplay = document.getElementById("streak");
-    const livesEl = document.getElementById("lives");
-    const blanksEl = document.getElementById("blanks");
-    const hintLine = document.getElementById("hint-line");
-    const bee = document.getElementById("bee");
-    const overlay = document.getElementById("overlay");
-    const overlayTitle = document.getElementById("overlay-title");
-    const overlayMsg = document.getElementById("overlay-msg");
-    const overlayForm = document.getElementById("overlay-form");
-    const overlayBtn = document.getElementById("overlay-btn");
-    const nameInput = document.getElementById("name-input");
-    const levelBadge = document.getElementById("level-badge");
-    const clearLbBtn = document.getElementById("clear-lb");
-    const confirmEl = document.getElementById("confirm");
-    const celebrateEl = document.getElementById("celebrate");
-    const PARTY_SCORE = 5;
-    const CHAMPION_SCORE = 10;
-    const diffBtns = {
-      easy: document.getElementById("easy"),
-      medium: document.getElementById("medium"),
-      hard: document.getElementById("hard")
-    };
+  let profile = Engine.loadProfile();
+  Engine.ensureChallengeWeek(profile);
+  Engine.refreshUnlocks(profile);
+  Engine.saveProfile(profile);
 
-    let muted = localStorage.getItem("spellbee_mute") === "1";
-    let leaderboard = JSON.parse(localStorage.getItem("spellbee_lb") || "[]");
-    let currentDifficulty = "easy";
-    let word = "";
-    let score = 0;
-    let lives = 3;
-    let streak = 0;
-    let timer = null;
-    let timeLeft = 0;
-    let deck = [];
-    let hintUsed = false;
-    let speakCount = 0;
-    let audioCtx = null;
-    let overlayCallback = null;
-    let roundActive = false;
+  let muted = localStorage.getItem("spellbee_mute") === "1";
+  if (Assets) Assets.setMuted(muted);
 
-    function reduceMotionOn() {
-      return reduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let bossMode = false;
+  let dailyMode = false;
+  let currentBossKey = null;
+
+  function showCelebration(text) {
+    const el = document.getElementById("celebration-toast");
+    if (!el || !text) return;
+    el.textContent = text;
+    el.classList.add("show");
+    setTimeout(function () { el.classList.remove("show"); }, reduceMotionOn() ? 900 : 2200);
+  }
+
+  function renderEngageChrome() {
+    Engine.ensureEngagement(profile);
+    Engine.touchLastPlayed(profile);
+    const name = profile.name || "Explorer";
+    document.getElementById("avatar-label").textContent = name;
+    if (Assets) {
+      Assets.mountAvatar(document.getElementById("avatar-mount"), profile.engagement.avatar);
     }
-
-    function shuffle(list) {
-      const copy = list.slice();
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
+    const comps = Engine.availableCompanions(profile);
+    const equipped = comps.find(function (c) { return c.equipped; });
+    if (Assets) {
+      Assets.mountCompanion(document.getElementById("companion-mount"), equipped ? (equipped.assetId || equipped.id) : "", equipped ? equipped.emoji : "✨");
     }
-
-    function unique(list) {
-      return [...new Set(list.map((w) => w.toLowerCase()))];
-    }
-    wordLists.easy = unique(wordLists.easy);
-    wordLists.medium = unique(wordLists.medium);
-    wordLists.hard = unique(wordLists.hard);
-
-    function getCtx() {
-      const Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return null;
-      if (!audioCtx) audioCtx = new Ctx();
-      if (audioCtx.state === "suspended") audioCtx.resume();
-      return audioCtx;
-    }
-
-    function tone(freq, duration, type, gain, startAt) {
-      if (muted) return;
-      try {
-        const ctx = getCtx();
-        if (!ctx) return;
-        const t = ctx.currentTime + (startAt || 0);
-        const osc = ctx.createOscillator();
-        const g = ctx.createGain();
-        osc.type = type || "sine";
-        osc.frequency.setValueAtTime(freq, t);
-        g.gain.setValueAtTime(gain || 0.07, t);
-        g.gain.exponentialRampToValueAtTime(0.001, t + duration);
-        osc.connect(g);
-        g.connect(ctx.destination);
-        osc.start(t);
-        osc.stop(t + duration);
-      } catch (err) {}
-    }
-
-    function playMp3(id, volume) {
-      if (muted) return;
-      const el = document.getElementById(id);
-      if (!el) return;
-      try {
-        el.volume = volume == null ? 1 : volume;
-        el.currentTime = 0;
-        const p = el.play();
-        if (p && p.catch) p.catch(() => {});
-      } catch (err) {}
-    }
-
-    function playSfx(kind) {
-      if (muted) return;
-      if (kind === "click") tone(880, 0.05, "triangle", 0.05);
-      else if (kind === "buzz") {
-        tone(240, 0.18, "sawtooth", 0.04);
-        tone(310, 0.16, "square", 0.025, 0.04);
-        tone(190, 0.12, "sawtooth", 0.03, 0.1);
-      } else if (kind === "sparkle") {
-        tone(784, 0.12, "sine", 0.06);
-        tone(988, 0.12, "sine", 0.06, 0.08);
-        tone(1174, 0.18, "sine", 0.07, 0.16);
-      } else if (kind === "life") {
-        tone(330, 0.14, "triangle", 0.07);
-        tone(220, 0.2, "triangle", 0.07, 0.12);
-      } else if (kind === "fanfare") {
-        tone(523, 0.14, "square", 0.05);
-        tone(659, 0.14, "square", 0.05, 0.12);
-        tone(784, 0.14, "square", 0.05, 0.24);
-        tone(1046, 0.28, "square", 0.06, 0.36);
-      } else if (kind === "wrongBuzz") {
-        tone(140, 0.22, "sawtooth", 0.05);
-        tone(110, 0.28, "triangle", 0.04, 0.08);
+    document.getElementById("companion-label").textContent = equipped ? equipped.name : "No companion yet";
+    const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
+    const worldId = band && band.worldId;
+    if (worldId) {
+      Engine.refreshWorldStage(profile, worldId);
+      const stage = Engine.getWorldStage(profile, worldId);
+      const stages = (Content.WORLD_STAGES && Content.WORLD_STAGES[worldId]) || [];
+      const strip = stages.map(function (s, i) {
+        const cur = (profile.engagement.worldStages[worldId] || 0) === i;
+        return (cur ? "[" : "") + s.icon + (cur ? "]" : "");
+      }).join(" → ");
+      document.getElementById("stage-text").textContent = (stage.icon || "") + " " + (stage.label || "") + (strip ? " · " + strip : "");
+      if (Assets) {
+        const idx = (profile.engagement.worldStages && profile.engagement.worldStages[worldId]) || 0;
+        Assets.mountWorldStage(document.getElementById("stage-art"), ASSET_SUBJECT, idx);
       }
     }
-
-    function playSound(name) {
-      if (name === "correct") {
-        playMp3("snd-correct", 0.85);
-        if (streak >= 3) playSfx("sparkle");
-      } else if (name === "wrong") {
-        playMp3("snd-wrong", 0.45);
-        playSfx("wrongBuzz");
-      } else if (name === "tick") {
-        playMp3("snd-tick", 0.55);
-      } else {
-        playSfx(name);
-      }
+    const mission = Engine.resolveNextMission(profile);
+    const nmTitle = document.getElementById("nm-title");
+    const nmBlurb = document.getElementById("nm-blurb");
+    const nmCard = document.getElementById("next-mission-card");
+    if (!mission) {
+      nmTitle.textContent = "All clear for now!";
+      nmBlurb.textContent = "Explore the map, try Today's Adventure, or visit the Secret Lab.";
+      nmCard.onclick = null;
+    } else {
+      nmTitle.textContent = (mission.emoji || "⭐") + " " + mission.title;
+      nmBlurb.textContent = mission.blurb + (mission.worldName ? " · " + mission.worldName : "");
+      nmCard.onclick = function () {
+        playSfx("click");
+        if (mission.boss) startBoss(mission.worldId, mission.nodeId);
+        else startLesson(mission.worldId, mission.nodeId, mission.lessonId);
+      };
     }
-
-    function updateMuteUi() {
-      muteBtn.textContent = muted ? "🔇" : "🔊";
-      muteBtn.setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
-      muteBtn.title = muted ? "Unmute sounds" : "Mute sounds";
+    const daily = Engine.getDailyState(profile);
+    document.getElementById("btn-daily").textContent = daily.completed ? "Adventure done ✓" : "Today's Adventure";
+    document.getElementById("btn-lab").disabled = !profile.engagement.labUnlocked;
+    document.getElementById("btn-lab").title = profile.engagement.labUnlocked ? "Secret Lab" : "Unlock by completing lessons";
+    if (Engine.shouldWelcomeBack(profile) && Engine.markCelebration(profile, "welcome-" + Engine.dayKeyNow())) {
+      showCelebration("Welcome back! Your garden kept growing.");
+      Engine.saveProfile(profile);
     }
+  }
 
-    muteBtn.onclick = function () {
-      muted = !muted;
-      localStorage.setItem("spellbee_mute", muted ? "1" : "0");
-      updateMuteUi();
-      if (!muted) playSfx("click");
-    };
+  function setCompanionLine(kind) {
+    const line = Engine.companionLine(profile, kind);
+    let el = document.getElementById("companion-line");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "companion-line";
+      el.className = "companion-line";
+      const play = document.getElementById("play-screen");
+      if (play) play.insertBefore(el, play.querySelector(".hud") ? play.querySelector(".hud").nextSibling : play.firstChild);
+    }
+    el.textContent = line || "";
+  }
 
-    document.querySelectorAll("button").forEach((btn) => {
-      if (btn.id === "mute") return;
-      btn.addEventListener("click", () => playSfx("click"));
+  function startBoss(worldId, nodeId) {
+    const boss = Engine.getBoss(worldId, nodeId);
+    if (!boss) return;
+    bossMode = true;
+    dailyMode = false;
+    currentBossKey = worldId + ":" + nodeId;
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    currentLesson = { id: "boss-" + nodeId, title: boss.title, reward: boss.reward || { xp: 15, stars: 1 }, activities: boss.activities };
+    activityQueue = (boss.activities || []).slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>" + (boss.emoji || "🐉") + " " + boss.title + "</strong> — " + (boss.blurb || "Show what you know!");
+    }
+    nextActivity();
+  }
+
+  function startDailyAdventure() {
+    const daily = Engine.getDailyState(profile);
+    if (daily.completed) {
+      showOverlay({ title: "Already done", message: "You finished Today's Adventure. Come back tomorrow—no pressure!", button: "OK" });
+      return;
+    }
+    const acts = Engine.getDailyActivities(profile);
+    if (!acts.length) {
+      showOverlay({ title: "Rest day", message: "No adventure ready—play a mission on the map!", button: "OK" });
+      return;
+    }
+    dailyMode = true;
+    bossMode = false;
+    currentLesson = { id: "daily", title: "Today's Adventure", reward: { xp: 10, stars: 1 }, activities: acts };
+    activityQueue = acts.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>🌟 Today's Adventure</strong> — A short optional challenge. Learning only!";
+    }
+    nextActivity();
+  }
+
+  function renderCompanions() {
+    const list = document.getElementById("companions-list");
+    list.replaceChildren();
+    const avatarRow = document.createElement("div");
+    avatarRow.className = "cosmetic-row";
+    avatarRow.innerHTML = "<div><strong>Avatar look</strong><div class='muted'>Outfits unlock as you learn—never required.</div></div>";
+    const avatarActions = document.createElement("div");
+    avatarActions.className = "avatar-equip-row";
+    [["explorer","Explorer"],["wizard","Wizard"],["scientist","Scientist"],["knight","Knight"]].forEach(function (pair) {
+      const btn = document.createElement("button");
+      btn.className = "btn secondary";
+      btn.type = "button";
+      btn.textContent = pair[1];
+      btn.onclick = function () {
+        Engine.ensureEngagement(profile);
+        profile.engagement.avatar.outfit = pair[0];
+        Engine.saveProfile(profile);
+        renderEngageChrome();
+        renderCompanions();
+      };
+      avatarActions.appendChild(btn);
     });
+    [["","None"],["glasses","Glasses"],["hat","Hat"],["backpack","Pack"],["crown","Crown"]].forEach(function (pair) {
+      const btn = document.createElement("button");
+      btn.className = "btn secondary";
+      btn.type = "button";
+      btn.textContent = pair[1];
+      btn.onclick = function () {
+        Engine.ensureEngagement(profile);
+        profile.engagement.avatar.accessory = pair[0];
+        Engine.saveProfile(profile);
+        renderEngageChrome();
+        renderCompanions();
+      };
+      avatarActions.appendChild(btn);
+    });
+    avatarRow.appendChild(avatarActions);
+    list.appendChild(avatarRow);
+    Engine.availableCompanions(profile).forEach(function (c) {
+      const row = document.createElement("div");
+      row.className = "cosmetic-row";
+      const left = document.createElement("div");
+      left.className = "companion-row-left";
+      const mount = document.createElement("div");
+      mount.className = "asset-companion";
+      if (Assets) Assets.mountCompanion(mount, c.assetId || c.id, c.emoji);
+      else {
+        const span = document.createElement("span");
+        span.className = "emoji";
+        span.textContent = c.emoji || "✨";
+        mount.appendChild(span);
+      }
+      left.appendChild(mount);
+      const meta = document.createElement("div");
+      meta.innerHTML = "<strong>" + c.name + "</strong><div class='muted'>" + (c.owned ? "Unlocked" : "Keep learning to unlock") + "</div>";
+      left.appendChild(meta);
+      row.appendChild(left);
+      const actions = document.createElement("div");
+      if (c.owned) {
+        const btn = document.createElement("button");
+        btn.className = "btn secondary";
+        btn.type = "button";
+        btn.textContent = c.equipped ? "Equipped" : "Equip";
+        btn.onclick = function () {
+          profile.engagement.equippedCompanion = c.id;
+          Engine.saveProfile(profile);
+          renderCompanions();
+          renderEngageChrome();
+        };
+        actions.appendChild(btn);
+      }
+      row.appendChild(actions);
+      list.appendChild(row);
+    });
+  }
 
-    function sanitizeName(raw) {
-      return String(raw || "")
-        .replace(/<[^>]*>/g, "")
-        .replace(/[^\w\s'-]/g, "")
-        .trim()
-        .slice(0, 16);
+  function renderLab() {
+    const prompts = Content.LAB_PROMPTS || ["Create something you learned today."];
+    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
+    document.getElementById("lab-prompt").textContent = prompt;
+    document.getElementById("lab-input").value = "";
+    const list = document.getElementById("lab-list");
+    list.replaceChildren();
+    (profile.engagement.labCreations || []).slice(0, 5).forEach(function (item) {
+      const p = document.createElement("p");
+      p.textContent = "• " + item.text;
+      list.appendChild(p);
+    });
+  }
+
+  let leaderboard = JSON.parse(localStorage.getItem("spellbee_lb") || "[]");
+  let audioCtx = null;
+  let overlayCallback = null;
+  let confirmCallback = null;
+  let currentWorldId = null;
+  let currentNodeId = null;
+  let currentPathOptions = null;
+  let currentLesson = null;
+  let activityQueue = [];
+  let activityIndex = 0;
+  let roundActive = false;
+  let currentItem = null;
+  let score = 0;
+  let lives = 3;
+  let streak = 0;
+  let stars = 0;
+  let timer = null;
+  let timeLeft = 0;
+  let buildPicked = [];
+  let lessonStartedAt = 0;
+  let placementMode = false;
+  let placementResults = [];
+  let screenStack = "map";
+
+  const muteBtn = document.getElementById("mute");
+  const mapScreen = document.getElementById("map-screen");
+  const pathScreen = document.getElementById("path-screen");
+  const nodeScreen = document.getElementById("node-screen");
+  const playScreen = document.getElementById("play-screen");
+  const parentScreen = document.getElementById("parent-screen");
+  const rewardsScreen = document.getElementById("rewards-screen");
+  const exportScreen = document.getElementById("export-screen");
+  const promptEl = document.getElementById("prompt");
+  const choicesEl = document.getElementById("choices");
+  const honorActions = document.getElementById("honor-actions");
+  const speakBtn = document.getElementById("speak");
+  const gotItBtn = document.getElementById("got-it");
+  const tryAgainBtn = document.getElementById("try-again");
+  const overlay = document.getElementById("overlay");
+  const overlayTitle = document.getElementById("overlay-title");
+  const overlayMsg = document.getElementById("overlay-msg");
+  const overlayForm = document.getElementById("overlay-form");
+  const overlayBtn = document.getElementById("overlay-btn");
+  const nameInput = document.getElementById("name-input");
+  const confirmEl = document.getElementById("confirm");
+  const celebrateEl = document.getElementById("celebrate");
+
+  function reduceMotionOn() {
+    return reduceMotion || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }
+  function shuffle(list) {
+    const copy = list.slice();
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = copy[i]; copy[i] = copy[j]; copy[j] = t;
     }
+    return copy;
+  }
+  function hideAllScreens() {
+    [mapScreen, pathScreen, nodeScreen, playScreen, parentScreen, rewardsScreen, exportScreen, document.getElementById("grade-screen"), document.getElementById("lab-screen"), document.getElementById("companions-screen")]
+      .forEach(function (el) { if (el) el.classList.add("hidden"); });
+  }
+  function showScreen(name) {
+    hideAllScreens();
+    screenStack = name;
+    if (name === "map") mapScreen.classList.remove("hidden");
+    else if (name === "path") pathScreen.classList.remove("hidden");
+    else if (name === "node") nodeScreen.classList.remove("hidden");
+    else if (name === "play") playScreen.classList.remove("hidden");
+    else if (name === "parent") parentScreen.classList.remove("hidden");
+    else if (name === "rewards") rewardsScreen.classList.remove("hidden");
+    else if (name === "export") exportScreen.classList.remove("hidden");
+    else if (name === "grade") document.getElementById("grade-screen").classList.remove("hidden");
+    else if (name === "lab") document.getElementById("lab-screen").classList.remove("hidden");
+    else if (name === "companions") document.getElementById("companions-screen").classList.remove("hidden");
+  }
 
-    function saveScore(name, value) {
-      const clean = sanitizeName(name);
-      if (!clean) return;
-      leaderboard.push({ name: clean, score: value, date: Date.now() });
-      leaderboard.sort((a, b) => b.score - a.score);
-      leaderboard = leaderboard.slice(0, 10);
-      localStorage.setItem("spellbee_lb", JSON.stringify(leaderboard));
+  function getCtx() {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return null;
+    if (!audioCtx) audioCtx = new Ctx();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function tone(freq, duration, type, gain, startAt) {
+    if (muted) return;
+    try {
+      const ctx = getCtx();
+      if (!ctx) return;
+      const t = ctx.currentTime + (startAt || 0);
+      const osc = ctx.createOscillator();
+      const g = ctx.createGain();
+      osc.type = type || "sine";
+      osc.frequency.setValueAtTime(freq, t);
+      g.gain.setValueAtTime(gain || 0.07, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + duration);
+      osc.connect(g); g.connect(ctx.destination);
+      osc.start(t); osc.stop(t + duration);
+    } catch (err) {}
+  }
+  function playMp3(id, volume) {
+    if (muted) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    try {
+      el.volume = volume == null ? 1 : volume;
+      el.currentTime = 0;
+      const p = el.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (err) {}
+  }
+  function playSfx(kind) {
+    if (muted) return;
+    if (Assets) {
+      Assets.setMuted(muted);
+      Assets.play(kind);
+      return;
     }
+    if (kind === "click") tone(880, 0.05, "triangle", 0.05);
+    else if (kind === "sparkle") { tone(784, 0.1, "sine", 0.06); tone(1174, 0.16, "sine", 0.07, 0.1); }
+    else if (kind === "fanfare") { tone(523, 0.12, "square", 0.05); tone(784, 0.2, "square", 0.05, 0.14); }
+    else if (kind === "life") { tone(330, 0.12, "triangle", 0.07); tone(220, 0.18, "triangle", 0.07, 0.1); }
+    else if (kind === "wrongBuzz") tone(140, 0.2, "sawtooth", 0.05);
+    else if (kind === "buzz") tone(180, 0.08, "sawtooth", 0.04);
+  }
+  function playSound(name) {
+    if (muted) return;
+    if (Assets) {
+      Assets.setMuted(muted);
+      if (name === "correct") { Assets.play("correct"); if (streak >= 3) Assets.play("sparkle"); }
+      else if (name === "wrong") { Assets.play("error-soft"); Assets.play("wrongBuzz"); }
+      else if (name === "tick") Assets.play("tick");
+      else Assets.play(name);
+      return;
+    }
+    if (name === "correct") { playMp3("snd-correct", 0.85); if (streak >= 3) playSfx("sparkle"); }
+    else if (name === "wrong") { playMp3("snd-wrong", 0.45); playSfx("wrongBuzz"); }
+    else if (name === "tick") playMp3("snd-tick", 0.55);
+    else playSfx(name);
+  }
+  function updateMuteUi() {
+    muteBtn.textContent = muted ? "🔇" : "🔊";
+    muteBtn.setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
+  }
+  muteBtn.onclick = function () {
+    muted = !muted;
+    localStorage.setItem("spellbee_mute", muted ? "1" : "0");
+    if (Assets) Assets.setMuted(muted);
+    updateMuteUi();
+    if (!muted) playSfx("click");
+  };
 
-    function renderLeaderboard() {
-      const body = document.getElementById("lb-body");
-      body.replaceChildren();
-      clearLbBtn.classList.toggle("hidden", !leaderboard.length);
-      if (!leaderboard.length) {
-        const empty = document.createElement("p");
-        empty.className = "empty";
-        empty.textContent = "No scores yet. Play a round to get on the board!";
-        body.appendChild(empty);
+  function sanitizeName(raw) {
+    return String(raw || "").replace(/<[^>]*>/g, "").replace(/[^\w\s'-]/g, "").trim().slice(0, 16);
+  }
+  function saveScore(name, value) {
+    const clean = sanitizeName(name);
+    if (!clean) return;
+    leaderboard.push({ name: clean, score: value, date: Date.now() });
+    leaderboard.sort(function (a, b) { return b.score - a.score; });
+    leaderboard = leaderboard.slice(0, 10);
+    localStorage.setItem("spellbee_lb", JSON.stringify(leaderboard));
+  }
+  function renderLeaderboard() {
+    const body = document.getElementById("lb-body");
+    const clearLbBtn = document.getElementById("clear-lb");
+    body.replaceChildren();
+    clearLbBtn.classList.toggle("hidden", !leaderboard.length);
+    if (!leaderboard.length) {
+      const empty = document.createElement("p");
+      empty.className = "empty";
+      empty.textContent = "No scores yet. Finish a lesson to get on the board!";
+      body.appendChild(empty);
+      return;
+    }
+    const list = document.createElement("ol");
+    leaderboard.forEach(function (entry) {
+      const li = document.createElement("li");
+      li.textContent = entry.name + ": " + entry.score;
+      list.appendChild(li);
+    });
+    body.appendChild(list);
+  }
+
+  function speakText(text) {
+    if (!text || !window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.75;
+    u.lang = "en-US";
+    speechSynthesis.speak(u);
+  }
+
+  function applyFrameClass() {
+    const wrap = document.getElementById("hero-wrap");
+    const mark = document.getElementById("brand-mark");
+    [wrap, mark].forEach(function (el) {
+      if (!el) return;
+      el.classList.remove("frame-leaf", "frame-sun", "frame-crown");
+      if (profile.equippedFrame) el.classList.add(profile.equippedFrame);
+    });
+  }
+
+  function updateAiStatusBadge() {
+    const el = document.getElementById("ai-status");
+    const askBtn = document.getElementById("btn-ask-ai");
+    const hintBtn = document.getElementById("btn-ai-hint");
+    if (!el || !AI) return;
+    const st = AI.getStatus();
+    if (!st.checked) {
+      el.textContent = "· checking…";
+      return;
+    }
+    if (st.available) {
+      el.textContent = "· AI ready";
+      el.classList.add("ai-on");
+      if (askBtn) askBtn.disabled = false;
+      if (hintBtn) hintBtn.disabled = false;
+    } else {
+      el.textContent = "· local coach";
+      el.classList.remove("ai-on");
+    }
+  }
+
+  function setCoachText(text, source) {
+    const el = document.getElementById("coach-text");
+    if (!el) return;
+    el.textContent = text || "";
+    if (source === "openai") {
+      const badge = document.getElementById("ai-status");
+      if (badge) {
+        badge.textContent = "· AI";
+        badge.classList.add("ai-on");
+      }
+    }
+  }
+
+  function refreshCoachBanner(preferAi) {
+    const local = Engine.coachMessage(profile, "map");
+    setCoachText(local, "local");
+    if (!preferAi || !AI || !profile.coachEnabled) return;
+    AI.coach(profile, "map").then(function (res) {
+      if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+    });
+  }
+
+  function refreshHeaderStats() {
+    Engine.ensureChallengeWeek(profile);
+    document.getElementById("stat-xp").textContent = "XP: " + profile.xp;
+    document.getElementById("stat-stars").textContent = "Stars: " + profile.stars;
+    document.getElementById("stat-challenge").textContent =
+      "Challenge: " + profile.personalBest.challengeProgress + "/" + profile.personalBest.challengeTarget;
+    refreshCoachBanner(false);
+    document.getElementById("player-name").value = profile.name || "";
+    const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
+    document.getElementById("grade-badge").textContent = profile.gradeBandSet
+      ? ((band ? band.label : ("Band " + profile.gradeBand)) + " · " + (band ? band.name : ""))
+      : "Level: pick your reading band to start";
+    const reviewBtn = document.getElementById("btn-review-toggle");
+    const hasReview = (profile.gradeBand || 1) > 1;
+    reviewBtn.classList.toggle("hidden", !hasReview);
+    reviewBtn.textContent = profile.reviewModeEnabled ? "Hide earlier skills" : "Review earlier skills";
+    applyFrameClass();
+    updateAiStatusBadge();
+  }
+
+  function buildWorldTile(region, accessState) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "world-tile";
+    if (accessState === "your-level") btn.classList.add("active-world");
+    if (accessState === "review") btn.classList.add("review-tile");
+    if (accessState === "locked") btn.classList.add("locked-tile");
+    btn.setAttribute("role", "listitem");
+    const world = Content.getWorld(region.id);
+    const nodesDone = world ? Engine.countWorldNodesDone(profile, region.id) : 0;
+    const nodesTotal = world ? world.nodes.length : 0;
+    let badge = "";
+    if (accessState === "your-level") badge = '<span class="map-badge your-level">Your level</span>';
+    else if (accessState === "review") badge = '<span class="map-badge review">Review</span>';
+    else if (accessState === "early") badge = '<span class="map-badge early">Unlocked early</span>';
+    else if (accessState === "locked") badge = '<span class="lock">Higher grade</span>';
+    if (Content.isWorldPreview && Content.isWorldPreview(region.id)) {
+      badge += '<span class="map-badge preview">New</span>';
+    }
+    btn.innerHTML =
+      '<span class="icon" aria-hidden="true">' + region.icon + "</span>" +
+      '<span class="meta"><strong>L' + region.level + " · " + region.name + "</strong>" +
+      "<span>" + region.focus + " · " + region.age + "</span>" +
+      (accessState !== "locked" ? '<span class="progress-mini">' + nodesDone + "/" + nodesTotal + " nodes</span>" : "") +
+      badge + "</span>";
+    return btn;
+  }
+
+  function openRegion(region) {
+    playSfx("click");
+    openWorld(region.id, {
+      regionName: region.name,
+      regionIcon: region.icon,
+      regionFocus: region.focus || "",
+      startNode: region.startNode || null,
+      pathFromStart: false,
+      autoEnter: false
+    });
+  }
+
+  function renderWorldMap() {
+    const map = document.getElementById("world-map");
+    const reviewMap = document.getElementById("review-map");
+    map.replaceChildren();
+    reviewMap.replaceChildren();
+    Content.MAP_REGIONS.forEach(function (region) {
+      const accessState = Engine.getRegionAccessState(profile, region.level);
+      if (accessState === "review-hidden") return;
+      const btn = buildWorldTile(region, accessState);
+      if (accessState === "locked") {
+        btn.disabled = true;
+        btn.title = "Try Placement or ask a parent to move up a grade";
+      } else {
+        btn.onclick = function () { openRegion(region); };
+      }
+      if (accessState === "review") reviewMap.appendChild(btn);
+      else map.appendChild(btn);
+    });
+    reviewMap.classList.toggle("hidden", !profile.reviewModeEnabled || reviewMap.childElementCount === 0);
+    refreshHeaderStats();
+    renderEngageChrome();
+  }
+
+  function renderGradePicker() {
+    const grid = document.getElementById("grade-grid");
+    grid.replaceChildren();
+    Content.GRADE_BANDS.forEach(function (band) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "grade-btn" + (profile.gradeBand === band.grade && profile.gradeBandSet ? " active" : "");
+      btn.innerHTML = "<strong>" + band.label + "</strong><span>" + band.age + "</span><small>" + band.name + "</small>";
+      btn.onclick = function () {
+        playSfx("click");
+        Engine.setGradeBand(profile, band.grade);
+        renderWorldMap();
+        showScreen("map");
+        showOverlay({
+          title: "Level set!",
+          message: "You are starting at " + band.name + " (" + band.label + "). Tap your world on the map to play. Use Review for earlier skills anytime.",
+          button: "Let's go"
+        });
+      };
+      grid.appendChild(btn);
+    });
+  }
+
+  function ensureGradeSelected() {
+    if (!profile.gradeBandSet) {
+      renderGradePicker();
+      showScreen("grade");
+      return false;
+    }
+    return true;
+  }
+
+  function openWorld(worldId, options) {
+    options = options || currentPathOptions || {};
+    currentPathOptions = {
+      regionName: options.regionName || null,
+      regionIcon: options.regionIcon || null,
+      regionFocus: options.regionFocus || "",
+      startNode: options.startNode || null,
+      pathFromStart: !!options.pathFromStart,
+      autoEnter: !!options.autoEnter
+    };
+    currentWorldId = worldId;
+    const world = Content.getWorld(worldId);
+    if (!world) return;
+    if (!Engine.canPlayWorld(profile, worldId)) {
+      showOverlay({
+        title: "Not available",
+        message: "This world is above your grade. Try Placement or ask a parent to change grade.",
+        button: "OK"
+      });
+      return;
+    }
+    const titleName = currentPathOptions.regionName || world.name;
+    const titleIcon = currentPathOptions.regionIcon || world.icon;
+    const titleFocus = currentPathOptions.regionFocus || world.focus;
+    document.getElementById("path-title").textContent = titleIcon + " " + titleName + " — " + titleFocus;
+    document.getElementById("path-coach").textContent = Engine.coachMessage(profile, "map");
+    const list = document.getElementById("path-list");
+    list.replaceChildren();
+    const pathStartId = currentPathOptions.pathFromStart ? currentPathOptions.startNode : null;
+    const pathNodes = Engine.getPathNodes(worldId, pathStartId);
+    const pathStartIndex = pathNodes.length ? pathNodes[0].pathStartIndex : 0;
+    pathNodes.forEach(function (entry) {
+      const node = entry.node;
+      const unlocked = Engine.nodeUnlocked(profile, worldId, node.id, entry.worldIndex, { pathStartIndex: pathStartIndex });
+      const done = !!profile.nodesCompleted[worldId + ":" + node.id];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "path-node" + (done ? " done" : "");
+      if (currentPathOptions.startNode && node.id === currentPathOptions.startNode) btn.classList.add("highlight-node");
+      btn.disabled = !unlocked;
+      btn.innerHTML =
+        '<span class="step">' + (done ? "✓" : (entry.pathIndex + 1)) + "</span>" +
+        '<span class="meta"><strong>' + node.name + "</strong><span>" + node.blurb +
+        (unlocked ? "" : " · complete prior node") + "</span></span>";
+      if (unlocked) {
+        btn.onclick = function () {
+          playSfx("click");
+          openNode(worldId, node.id);
+        };
+      }
+      list.appendChild(btn);
+    });
+    showScreen("path");
+    if (currentPathOptions.autoEnter && currentPathOptions.startNode) {
+      currentPathOptions.autoEnter = false;
+      openNode(worldId, currentPathOptions.startNode);
+      return;
+    }
+    if (currentPathOptions.startNode) {
+      const target = list.querySelector(".highlight-node");
+      if (target) target.scrollIntoView({ block: "nearest", behavior: reduceMotionOn() ? "auto" : "smooth" });
+    }
+  }
+
+  function openNode(worldId, nodeId) {
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    const node = Content.getNode(worldId, nodeId);
+    if (!node) return;
+    document.getElementById("node-title").textContent = node.name + " — pick a lesson";
+    const list = document.getElementById("lesson-list");
+    list.replaceChildren();
+    node.lessons.forEach(function (lesson) {
+      const key = worldId + ":" + nodeId + ":" + lesson.id;
+      const done = !!profile.lessonsCompleted[key];
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "lesson-btn" + (done ? " done" : "");
+      btn.innerHTML = lesson.title + "<small>" +
+        lesson.activities.length + " activities · +" + (lesson.reward && lesson.reward.xp || 0) + " XP" +
+        (done ? " · completed" : "") + "</small>";
+      btn.onclick = function () {
+        playSfx("click");
+        startLesson(worldId, nodeId, lesson.id);
+      };
+      list.appendChild(btn);
+    });
+    showScreen("node");
+  }
+
+  function startLesson(worldId, nodeId, lessonId) {
+    placementMode = false;
+    let lesson = Content.getLesson(worldId, nodeId, lessonId);
+    if (!lesson) return;
+    lesson = Engine.injectAdaptiveActivities(lesson, profile);
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    currentLesson = lesson;
+    activityQueue = lesson.activities.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    bossMode = false; dailyMode = false;
+    const meta = Engine.getMissionMeta(worldId, nodeId, lessonId);
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>" + (meta.emoji || "⭐") + " " + (meta.title || lesson.title) + "</strong> — " + (meta.blurb || "");
+    }
+    nextActivity();
+  }
+
+  function startPlacement() {
+    placementMode = true;
+    placementResults = [];
+    currentLesson = { id: "placement", title: "Placement", reward: { xp: 10, stars: 1 }, activities: Content.PLACEMENT_QUESTIONS };
+    activityQueue = Content.PLACEMENT_QUESTIONS.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    nextActivity();
+  }
+
+  function clearPlayUi() {
+    choicesEl.replaceChildren();
+    choicesEl.classList.add("hidden");
+    honorActions.classList.add("hidden");
+    document.getElementById("build-area").classList.add("hidden");
+    const answerArea = document.getElementById("answer-area");
+    if (answerArea) answerArea.classList.add("hidden");
+    document.getElementById("story-box").classList.add("hidden");
+    document.getElementById("build-emoji").classList.add("hidden");
+    document.getElementById("timer").classList.add("hidden");
+    promptEl.textContent = "";
+    buildPicked = [];
+    currentItem = null;
+  }
+
+  function updateHud() {
+    document.getElementById("score").textContent = "XP run: " + score;
+    document.getElementById("streak").textContent = streak >= 2 ? "Streak: " + streak : "";
+    document.getElementById("stars").textContent = "Stars: " + "★".repeat(Math.min(5, stars)) + "☆".repeat(Math.max(0, 5 - stars));
+    document.getElementById("level-badge").textContent =
+      (placementMode ? "Placement" : (currentLesson && currentLesson.title) || "Lesson") +
+      (currentItem && currentItem.adaptive ? " · Boost" : "");
+    document.getElementById("act-progress").textContent = (activityIndex + 1) + " / " + Math.max(activityQueue.length, 1);
+    const livesEl = document.getElementById("lives");
+    livesEl.replaceChildren();
+    for (let i = 0; i < 3; i++) {
+      const heart = document.createElement("span");
+      heart.className = "life" + (i >= lives ? " gone" : "");
+      heart.textContent = "💛";
+      livesEl.appendChild(heart);
+    }
+  }
+
+  function startTimer(seconds) {
+    const timerDisplay = document.getElementById("timer");
+    if (timer) clearInterval(timer);
+    if (!seconds) {
+      timerDisplay.classList.add("hidden");
+      return;
+    }
+    timeLeft = seconds;
+    timerDisplay.classList.remove("hidden", "urgent");
+    timerDisplay.textContent = "Timer: " + timeLeft;
+    timer = setInterval(function () {
+      timeLeft--;
+      if (timeLeft <= 5) {
+        timerDisplay.classList.add("urgent");
+        playSound("tick");
+      }
+      timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + Math.max(timeLeft, 0);
+      if (timeLeft <= 0) {
+        clearInterval(timer);
+        handleMiss("Time's up!");
+      }
+    }, 1000);
+  }
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    document.getElementById("timer").classList.remove("urgent");
+  }
+
+
+  function showAnswerInput(placeholder) {
+    const area = document.getElementById("answer-area");
+    const input = document.getElementById("answer-input");
+    area.classList.remove("hidden");
+    input.value = "";
+    input.placeholder = placeholder || "Type your answer";
+    input.focus();
+  }
+
+  function submitTypedAnswer() {
+    if (!roundActive || !currentItem) return;
+    const input = document.getElementById("answer-input");
+    const raw = (input && input.value) || "";
+    if (!String(raw).trim()) return;
+    judgeResponse(raw);
+  }
+
+  function nextActivity() {
+    clearPlayUi();
+    if (activityIndex >= activityQueue.length) {
+      finishLesson(true);
+      return;
+    }
+    const act = activityQueue[activityIndex];
+    currentItem = act;
+    roundActive = true;
+    updateHud();
+    playSfx("buzz");
+    renderActivity(act);
+  }
+
+  function renderActivity(act) {
+    const type = act.type;
+    if (type === "spell" || type === "equation") {
+      promptEl.textContent = act.prompt || "";
+      showAnswerInput(type === "spell" ? "Type the spelling" : "Type the answer");
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      if (act.speak) speakText(act.speak);
+      startTimer(placementMode ? 40 : (type === "spell" ? 35 : 30));
+      return;
+    }
+    if (type === "story") {
+      promptEl.textContent = act.prompt || "";
+      const box = document.getElementById("story-box");
+      box.classList.remove("hidden");
+      document.getElementById("story-emoji").textContent = (act.payload && act.payload.emoji) || "📖";
+      document.getElementById("story-text").textContent = (act.payload && act.payload.text) || "";
+      document.getElementById("story-q").textContent = (act.payload && act.payload.question) || "What happened?";
+      renderChoiceButtons(act.options || [], false);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(placementMode ? 40 : 35);
+      return;
+    }
+    if (type === "build") {
+      promptEl.textContent = act.prompt;
+      const emoji = document.getElementById("build-emoji");
+      emoji.textContent = (act.payload && act.payload.emoji) || "";
+      emoji.classList.toggle("hidden", !emoji.textContent);
+      setupBuild(act);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(placementMode ? 45 : 40);
+      return;
+    }
+    if (type === "picture") {
+      promptEl.textContent = act.prompt;
+      choicesEl.className = "pic-grid";
+      choicesEl.classList.remove("hidden");
+      (act.options || []).forEach(function (opt) {
+        const word = opt.word || opt;
+        const emoji = opt.emoji || word;
+        const btn = document.createElement("button");
+        btn.className = "btn pic-btn";
+        btn.type = "button";
+        btn.textContent = emoji;
+        btn.setAttribute("aria-label", word);
+        btn.onclick = function () { judgeResponse(word); };
+        choicesEl.appendChild(btn);
+      });
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      startTimer(25);
+      return;
+    }
+    if (type === "letter" || type === "sound" || type === "sentence" || type === "choice") {
+      promptEl.textContent = act.prompt;
+      renderChoiceButtons(act.options || [], true);
+      honorActions.classList.remove("hidden");
+      gotItBtn.classList.add("hidden");
+      tryAgainBtn.classList.add("hidden");
+      if (act.speak) speakText(act.speak);
+      startTimer(type === "sentence" ? 30 : 25);
+      return;
+    }
+    /* sprint / action honor */
+    promptEl.textContent = act.prompt;
+    honorActions.classList.remove("hidden");
+    gotItBtn.classList.remove("hidden");
+    tryAgainBtn.classList.remove("hidden");
+    gotItBtn.textContent = type === "action" ? "I did it" : "I got it";
+    tryAgainBtn.textContent = type === "action" ? "Need help" : "Try again";
+    startTimer(type === "sprint" && String(act.prompt).indexOf(" ") !== -1 ? 20 : 12);
+  }
+
+  function renderChoiceButtons(options, asText) {
+    choicesEl.className = "choice-grid";
+    choicesEl.classList.remove("hidden");
+    shuffle(options).forEach(function (opt) {
+      const value = typeof opt === "object" && opt && opt.word != null ? opt.word : opt;
+      const label = typeof opt === "object" && opt && opt.emoji ? opt.emoji : value;
+      const btn = document.createElement("button");
+      btn.className = "btn choice-btn";
+      btn.type = "button";
+      btn.textContent = asText ? value : label;
+      btn.onclick = function () { judgeResponse(value); };
+      choicesEl.appendChild(btn);
+    });
+  }
+
+  function setupBuild(act) {
+    const area = document.getElementById("build-area");
+    const slots = document.getElementById("build-slots");
+    const tray = document.getElementById("build-tray");
+    area.classList.remove("hidden");
+    slots.replaceChildren();
+    tray.replaceChildren();
+    buildPicked = [];
+    const letters = (act.payload && act.payload.letters) ? act.payload.letters.slice() : String(act.answer || "").toUpperCase().split("");
+    letters.forEach(function () {
+      const slot = document.createElement("div");
+      slot.className = "build-slot empty";
+      slot.textContent = "_";
+      slots.appendChild(slot);
+    });
+    const alphabet = (Content.LETTERS && Content.LETTERS.length) ? Content.LETTERS : "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const distractors = shuffle(alphabet.filter(function (L) {
+      return letters.indexOf(L) === -1;
+    })).slice(0, Math.min(3, Math.max(0, 6 - letters.length)));
+    const trayLetters = shuffle(letters.concat(distractors));
+    trayLetters.forEach(function (L) {
+      const tile = document.createElement("button");
+      tile.type = "button";
+      tile.className = "build-tile";
+      tile.textContent = L;
+      tile.onclick = function () {
+        if (buildPicked.length >= letters.length) return;
+        buildPicked.push(L);
+        tile.disabled = true;
+        renderBuildSlots(letters.length);
+        playSfx("click");
+      };
+      tray.appendChild(tile);
+    });
+  }
+
+  function renderBuildSlots(len) {
+    const slots = document.getElementById("build-slots");
+    slots.replaceChildren();
+    for (let i = 0; i < len; i++) {
+      const slot = document.createElement("div");
+      slot.className = "build-slot" + (buildPicked[i] ? "" : " empty");
+      slot.textContent = buildPicked[i] || "_";
+      slots.appendChild(slot);
+    }
+  }
+
+  document.getElementById("build-clear").onclick = function () {
+    if (!currentItem || currentItem.type !== "build") return;
+    setupBuild(currentItem);
+  };
+  document.getElementById("build-check").onclick = function () {
+    if (!roundActive || !currentItem || currentItem.type !== "build") return;
+    judgeResponse(buildPicked.join("").toLowerCase());
+  };
+
+  function judgeResponse(value) {
+    if (!roundActive || !currentItem) return;
+    const result = Engine.evaluateActivity(currentItem, value);
+    if (result.correct) handleCorrect();
+    else handleMiss(result.message);
+  }
+
+  function flashCard(kind) {
+    playScreen.classList.remove("ok", "bad", "shake");
+    playScreen.classList.add(kind === "ok" ? "ok" : "bad");
+    if (kind !== "ok" && !reduceMotionOn()) playScreen.classList.add("shake");
+    setTimeout(function () { playScreen.classList.remove("ok", "bad", "shake"); }, 700);
+  }
+  function honeyConfetti() {
+    if (reduceMotionOn()) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+    for (let i = 0; i < 16; i++) {
+      const dot = document.createElement("span");
+      dot.className = "confetti";
+      dot.style.left = Math.random() * 90 + 5 + "%";
+      dot.style.background = colors[i % colors.length];
+      playScreen.appendChild(dot);
+      setTimeout(function () { dot.remove(); }, 1000);
+    }
+  }
+  function launchCelebration(kind) {
+    if (reduceMotionOn()) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
+    const big = kind === "champion";
+    celebrateEl.replaceChildren();
+    for (let i = 0; i < (big ? 16 : 10); i++) {
+      const ribbon = document.createElement("span");
+      ribbon.className = "streamer";
+      ribbon.style.left = (4 + i * (92 / Math.max((big ? 16 : 10) - 1, 1))) + "%";
+      ribbon.style.height = 38 + Math.random() * 28 + "vh";
+      ribbon.style.background = "linear-gradient(180deg, " + colors[i % colors.length] + ", transparent)";
+      celebrateEl.appendChild(ribbon);
+    }
+    for (let i = 0; i < (big ? 90 : 48); i++) {
+      const bit = document.createElement("span");
+      bit.className = "party-confetti";
+      bit.style.left = Math.random() * 100 + "%";
+      bit.style.background = colors[i % colors.length];
+      bit.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+      celebrateEl.appendChild(bit);
+    }
+    playSfx(big ? "fanfare" : "sparkle");
+    setTimeout(function () { celebrateEl.replaceChildren(); }, big ? 4800 : 3200);
+  }
+
+  function showOverlay(opts) {
+    overlayTitle.textContent = opts.title;
+    overlayMsg.textContent = opts.message;
+    overlayBtn.textContent = opts.button || "Continue";
+    overlayForm.classList.toggle("hidden", !opts.askName);
+    overlay.classList.remove("hidden");
+    overlayCallback = opts.onContinue || null;
+    if (opts.askName) { nameInput.value = profile.name || ""; nameInput.focus(); }
+    else overlayBtn.focus();
+  }
+  function hideOverlay() {
+    overlay.classList.add("hidden");
+    const cb = overlayCallback;
+    overlayCallback = null;
+    if (cb) cb();
+  }
+  overlayBtn.onclick = function () {
+    if (!overlayForm.classList.contains("hidden")) {
+      const n = sanitizeName(nameInput.value) || profile.name || "Player";
+      profile.name = n;
+      Engine.saveProfile(profile);
+      saveScore(n, score + (profile.xp % 100));
+      renderLeaderboard();
+    }
+    hideOverlay();
+  };
+
+  function askConfirm(title, message, onYes) {
+    document.getElementById("confirm-title").textContent = title;
+    document.getElementById("confirm-msg").textContent = message;
+    confirmCallback = onYes;
+    confirmEl.classList.remove("hidden");
+    document.getElementById("confirm-no").focus();
+  }
+  document.getElementById("confirm-no").onclick = function () {
+    confirmEl.classList.add("hidden");
+    confirmCallback = null;
+  };
+  document.getElementById("confirm-yes").onclick = function () {
+    confirmEl.classList.add("hidden");
+    const cb = confirmCallback;
+    confirmCallback = null;
+    if (cb) cb();
+  };
+
+  function setPlayingOff() {
+    roundActive = false;
+    stopTimer();
+  }
+
+  function handleCorrect() {
+    if (!roundActive) return;
+    setPlayingOff();
+    score++;
+    streak++;
+    stars = Math.min(5, stars + 1);
+    if (placementMode && currentItem) {
+      placementResults.push({ tier: currentItem.tier || 1, correct: true });
+    }
+    Engine.afterActivityResult(profile, currentItem, true, streak);
+    updateHud();
+    honeyConfetti();
+    flashCard("ok");
+    playSound("correct");
+    setCompanionLine("correct");
+    const localCoach = Engine.coachMessage(profile, "correct", { streak: streak });
+    setCoachText(localCoach, "local");
+    if (AI && profile.coachEnabled) {
+      AI.coach(profile, "correct", { streak: streak }, currentItem).then(function (res) {
+        if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+      });
+    }
+    setTimeout(function () {
+      activityIndex++;
+      nextActivity();
+    }, 700);
+  }
+
+  function handleMiss(message) {
+    if (!roundActive) return;
+    setPlayingOff();
+    streak = 0;
+    lives--;
+    if (placementMode && currentItem) {
+      placementResults.push({ tier: currentItem.tier || 1, correct: false });
+    }
+    Engine.afterActivityResult(profile, currentItem, false, 0);
+    updateHud();
+    flashCard("bad");
+    playSound("wrong");
+    setCompanionLine("miss");
+    const localCoach = Engine.coachMessage(profile, "miss");
+    function showMissOverlay(coachText) {
+      if (lives > 0) {
+        playSfx("life");
+        showOverlay({
+          title: "Oops!",
+          message: message + " " + coachText + " Lives left: " + lives + ".",
+          button: "Next",
+          onContinue: function () {
+            activityIndex++;
+            nextActivity();
+          }
+        });
+      } else {
+        finishLesson(false, message);
+      }
+    }
+    if (AI && profile.coachEnabled && !placementMode) {
+      AI.coach(profile, "miss", {}, currentItem).then(function (res) {
+        showMissOverlay((res && res.ok && res.message) ? res.message : localCoach);
+      });
+    } else {
+      showMissOverlay(localCoach);
+    }
+  }
+
+  function finishLesson(success, extraMessage) {
+    setPlayingOff();
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    const elapsed = Date.now() - lessonStartedAt;
+    Engine.addTime(profile, elapsed || Engine.estimateLessonMs(activityQueue.length));
+
+    if (placementMode) {
+      const placement = Engine.runPlacement(placementResults);
+      if (!placement.reliable && !success) {
+        placementMode = false;
+        showOverlay({
+          title: "Placement paused",
+          message: "Not enough answers yet to place you reliably. Pick a reading level, or try Placement again when you are ready.",
+          button: "Choose level",
+          onContinue: function () {
+            if (!profile.gradeBandSet) {
+              renderGradePicker();
+              showScreen("grade");
+            } else {
+              renderWorldMap();
+              showScreen("map");
+            }
+          }
+        });
         return;
       }
-      const list = document.createElement("ol");
-      leaderboard.forEach((entry) => {
-        const li = document.createElement("li");
-        li.textContent = entry.name + ": " + entry.score;
-        list.appendChild(li);
+      Engine.applyPlacement(profile, placement);
+      launchCelebration("milestone");
+      const band = Engine.getGradeBandConfig(placement.tier) || {};
+      let msg = "Score " + placement.score + " from " + placement.answered + " answers. Suggested level: " +
+        (band.label || ("Band " + placement.tier)) + " — " + (band.name || "") + ".";
+      if (!placement.reliable) {
+        msg += " (Partial quiz — you can re-run Placement anytime.)";
+      }
+      if (placement.earlyUnlockWorld) {
+        msg += " You also unlocked the next world early!";
+      }
+      showOverlay({
+        title: "Placement complete",
+        message: msg,
+        button: "Open map",
+        onContinue: function () {
+          placementMode = false;
+          renderWorldMap();
+          showScreen("map");
+        }
       });
-      body.appendChild(list);
+      return;
     }
 
-    function clearLeaderboard() {
+    if (success && currentLesson) {
+      const lessonKey = currentWorldId + ":" + currentNodeId + ":" + currentLesson.id;
+      Engine.applyReward(profile, currentLesson.reward, {
+        lessonKey: lessonKey,
+        streak: streak
+      });
+      const nodeJustMastered = Engine.markNodeCompleteIfReady(profile, currentWorldId, currentNodeId);
+      if (nodeJustMastered && Engine.markCelebration(profile, "node-" + currentWorldId + ":" + currentNodeId)) showCelebration("Node mastered!");
+      let engageInfo = { newCompanions: [], stageInfo: null, labUnlocked: false };
+      if (bossMode && currentBossKey) {
+        const parts = currentBossKey.split(":");
+        Engine.clearBoss(profile, parts[0], parts[1]);
+        if (Engine.markCelebration(profile, "boss-" + currentBossKey)) showCelebration("Boss cleared! Mastery shines.");
+        setCompanionLine("boss");
+        bossMode = false; currentBossKey = null;
+      } else if (dailyMode) {
+        const dres = Engine.completeDaily(profile);
+        if (!dres.already && Engine.markCelebration(profile, "daily-" + Engine.dayKeyNow())) showCelebration("Adventure Star earned!");
+        dailyMode = false;
+      } else if (currentWorldId && currentNodeId && currentLesson) {
+        engageInfo = Engine.onLessonCompleteEngagement(profile, currentWorldId, currentNodeId, currentLesson.id) || engageInfo;
+        setCompanionLine("complete");
+        if (engageInfo.firstLesson || Engine.countLessonsDone(profile) === 1) showCelebration("First lesson complete!");
+        if (engageInfo.stageInfo && engageInfo.stageInfo.upgraded) showCelebration("World grew: " + (engageInfo.stageInfo.label && engageInfo.stageInfo.label.label));
+        (engageInfo.newCompanions || []).forEach(function (c) { showCelebration("New companion: " + c.emoji + " " + c.name); });
+        if (engageInfo.labUnlocked && Engine.markCelebration(profile, "lab-unlock")) showCelebration("Secret Lab unlocked!");
+      }
+      launchCelebration(score >= 8 ? "champion" : "milestone");
+      playSfx("fanfare");
+      const localTip = Engine.coachMessage(profile, "lesson-complete");
+      function showComplete(tip) {
+        showOverlay({
+          title: "Lesson complete!",
+          message: (extraMessage ? extraMessage + " " : "") +
+            "You earned XP and stars. " + tip,
+          button: "Save score",
+          askName: true,
+          onContinue: function () {
+            refreshHeaderStats();
+            openNode(currentWorldId, currentNodeId);
+          }
+        });
+      }
+      if (AI && profile.coachEnabled) {
+        AI.coach(profile, "lesson-complete").then(function (res) {
+          showComplete((res && res.ok && res.message) ? res.message : localTip);
+        });
+      } else {
+        showComplete(localTip);
+      }
+    } else if (bossMode) {
+      bossMode = false;
+      currentBossKey = null;
+      showOverlay({
+        title: "Not yet — let's practice",
+        message: "This mastery check is for learning, not losing. Skills were saved. Try a lesson, then retry the challenge anytime.",
+        button: "Back to map",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
+    } else if (dailyMode) {
+      dailyMode = false;
+      showOverlay({
+        title: "Adventure paused",
+        message: (extraMessage || "That's okay!") + " Today's Adventure is optional—try again anytime. Progress was saved.",
+        button: "Back to map",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
+    } else {
+      showOverlay({
+        title: "Lesson paused",
+        message: (extraMessage || "Out of lives.") + " Progress on skills was still saved. " +
+          Engine.coachMessage(profile, "miss"),
+        button: "Back",
+        onContinue: function () {
+          if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
+          else { renderWorldMap(); showScreen("map"); }
+        }
+      });
+    }
+  }
+
+  function withParentGate(action) {
+    if (Engine.parentSessionActive(profile)) {
+      action();
+      return;
+    }
+    const creating = !Engine.hasParentPin(profile);
+    const pinOverlay = document.getElementById("pin-overlay");
+    const pinInput = document.getElementById("pin-input");
+    document.getElementById("pin-title").textContent = creating ? "Create parent PIN" : "Parent PIN";
+    document.getElementById("pin-msg").textContent = creating
+      ? "Set a 4-digit PIN to protect grade changes and reset."
+      : "Enter your 4-digit parent PIN.";
+    pinInput.value = "";
+    pinOverlay.classList.remove("hidden");
+    pinInput.focus();
+
+    function cleanup() {
+      pinOverlay.classList.add("hidden");
+      document.getElementById("pin-ok").onclick = null;
+      document.getElementById("pin-cancel").onclick = null;
+    }
+
+    document.getElementById("pin-cancel").onclick = function () {
+      cleanup();
+    };
+    document.getElementById("pin-ok").onclick = function () {
+      const pin = pinInput.value;
+      if (creating) {
+        const res = Engine.setParentPin(profile, pin);
+        if (!res.ok) {
+          showOverlay({ title: "PIN needed", message: res.message, button: "OK" });
+          return;
+        }
+        Engine.unlockParentSession(profile, 10);
+        cleanup();
+        action();
+        return;
+      }
+      if (!Engine.verifyParentPin(profile, pin)) {
+        showOverlay({ title: "Wrong PIN", message: "That PIN did not match. Try again.", button: "OK" });
+        return;
+      }
+      Engine.unlockParentSession(profile, 10);
+      cleanup();
+      action();
+    };
+  }
+
+  function renderParent() {
+    const report = Engine.parentReport(profile);
+    document.getElementById("parent-summary").textContent =
+      report.name + " · " + report.gradeLabel + " (" + report.gradeName + ") · " +
+      report.xp + " XP · " + report.stars + " stars · ~" + report.minutes + " min reading";
+    document.getElementById("parent-coach").textContent = report.coachTip;
+    if (AI && profile.coachEnabled) {
+      AI.coach(profile, "parent").then(function (res) {
+        if (res && res.ok && res.message) {
+          document.getElementById("parent-coach").textContent = res.message;
+        }
+      });
+    }
+    const gradePanel = document.getElementById("parent-grade");
+    gradePanel.replaceChildren();
+    const gradeInfo = document.createElement("p");
+    gradeInfo.className = "muted";
+    gradeInfo.textContent = "Current level: " + report.gradeLabel + " · " + report.gradeName +
+      (report.reviewModeEnabled ? " · Review mode on" : "") +
+      (Engine.hasParentPin(profile) ? " · PIN on" : " · set a PIN to lock controls");
+    gradePanel.appendChild(gradeInfo);
+    const gradeActions = document.createElement("div");
+    gradeActions.className = "actions";
+    gradeActions.style.marginTop = "0.5rem";
+    const downBtn = document.createElement("button");
+    downBtn.className = "btn secondary";
+    downBtn.type = "button";
+    downBtn.textContent = "Move down (review)";
+    downBtn.disabled = report.gradeBand <= 1;
+    downBtn.onclick = function () {
+      withParentGate(function () {
+        Engine.bumpGradeDown(profile);
+        renderParent();
+        renderWorldMap();
+      });
+    };
+    const upBtn = document.createElement("button");
+    upBtn.className = "btn secondary";
+    upBtn.type = "button";
+    upBtn.textContent = "Move up a level";
+    upBtn.disabled = report.gradeBand >= 9;
+    upBtn.onclick = function () {
+      withParentGate(function () {
+        Engine.bumpGradeUp(profile);
+        renderParent();
+        renderWorldMap();
+      });
+    };
+    const reviewBtn = document.createElement("button");
+    reviewBtn.className = "btn secondary";
+    reviewBtn.type = "button";
+    reviewBtn.textContent = report.reviewModeEnabled ? "Hide review worlds" : "Show review worlds";
+    reviewBtn.onclick = function () {
+      withParentGate(function () {
+        Engine.setReviewMode(profile, !profile.reviewModeEnabled);
+        renderParent();
+        renderWorldMap();
+      });
+    };
+    const pinBtn = document.createElement("button");
+    pinBtn.className = "btn secondary";
+    pinBtn.type = "button";
+    pinBtn.textContent = Engine.hasParentPin(profile) ? "Change PIN" : "Set PIN";
+    pinBtn.onclick = function () {
+      withParentGate(function () {
+        const pinOverlay = document.getElementById("pin-overlay");
+        const pinInput = document.getElementById("pin-input");
+        document.getElementById("pin-title").textContent = "Set new PIN";
+        document.getElementById("pin-msg").textContent = "Enter a new 4-digit PIN.";
+        pinInput.value = "";
+        pinOverlay.classList.remove("hidden");
+        pinInput.focus();
+        document.getElementById("pin-cancel").onclick = function () {
+          pinOverlay.classList.add("hidden");
+        };
+        document.getElementById("pin-ok").onclick = function () {
+          const res = Engine.setParentPin(profile, pinInput.value);
+          pinOverlay.classList.add("hidden");
+          showOverlay({
+            title: res.ok ? "PIN saved" : "PIN not saved",
+            message: res.ok ? "Parent controls stay locked behind this PIN." : res.message,
+            button: "OK",
+            onContinue: renderParent
+          });
+        };
+      });
+    };
+    gradeActions.appendChild(downBtn);
+    gradeActions.appendChild(upBtn);
+    gradeActions.appendChild(reviewBtn);
+    gradeActions.appendChild(pinBtn);
+    gradePanel.appendChild(gradeActions);
+    const bars = document.getElementById("skill-bars");
+    bars.replaceChildren();
+    report.skills.forEach(function (s) {
+      const row = document.createElement("div");
+      row.className = "skill-row";
+      row.innerHTML =
+        "<label><span>" + s.label + (s.mastery ? " ✓" : "") + "</span><span>" + s.score + "%</span></label>" +
+        '<div class="skill-track"><div class="skill-fill" style="width:' + s.score + '%"></div></div>';
+      bars.appendChild(row);
+    });
+    const worldProgress = document.getElementById("world-progress");
+    worldProgress.replaceChildren();
+    report.worlds.forEach(function (w) {
+      const p = document.createElement("p");
+      p.className = "muted";
+      p.textContent = w.name + ": " + (w.unlocked ? (w.nodesDone + "/" + w.nodesTotal + " nodes") : "locked") +
+        (w.complete ? " · complete" : "");
+      worldProgress.appendChild(p);
+    });
+    const recent = document.createElement("p");
+    recent.className = "muted";
+    recent.style.marginTop = "0.6rem";
+    recent.textContent = "Recent: " + (report.recent.length
+      ? report.recent.slice(0, 5).map(function (h) {
+          return (h.correct ? "✓" : "✗") + " " + (h.skill || h.type);
+        }).join(", ")
+      : "none yet");
+    worldProgress.appendChild(recent);
+  }
+
+  function renderRewards() {
+    document.getElementById("reward-xp").textContent = "XP: " + profile.xp;
+    document.getElementById("reward-stars").textContent = "Stars: " + profile.stars;
+    const list = document.getElementById("cosmetic-list");
+    list.replaceChildren();
+    Engine.availableCosmetics(profile).forEach(function (c) {
+      const row = document.createElement("div");
+      row.className = "cosmetic-row";
+      const info = document.createElement("div");
+      info.innerHTML = "<strong>" + c.name + "</strong><div class='muted'>" +
+        (c.owned ? "Owned" : (c.unlocked ? ("Unlock for " + c.cost + " XP") : "Need more stars")) + "</div>";
+      const actions = document.createElement("div");
+      actions.style.display = "flex";
+      actions.style.gap = "0.35rem";
+      if (!c.owned && c.unlocked) {
+        const buy = document.createElement("button");
+        buy.className = "btn";
+        buy.type = "button";
+        buy.textContent = "Get";
+        buy.onclick = function () {
+          const res = Engine.unlockCosmetic(profile, c.id);
+          showOverlay({ title: res.ok ? "Unlocked!" : "Not yet", message: res.message, button: "OK", onContinue: renderRewards });
+        };
+        actions.appendChild(buy);
+      }
+      if (c.owned && c.id.indexOf("frame-") === 0) {
+        const eq = document.createElement("button");
+        eq.className = "btn secondary";
+        eq.type = "button";
+        eq.textContent = profile.equippedFrame === c.id ? "Equipped" : "Equip";
+        eq.onclick = function () {
+          profile.equippedFrame = profile.equippedFrame === c.id ? "" : c.id;
+          Engine.saveProfile(profile);
+          applyFrameClass();
+          renderRewards();
+        };
+        actions.appendChild(eq);
+      }
+      row.appendChild(info);
+      row.appendChild(actions);
+      list.appendChild(row);
+    });
+  }
+
+  function renderExport() {
+    document.getElementById("export-box").value = Engine.exportProfile(profile);
+    const aiSt = AI ? AI.getStatus() : { available: false };
+    document.getElementById("classroom-coach").innerHTML =
+      "<strong>Classroom challenge (self):</strong> " + Engine.coachMessage(profile, "map") +
+      " Best weekly lessons: " + (profile.personalBest.weeklyReads || 0) +
+      ". Coach is " + (profile.coachEnabled ? "on" : "off") +
+      ". AI API: " + (aiSt.available ? "connected (" + (aiSt.model || "model") + ")" : "not configured — set OPENAI_API_KEY on Vercel") + ".";
+  }
+
+  /* Nav bindings */
+  document.getElementById("save-name").onclick = function () {
+    profile.name = sanitizeName(document.getElementById("player-name").value);
+    Engine.saveProfile(profile);
+    playSfx("click");
+    refreshHeaderStats();
+  };
+  document.getElementById("path-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("node-back").onclick = function () {
+    openWorld(currentWorldId, currentPathOptions || {});
+  };
+  document.getElementById("quit-lesson").onclick = function () {
+    setPlayingOff();
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (placementMode) {
+      placementMode = false;
+      placementResults = [];
+      showOverlay({
+        title: "Placement canceled",
+        message: profile.gradeBandSet
+          ? "No placement changes were saved."
+          : "Pick a reading level on the next screen, or try Placement again later.",
+        button: "OK",
+        onContinue: function () {
+          if (!profile.gradeBandSet) {
+            renderGradePicker();
+            showScreen("grade");
+          } else {
+            renderWorldMap();
+            showScreen("map");
+          }
+        }
+      });
+      return;
+    }
+    if (currentWorldId && currentNodeId) openNode(currentWorldId, currentNodeId);
+    else { renderWorldMap(); showScreen("map"); }
+  };
+  document.getElementById("btn-ask-ai").onclick = function () {
+    playSfx("click");
+    if (!profile.coachEnabled) {
+      showOverlay({ title: "Coach off", message: "Turn the coach on in Export / classroom settings first.", button: "OK" });
+      return;
+    }
+    const btn = document.getElementById("btn-ask-ai");
+    btn.disabled = true;
+    setCoachText("Thinking…", "local");
+    const local = Engine.coachMessage(profile, "ask") || Engine.coachMessage(profile, "map");
+    if (!AI) {
+      setCoachText(local, "local");
+      btn.disabled = false;
+      return;
+    }
+    AI.coach(profile, "ask").then(function (res) {
+      if (res && res.ok && res.message) setCoachText(res.message, res.source || "openai");
+      else {
+        setCoachText(local || "Keep reading — you are doing great!", "local");
+        if ((res && res.error === "missing_key") || (AI.getStatus() && !AI.getStatus().available)) {
+          showOverlay({
+            title: "AI not configured",
+            message: "Add OPENAI_API_KEY in Vercel Environment Variables, redeploy, then try again. Local coach still works offline.",
+            button: "OK"
+          });
+        }
+      }
+      btn.disabled = false;
+      updateAiStatusBadge();
+    });
+  };
+  document.getElementById("btn-ai-hint").onclick = function () {
+    playSfx("click");
+    if (!currentItem) return;
+    const btn = document.getElementById("btn-ai-hint");
+    btn.disabled = true;
+    const fallback = "Look at the whole sentence or picture, then eliminate options that do not fit.";
+    if (!AI) {
+      showOverlay({ title: "Hint", message: fallback, button: "OK" });
+      btn.disabled = false;
+      return;
+    }
+    AI.hint(profile, currentItem).then(function (res) {
+      showOverlay({
+        title: res && res.ok ? "AI Hint" : "Hint",
+        message: (res && res.ok && res.message) ? res.message : fallback,
+        button: "OK"
+      });
+      btn.disabled = false;
+      updateAiStatusBadge();
+    });
+  };
+  document.getElementById("btn-change-grade").onclick = function () {
+    playSfx("click");
+    renderGradePicker();
+    showScreen("grade");
+  };
+  document.getElementById("grade-use-placement").onclick = function () {
+    playSfx("click");
+    showScreen("map");
+    startPlacement();
+  };
+  document.getElementById("btn-review-toggle").onclick = function () {
+    playSfx("click");
+    Engine.setReviewMode(profile, !profile.reviewModeEnabled);
+    renderWorldMap();
+  };
+  document.getElementById("btn-placement").onclick = function () {
+    playSfx("click");
+    if (!ensureGradeSelected()) return;
+    startPlacement();
+  };
+  document.getElementById("btn-parent").onclick = function () {
+    playSfx("click");
+    withParentGate(function () {
+      renderParent();
+      showScreen("parent");
+    });
+  };
+  document.getElementById("btn-rewards").onclick = function () {
+    playSfx("click");
+    renderRewards();
+    showScreen("rewards");
+  };
+  document.getElementById("btn-daily").onclick = function () { playSfx("click"); startDailyAdventure(); };
+  document.getElementById("btn-lab").onclick = function () {
+    playSfx("click");
+    if (!profile.engagement.labUnlocked) {
+      showOverlay({ title: "Lab locked", message: "Complete a few lessons to open the Secret Lab.", button: "OK" });
+      return;
+    }
+    renderLab();
+    showScreen("lab");
+  };
+  document.getElementById("btn-companions").onclick = function () {
+    playSfx("click"); renderCompanions(); showScreen("companions");
+  };
+  document.getElementById("lab-back").onclick = function () { renderWorldMap(); showScreen("map"); };
+  document.getElementById("companions-back").onclick = function () { renderWorldMap(); showScreen("map"); };
+  document.getElementById("lab-save").onclick = function () {
+    const res = Engine.saveLabCreation(profile, document.getElementById("lab-input").value);
+    showOverlay({ title: res.ok ? "Saved!" : "Hmm", message: res.ok ? "Your creation is in the lab." : res.message, button: "OK", onContinue: renderLab });
+  };
+  document.getElementById("btn-export").onclick = function () {
+    playSfx("click");
+    renderExport();
+    showScreen("export");
+  };
+  document.getElementById("parent-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("rewards-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("export-back").onclick = function () {
+    renderWorldMap();
+    showScreen("map");
+  };
+  document.getElementById("reset-progress").onclick = function () {
+    withParentGate(function () {
+      askConfirm("Reset progress?", "This clears Spelling World progress on this device (not the leaderboard).", function () {
+        const pin = profile.parentPin;
+        profile = Engine.defaultProfile();
+        if (pin) profile.parentPin = pin;
+        Engine.saveProfile(profile);
+        renderWorldMap();
+        showScreen("map");
+      });
+    });
+  };
+  document.getElementById("do-export").onclick = function () {
+    const text = Engine.exportProfile(profile);
+    document.getElementById("export-box").value = text;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        showOverlay({ title: "Copied", message: "Profile JSON copied to clipboard.", button: "OK" });
+      }).catch(function () {
+        showOverlay({ title: "Export ready", message: "Copy the text from the box.", button: "OK" });
+      });
+    } else {
+      showOverlay({ title: "Export ready", message: "Copy the text from the box.", button: "OK" });
+    }
+  };
+  document.getElementById("do-import").onclick = function () {
+    try {
+      profile = Engine.importProfile(document.getElementById("import-box").value);
+      showOverlay({
+        title: "Imported",
+        message: "Profile loaded for " + (profile.name || "Player") + ".",
+        button: "OK",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
+    } catch (err) {
+      showOverlay({ title: "Import failed", message: "Could not read that JSON.", button: "OK" });
+    }
+  };
+  document.getElementById("toggle-coach").onclick = function () {
+    profile.coachEnabled = !profile.coachEnabled;
+    Engine.saveProfile(profile);
+    renderExport();
+  };
+
+  const answerSubmit = document.getElementById("answer-submit");
+  if (answerSubmit) answerSubmit.onclick = function () { playSfx("click"); submitTypedAnswer(); };
+  const answerInput = document.getElementById("answer-input");
+  if (answerInput) answerInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") { e.preventDefault(); submitTypedAnswer(); }
+  });
+
+  speakBtn.onclick = function () {
+    if (!currentItem) return;
+    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text);
+    else if (currentItem.type === "equation" && currentItem.payload && currentItem.payload.equation) speakText(currentItem.speak || currentItem.payload.equation);
+    else speakText(currentItem.speak || currentItem.prompt);
+  };
+  gotItBtn.onclick = function () {
+    if (!roundActive || !currentItem) return;
+    if (currentItem.type !== "sprint" && currentItem.type !== "action") return;
+    judgeResponse(true);
+  };
+  tryAgainBtn.onclick = function () {
+    if (!roundActive || !currentItem) return;
+    if (currentItem.type !== "sprint" && currentItem.type !== "action") return;
+    handleMiss("Keep trying. It was: " + (currentItem.answer || currentItem.prompt));
+  };
+
+  document.getElementById("clear-lb").onclick = function () {
+    askConfirm("Clear leaderboard?", "This removes all saved scores on this device.", function () {
       leaderboard = [];
       localStorage.removeItem("spellbee_lb");
       renderLeaderboard();
-    }
-
-    function setDifficulty(level) {
-      currentDifficulty = level;
-      for (const key in diffBtns) diffBtns[key].classList.remove("active");
-      diffBtns[level].classList.add("active");
-      const cfg = LEVELS[level];
-      levelBadge.textContent = cfg.label + " · " + cfg.grades;
-    }
-
-    diffBtns.easy.onclick = () => setDifficulty("easy");
-    diffBtns.medium.onclick = () => setDifficulty("medium");
-    diffBtns.hard.onclick = () => setDifficulty("hard");
-
-    function renderLives() {
-      livesEl.replaceChildren();
-      for (let i = 0; i < 3; i++) {
-        const heart = document.createElement("span");
-        heart.className = "life" + (i >= lives ? " gone" : "");
-        heart.textContent = "💛";
-        heart.setAttribute("aria-hidden", "true");
-        livesEl.appendChild(heart);
-      }
-      livesEl.setAttribute("aria-label", lives + " lives remaining");
-    }
-
-    function renderBlanks() {
-      const cfg = LEVELS[currentDifficulty];
-      if (!cfg.blanks || !word) {
-        blanksEl.classList.add("hidden");
-        blanksEl.textContent = "";
-        return;
-      }
-      blanksEl.classList.remove("hidden");
-      const shown = word.split("").map((ch, i) => (hintUsed && i === 0 ? ch.toUpperCase() : "_"));
-      blanksEl.textContent = shown.join(" ");
-    }
-
-    function renderHintLine() {
-      if (hintUsed && !LEVELS[currentDifficulty].blanks && word) {
-        hintLine.classList.remove("hidden");
-        hintLine.textContent = "Starts with " + word[0].toUpperCase();
-      } else {
-        hintLine.classList.add("hidden");
-        hintLine.textContent = "";
-      }
-    }
-
-    function updateHud() {
-      scoreDisplay.textContent = "Score: " + score;
-      streakDisplay.textContent = streak >= 2 ? "Streak: " + streak + " 🔥" : "";
-      renderLives();
-    }
-
-    function speakWord(slow) {
-      if (!word || !window.speechSynthesis) return;
-      speechSynthesis.cancel();
-      const voice = new SpeechSynthesisUtterance(word);
-      const base = LEVELS[currentDifficulty].rate;
-      voice.rate = slow ? Math.max(0.45, base - 0.25) : base;
-      voice.pitch = 1;
-      voice.lang = "en-US";
-      speechSynthesis.speak(voice);
-    }
-
-    function speakSentence() {
-      if (!word || !window.speechSynthesis) return;
-      speechSynthesis.cancel();
-      const voice = new SpeechSynthesisUtterance(
-        "Here is that word in a sentence. Everyone wanted to learn the word " + word + "."
-      );
-      voice.rate = LEVELS[currentDifficulty].rate;
-      voice.pitch = 1;
-      voice.lang = "en-US";
-      speechSynthesis.speak(voice);
-    }
-
-    function buzzBee() {
-      if (reduceMotionOn()) return;
-      bee.classList.remove("buzz");
-      void bee.offsetWidth;
-      bee.classList.add("buzz");
-    }
-
-    function flashCard(kind) {
-      playScreen.classList.remove("ok", "bad", "shake");
-      playScreen.classList.add(kind === "ok" ? "ok" : "bad");
-      if (kind !== "ok" && !reduceMotionOn()) playScreen.classList.add("shake");
-      setTimeout(() => playScreen.classList.remove("ok", "bad", "shake"), 700);
-    }
-
-    function popScore() {
-      if (reduceMotionOn()) return;
-      scoreDisplay.classList.remove("pop");
-      void scoreDisplay.offsetWidth;
-      scoreDisplay.classList.add("pop");
-      const plus = document.createElement("div");
-      plus.className = "float-plus";
-      plus.textContent = "+1";
-      playScreen.appendChild(plus);
-      setTimeout(() => plus.remove(), 900);
-    }
-
-    function honeyConfetti() {
-      if (reduceMotionOn()) return;
-      const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
-      for (let i = 0; i < 16; i++) {
-        const dot = document.createElement("span");
-        dot.className = "confetti";
-        dot.style.left = Math.random() * 90 + 5 + "%";
-        dot.style.background = colors[i % colors.length];
-        dot.style.animationDelay = Math.random() * 0.12 + "s";
-        playScreen.appendChild(dot);
-        setTimeout(() => dot.remove(), 1000);
-      }
-    }
-
-    function launchCelebration(level) {
-      if (reduceMotionOn()) return;
-      const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff", "#b14dff"];
-      const big = level === "champion";
-      celebrateEl.replaceChildren();
-      const streamerCount = big ? 16 : 10;
-      const confettiCount = big ? 90 : 48;
-      for (let i = 0; i < streamerCount; i++) {
-        const ribbon = document.createElement("span");
-        ribbon.className = "streamer";
-        ribbon.style.left = (4 + i * (92 / Math.max(streamerCount - 1, 1))) + "%";
-        ribbon.style.height = 38 + Math.random() * 28 + "vh";
-        ribbon.style.background = "linear-gradient(180deg, " + colors[i % colors.length] + ", transparent)";
-        ribbon.style.color = colors[i % colors.length];
-        ribbon.style.animationDelay = (i * 0.07) + "s";
-        ribbon.style.animationDuration = 1.4 + Math.random() * 0.8 + "s";
-        celebrateEl.appendChild(ribbon);
-      }
-      for (let i = 0; i < confettiCount; i++) {
-        const bit = document.createElement("span");
-        bit.className = "party-confetti";
-        bit.style.left = Math.random() * 100 + "%";
-        bit.style.background = colors[i % colors.length];
-        bit.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
-        bit.style.animationDelay = Math.random() * 0.7 + "s";
-        bit.style.width = 6 + Math.random() * 7 + "px";
-        bit.style.height = 10 + Math.random() * 10 + "px";
-        celebrateEl.appendChild(bit);
-      }
-      playSfx(big ? "fanfare" : "sparkle");
-      const hold = big ? 4800 : 3200;
-      setTimeout(() => {
-        if (celebrateEl.childElementCount) celebrateEl.replaceChildren();
-      }, hold);
-    }
-
-    function setPlaying(on) {
-      roundActive = on;
-      input.disabled = !on;
-      speakBtn.disabled = !on;
-      submitBtn.disabled = !on;
-      const cfg = LEVELS[currentDifficulty];
-      hintBtn.disabled = !on || cfg.hint === "none" || hintUsed;
-      hintBtn.classList.toggle("hidden", cfg.hint === "none");
-      sentenceBtn.classList.toggle("hidden", !cfg.sentence);
-      sentenceBtn.disabled = !on || !cfg.sentence;
-      if (on) input.focus();
-    }
-
-    function startTimer() {
-      if (timer) clearInterval(timer);
-      timeLeft = LEVELS[currentDifficulty].time;
-      timerDisplay.classList.remove("urgent");
-      timerDisplay.textContent = "Timer: " + timeLeft;
-      timer = setInterval(() => {
-        timeLeft--;
-        if (timeLeft <= 5) {
-          timerDisplay.classList.add("urgent");
-          playSound("tick");
-        }
-        timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + Math.max(timeLeft, 0);
-        if (timeLeft <= 0) {
-          clearInterval(timer);
-          handleMiss("Time's up! The word was " + word + ".");
-        }
-      }, 1000);
-    }
-
-    function stopTimer() {
-      if (timer) clearInterval(timer);
-      timer = null;
-      timerDisplay.classList.remove("urgent");
-    }
-
-    function nextWord() {
-      const list = wordLists[currentDifficulty];
-      if (!deck.length) deck = shuffle(list.slice());
-      word = deck.pop();
-      hintUsed = false;
-      speakCount = 0;
-      input.value = "";
-      renderBlanks();
-      renderHintLine();
-      setPlaying(true);
-      buzzBee();
-      playSfx("buzz");
-      speakWord(false);
-      startTimer();
-    }
-
-    function startRound() {
-      getCtx();
-      score = 0;
-      lives = 3;
-      streak = 0;
-      deck = shuffle(wordLists[currentDifficulty].slice());
-      startScreen.classList.add("hidden");
-      playScreen.classList.remove("hidden");
-      updateHud();
-      nextWord();
-    }
-
-    function showOverlay(opts) {
-      overlayTitle.textContent = opts.title;
-      overlayMsg.textContent = opts.message;
-      overlayBtn.textContent = opts.button || "Continue";
-      overlayForm.classList.toggle("hidden", !opts.askName);
-      overlay.classList.remove("hidden");
-      overlayCallback = opts.onContinue || null;
-      if (opts.askName) {
-        nameInput.value = "";
-        nameInput.focus();
-      } else {
-        overlayBtn.focus();
-      }
-    }
-
-    function hideOverlay() {
-      overlay.classList.add("hidden");
-      const cb = overlayCallback;
-      overlayCallback = null;
-      if (cb) cb();
-    }
-
-    overlayBtn.onclick = function () {
-      if (!overlayForm.classList.contains("hidden")) {
-        const name = sanitizeName(nameInput.value) || "Player";
-        saveScore(name, score);
-        renderLeaderboard();
-      }
-      hideOverlay();
-    };
-
-    function goHome() {
-      if (window.speechSynthesis) speechSynthesis.cancel();
-      stopTimer();
-      word = "";
-      roundActive = false;
-      playScreen.classList.add("hidden");
-      startScreen.classList.remove("hidden");
-      timerDisplay.textContent = "Timer: 00";
-    }
-
-    function endGame(extraMessage) {
-      setPlaying(false);
-      stopTimer();
-      const champion = score >= CHAMPION_SCORE;
-      const party = score >= PARTY_SCORE;
-      if (champion) launchCelebration("champion");
-      else if (party) launchCelebration("milestone");
-      playSfx("fanfare");
-      const points = "You scored " + score + " point" + (score === 1 ? "" : "s") + ".";
-      showOverlay({
-        title: champion ? "Champion!" : "SpellBuzz over!",
-        message: (extraMessage ? extraMessage + " " : "") + points + " Add your name to the leaderboard.",
-        button: "Save score",
-        askName: true,
-        onContinue: goHome
-      });
-    }
-
-    function handleMiss(message) {
-      if (!roundActive) return;
-      roundActive = false;
-      stopTimer();
-      setPlaying(false);
-      streak = 0;
-      lives--;
-      updateHud();
-      flashCard("bad");
-      if (lives > 0) {
-        playSfx("life");
-        playSound("wrong");
-        showOverlay({
-          title: "Oops!",
-          message: message + " Lives left: " + lives + ".",
-          button: "Next word",
-          onContinue: nextWord
-        });
-      } else {
-        playSound("wrong");
-        endGame(message);
-      }
-    }
-
-    function handleCorrect() {
-      if (!roundActive) return;
-      roundActive = false;
-      stopTimer();
-      setPlaying(false);
-      score++;
-      streak++;
-      updateHud();
-      popScore();
-      honeyConfetti();
-      if (score === PARTY_SCORE || score === CHAMPION_SCORE || score === 15 || score === 20) {
-        launchCelebration(score >= CHAMPION_SCORE ? "champion" : "milestone");
-      }
-      flashCard("ok");
-      playSound("correct");
-      timerDisplay.textContent = "Correct!";
-      setTimeout(() => {
-        if (lives > 0) nextWord();
-      }, 900);
-    }
-
-    document.getElementById("play").onclick = startRound;
-
-    clearLbBtn.onclick = function () {
-      confirmEl.classList.remove("hidden");
-      document.getElementById("confirm-no").focus();
-    };
-    document.getElementById("confirm-no").onclick = function () {
-      confirmEl.classList.add("hidden");
-    };
-    document.getElementById("confirm-yes").onclick = function () {
-      clearLeaderboard();
-      confirmEl.classList.add("hidden");
-    };
-
-    speakBtn.onclick = function () {
-      speakCount++;
-      const slower = currentDifficulty === "easy" && speakCount > 1;
-      speakWord(slower);
-    };
-
-    hintBtn.onclick = function () {
-      if (!roundActive || hintUsed) return;
-      const cfg = LEVELS[currentDifficulty];
-      if (cfg.hint === "none") return;
-      hintUsed = true;
-      hintBtn.disabled = true;
-      if (cfg.hint === "cost") {
-        timeLeft = Math.max(1, timeLeft - 3);
-        timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + timeLeft;
-      }
-      renderBlanks();
-      renderHintLine();
-    };
-
-    sentenceBtn.onclick = function () {
-      speakSentence();
-    };
-
-    submitBtn.onclick = function () {
-      if (!roundActive || !word) return;
-      const userInput = input.value.trim().toLowerCase();
-      if (!userInput) return;
-      if (userInput === word.toLowerCase()) handleCorrect();
-      else handleMiss("Incorrect! The word was " + word + ".");
-    };
-
-    input.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !submitBtn.disabled) submitBtn.click();
     });
+  };
 
-    document.addEventListener("keydown", function (e) {
-      if (e.key !== "Escape") return;
-      if (!confirmEl.classList.contains("hidden")) {
-        confirmEl.classList.add("hidden");
-        return;
-      }
-      if (!overlay.classList.contains("hidden")) overlayBtn.click();
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!confirmEl.classList.contains("hidden")) { confirmEl.classList.add("hidden"); return; }
+    if (!overlay.classList.contains("hidden")) overlayBtn.click();
+  });
+  nameInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") overlayBtn.click();
+  });
+
+  document.querySelectorAll("button").forEach(function (btn) {
+    if (btn.id === "mute") return;
+    btn.addEventListener("click", function () { /* soft click already on many handlers */ });
+  });
+
+  updateMuteUi();
+  renderLeaderboard();
+  renderWorldMap();
+  if (AI && AI.checkHealth) {
+    AI.checkHealth().then(function () {
+      updateAiStatusBadge();
+      refreshCoachBanner(true);
     });
-
-    nameInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") overlayBtn.click();
-    });
-
-    updateMuteUi();
-    renderLeaderboard();
-    setDifficulty("easy");
+  }
+  if (!profile.gradeBandSet) {
+    renderGradePicker();
+    showScreen("grade");
+  } else {
+    showScreen("map");
+  }
+})();
   </script>
 </body>
 </html>

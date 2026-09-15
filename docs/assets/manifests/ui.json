@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "sparkle-icon",
+      "name": "Sparkle icon",
+      "category": "ui",
+      "path": "/assets/images/ui/sparkle.svg"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "star-badge",
+      "name": "Star badge",
+      "category": "badge",
+      "path": "/assets/images/badges/star-badge.svg"
+    }
+  ]
+}

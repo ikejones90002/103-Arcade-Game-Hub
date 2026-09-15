@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "book-owl",
+      "name": "Book Owl",
+      "category": "companion",
+      "world": "reading",
+      "path": "/assets/images/companions/reading/book-owl.svg",
+      "fallbackEmoji": "🦉"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "story-fox",
+      "name": "Story Fox",
+      "category": "companion",
+      "world": "reading",
+      "path": "/assets/images/companions/reading/story-fox.svg",
+      "fallbackEmoji": "🦊"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "word-rabbit",
+      "name": "Word Rabbit",
+      "category": "companion",
+      "world": "reading",
+      "path": "/assets/images/companions/reading/word-rabbit.svg",
+      "fallbackEmoji": "🐰"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "page-dragon",
+      "name": "Page Dragon",
+      "category": "companion",
+      "world": "reading",
+      "path": "/assets/images/companions/reading/page-dragon.svg",
+      "fallbackEmoji": "🐉"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "buzzbee",
+      "name": "Buzzbee",
+      "category": "companion",
+      "world": "spelling",
+      "path": "/assets/images/companions/spelling/buzzbee.svg",
+      "fallbackEmoji": "🐝"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "letter-owl",
+      "name": "Letter Owl",
+      "category": "companion",
+      "world": "spelling",
+      "path": "/assets/images/companions/spelling/letter-owl.svg",
+      "fallbackEmoji": "🦉"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "sound-fox",
+      "name": "Sound Fox",
+      "category": "companion",
+      "world": "spelling",
+      "path": "/assets/images/companions/spelling/sound-fox.svg",
+      "fallbackEmoji": "🦊"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "word-frog",
+      "name": "Word Frog",
+      "category": "companion",
+      "world": "spelling",
+      "path": "/assets/images/companions/spelling/word-frog.svg",
+      "fallbackEmoji": "🐸"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "number-turtle",
+      "name": "Number Turtle",
+      "category": "companion",
+      "world": "math",
+      "path": "/assets/images/companions/math/number-turtle.svg",
+      "fallbackEmoji": "🐢"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "countbot",
+      "name": "Countbot",
+      "category": "companion",
+      "world": "math",
+      "path": "/assets/images/companions/math/countbot.svg",
+      "fallbackEmoji": "🤖"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "fraction-fox",
+      "name": "Fraction Fox",
+      "category": "companion",
+      "world": "math",
+      "path": "/assets/images/companions/math/fraction-fox.svg",
+      "fallbackEmoji": "🦊"
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "equation-dragon",
+      "name": "Equation Dragon",
+      "category": "companion",
+      "world": "math",
+      "path": "/assets/images/companions/math/equation-dragon.svg",
+      "fallbackEmoji": "🐉"
+    }
+  ]
+}

@@ -6,14 +6,65 @@ Offline educational mini-games from **103 Software Solutions LLC**. Open [`docs/
 
 | Game | File | Skill |
 |---|---|---|
-| SpellBuzz | [`docs/spellbuzz.html`](docs/spellbuzz.html) | Spelling / listening |
-| NumBuzz | [`docs/numbuzz.html`](docs/numbuzz.html) | Arithmetic |
+| SpellBuzz | [`docs/spellbuzz.html`](docs/spellbuzz.html) | Spelling World (curriculum adventure) |
+| NumBuzz | [`docs/numbuzz.html`](docs/numbuzz.html) | Math World (curriculum adventure) |
 | Word Quest | [`docs/wordquest.html`](docs/wordquest.html) | Reading World (curriculum adventure) |
 | FlipMatch | [`docs/flipmatch.html`](docs/flipmatch.html) | Memory pairs |
 | PatternPop | [`docs/patternpop.html`](docs/patternpop.html) | Patterns / logic |
 | RhymeTime | [`docs/rhymetime.html`](docs/rhymetime.html) | Phonemic awareness |
 
-Shared look: [`docs/theme.css`](docs/theme.css), sounds in [`docs/sounds/`](docs/sounds/), company mark in the footer (`docs/logo.png`). The hub hero is the **103 Arcade** logo (`docs/arcade-logo.svg`).
+Shared look: [`docs/theme.css`](docs/theme.css), sounds in [`docs/sounds/`](docs/sounds/), company mark in the footer (`docs/logo.png`). The hub hero is the **103 Arcade** logo (`docs/arcade-logo.svg`). Shared AI client: [`docs/arcade-ai.js`](docs/arcade-ai.js) → `/api/coach`, `/api/hint`, `/api/health`.
+
+## Architecture: three independent Worlds
+
+Reading World is the **reference product pattern**, not a runtime dependency. Spelling World and Math World are sibling games that mirror the same experience (grade bands, map, lessons, placement, parent PIN, AI) with their own files and profiles.
+
+| | Reading | Spelling | Math |
+|---|---|---|---|
+| Shell | `wordquest.html` | `spellbuzz.html` | `numbuzz.html` |
+| Content | `wordquest-content.js` | `spellbuzz-content.js` | `numbuzz-content.js` |
+| Engine | `wordquest-engine.js` | `spellbuzz-engine.js` | `numbuzz-engine.js` |
+| Profile key | `wordquest_profile` | `spellbuzz_profile` | `numbuzz_profile` |
+
+Do **not** import `wordquest-engine.js` / `wordquest-content.js` into SpellBuzz or NumBuzz.
+
+## World Engagement Layer
+
+Each Learning World pairs a **curriculum engine** with a local **engagement layer** (map-first motivation). Patterns are copied per world—there is no shared `engagement-engine.js` and no cross-game profile.
+
+```text
+Curriculum Engine  +  Engagement Layer  →  Learning World
+Discover → Next Mission → Learn → Practice → Master → Soft Boss → Reward → World grows
+```
+
+**Per-world profile namespace** `engagement`: avatar, companions, worldStages, currentMission, daily, missionsSeen, bossesCleared, celebrationsSeen, labUnlocked, labCreations, lastPlayedAt.
+
+**Features (all three worlds):** persistent avatar chrome · visible world stages · always-on **Next Mission** card · collectible companions with local encouragement lines · soft mastery bosses (retry/review, never wipe progress) · optional **Today's Adventure** · **Secret Lab** creative sandbox after milestones · short milestone celebrations only.
+
+**Child-experience rules:** never remove earned progress, never reset for inactivity, never shame mistakes, no countdown pressure on core curriculum, no required daily attendance, no gambling rewards, no hiding lessons behind engagement, no purchases for progression, no streak punishment (friendly “learning garden” welcome-back instead). Deferred: leaderboards, multiplayer, chat, energy/lives, FOMO streaks, elaborate inventories.
+
+**Independence:** Spell/Math engagement state lives only in `spellbuzz_profile` / `numbuzz_profile`. Companion chatter is local; Ask AI Coach / AI Hint / parent PIN / placement / export stay unchanged.
+
+Light shared CSS only in [`docs/theme.css`](docs/theme.css) (`.next-mission`, `.stage-strip`, `.companion-line`, `.celebration-toast`, lab chrome)—still using existing `wq-*` tokens.
+
+## Asset & Audio Pipeline
+
+Shared **platform** library (like theme + AI)—not a shared game engine. Served from [`docs/assets/`](docs/assets/) at URLs `/assets/...` via the existing Vercel rewrite.
+
+| Piece | Path |
+|---|---|
+| Art bible | [`docs/ART-DIRECTION.md`](docs/ART-DIRECTION.md) |
+| Loader | [`docs/arcade-assets.js`](docs/arcade-assets.js) (`window.ArcadeAssets`) |
+| Manifests | [`docs/assets/manifests/`](docs/assets/manifests/) (`avatars`, `companions`, `worlds`, `audio`, `sources`) |
+| Tooling | `npm run assets:validate` · `assets:manifest` · `assets:svgs` |
+
+**Contract:** content and shells reference assets by **stable ID** (`ArcadeAssets.play("unlock")`, `mountAvatar`, `mountCompanion`, `mountWorldStage`). No hotlinks, no random internet downloads. Every production asset needs a `sources.json` entry.
+
+**Visuals:** layered SVG avatars (body/hair/outfit/accessory), subject companions, world-stage vignettes. Emoji fallback if a file is missing.
+
+**Audio:** curated SFX IDs in `audio.json`. Existing `correct` / `error-soft` / `tick` MP3s live under `assets/audio/ui/`; other IDs use an internal Web Audio synth bank until real files are added. Educational speech stays on browser TTS—not this library.
+
+**Independence:** shared assets ≠ shared profiles. Spell/Math still do not import `wordquest-engine.js`.
 
 ## Word Quest — Reading World
 
@@ -29,7 +80,31 @@ Word Quest is the hub’s reading title: a **Reading World** map with nine regio
 
 **Grade-based access:** On first launch, pick a reading band (Preschool through ~6th–7th). Your band opens that world on the map. Younger worlds stay hidden unless you tap **Review earlier skills** (or a parent enables review in the Parent panel). Worlds above your band stay locked until **Placement** shows readiness or a parent moves the level up. **Phonics Hatchery** opens Alphabet Forest at Sound Grove (not Letter Camp). Parent grade/reset controls use a 4-digit PIN.
 
-**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds, 3 nodes each on 6–9); grade picker with age labels; placement quiz through band 9; skill bars; adaptive remediation; parent PIN + panel; cosmetics; profile export/import; weekly self-challenge; rule-based + optional OpenAI coach (ask, hint, miss/correct/lesson/parent tips via Vercel API).
+**Features shipped:** Alphabet Forest through Crown Library (expanded upper worlds, 3 nodes each on 6–9); grade picker with age labels; placement quiz through band 9; skill bars; adaptive remediation; parent PIN + panel; cosmetics; profile export/import; weekly self-challenge; rule-based + optional OpenAI coach (ask, hint, miss/correct/lesson/parent tips via Vercel API); World Engagement Layer (Next Mission, stages, companions, soft bosses, daily adventure, Secret Lab).
+
+## SpellBuzz — Spelling World
+
+Independent spelling curriculum (same UX pattern as Reading World). Profile: `spellbuzz_profile`.
+
+| File | Role |
+|---|---|
+| [`docs/spellbuzz.html`](docs/spellbuzz.html) | Spelling World shell |
+| [`docs/spellbuzz-content.js`](docs/spellbuzz-content.js) | 9 bands: Letter Camp → Mastery Library |
+| [`docs/spellbuzz-engine.js`](docs/spellbuzz-engine.js) | Own progression / placement / parent PIN |
+
+**Skills:** letterSounds, phonicsSpelling, sightSpelling, patternSpelling, vocabularySpelling, multisyllable, trickyWords. AI subject: `spelling`.
+
+## NumBuzz — Math World
+
+Independent math curriculum (same UX pattern as Reading World). Profile: `numbuzz_profile`.
+
+| File | Role |
+|---|---|
+| [`docs/numbuzz.html`](docs/numbuzz.html) | Math World shell |
+| [`docs/numbuzz-content.js`](docs/numbuzz-content.js) | 9 bands: Count Forest → Pre-Algebra Library |
+| [`docs/numbuzz-engine.js`](docs/numbuzz-engine.js) | Own progression / placement / parent PIN |
+
+**Skills:** counting, addition, subtraction, placeValue, multiplication, division, fractions, wordProblems, preAlgebra. AI subject: `math`.
 
 ## Deploy on Vercel (frontend + API)
 

@@ -1,21 +1,39 @@
-const SYSTEM_PROMPT =
-  "You help kids in a reading game. Give ONE short hint (max 2 sentences) that guides thinking " +
-  "without revealing the correct answer or spelling it out. No markdown.";
+function systemPromptFor(subject) {
+  const s = subject || "reading";
+  if (s === "spelling") {
+    return (
+      "You help kids in a spelling game. Give ONE short hint (max 2 sentences) that guides sounding out " +
+      "or noticing patterns WITHOUT revealing the correct spelling or listing the answer letters. No markdown."
+    );
+  }
+  if (s === "math") {
+    return (
+      "You help kids in a math game. Give ONE short hint (max 2 sentences) that guides strategy " +
+      "(count on, break apart, draw) WITHOUT revealing the numeric answer. No markdown."
+    );
+  }
+  return (
+    "You help kids in a reading game. Give ONE short hint (max 2 sentences) that guides thinking " +
+    "without revealing the correct answer or spelling it out. No markdown."
+  );
+}
 
 function buildPrompt(body) {
+  const subject = body.subject || "reading";
   const activity = body.activity || {};
   const profile = body.profile || {};
   return [
+    "Subject: " + subject,
     "Grade band: " + (profile.gradeBand || 1),
     "Activity type: " + (activity.type || "unknown"),
-    "Skill: " + (activity.skill || "reading"),
+    "Skill: " + (activity.skill || subject),
     "Prompt shown to child: " + String(activity.prompt || activity.speak || "").slice(0, 280),
-    "Story excerpt (if any): " + String((activity.payload && activity.payload.text) || "").slice(0, 280),
+    "Extra text (if any): " + String((activity.payload && (activity.payload.text || activity.payload.equation)) || "").slice(0, 280),
     "Give a helpful hint only. Do not state the answer."
   ].join("\n");
 }
 
-async function callOpenAI(userPrompt) {
+async function callOpenAI(systemPrompt, userPrompt) {
   const key = process.env.OPENAI_API_KEY;
   const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
   const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -29,7 +47,7 @@ async function callOpenAI(userPrompt) {
       temperature: 0.5,
       max_tokens: 90,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         { role: "user", content: userPrompt }
       ]
     })
@@ -80,12 +98,12 @@ module.exports = async function handler(req, res) {
   }
   body = body || {};
 
-  if (!body.activity || (!body.activity.prompt && !body.activity.speak && !(body.activity.payload && body.activity.payload.text))) {
+  if (!body.activity || (!body.activity.prompt && !body.activity.speak && !(body.activity.payload && (body.activity.payload.text || body.activity.payload.equation)))) {
     return res.status(400).json({ ok: false, error: "activity.prompt required" });
   }
 
   try {
-    const message = await callOpenAI(buildPrompt(body));
+    const message = await callOpenAI(systemPromptFor(body.subject), buildPrompt(body));
     if (!message) {
       return res.status(502).json({ ok: false, error: "Empty AI response", code: "empty" });
     }

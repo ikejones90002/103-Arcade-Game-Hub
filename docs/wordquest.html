@@ -57,7 +57,26 @@
         <button id="btn-rewards" class="btn secondary" type="button">Rewards</button>
         <button id="btn-export" class="btn secondary" type="button">Export</button>
       </div>
+      
+      <div class="engage-bar" id="engage-bar">
+        <div class="engage-avatar"><div class="asset-avatar" id="avatar-mount" aria-hidden="true"></div><span id="avatar-label">Explorer</span></div>
+        <div class="engage-companion"><div class="asset-companion" id="companion-mount" aria-hidden="true"></div><span id="companion-label">No companion yet</span></div>
+      </div>
       <div class="world-map" id="world-map" role="list"></div>
+      <div class="stage-art hidden" id="stage-art" aria-hidden="true"></div>
+      <p class="stage-strip" id="stage-strip"><strong>World growth:</strong> <span id="stage-text">Begin your adventure</span></p>
+      <button type="button" class="next-mission" id="next-mission-card" aria-label="Start next mission">
+        <div class="nm-label">Next Mission</div>
+        <div class="nm-title" id="nm-title">Pick a level to begin</div>
+        <div class="nm-blurb" id="nm-blurb">Your next adventure will appear here.</div>
+      </button>
+
+      <div class="engage-actions">
+        <button id="btn-daily" class="btn secondary" type="button">Today's Adventure</button>
+        <button id="btn-lab" class="btn secondary" type="button">Secret Lab</button>
+        <button id="btn-companions" class="btn secondary" type="button">Companions</button>
+      </div>
+
       <div class="world-map review-map hidden" id="review-map" role="list" aria-label="Review earlier skills"></div>
       <div id="leaderboard">
         <div class="lb-head">
@@ -89,6 +108,8 @@
 
     <!-- Play -->
     <section id="play-screen" class="card hidden" aria-label="Lesson">
+      <div class="mission-banner hidden" id="mission-banner"></div>
+      <div class="companion-line" id="companion-line"></div>
       <div class="hud">
         <div class="score" id="score">XP run: 0</div>
         <div class="lives" id="lives" aria-label="Lives remaining"></div>
@@ -180,6 +201,29 @@
       </div>
     </section>
 
+    
+    <section id="lab-screen" class="card hidden" aria-label="Secret Lab">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Secret Lab</h2>
+      <p class="howto" id="lab-prompt">Create something with what you learned.</p>
+      <textarea id="lab-input" class="lab-box" maxlength="800" placeholder="Create here..."></textarea>
+      <div class="actions">
+        <button id="lab-save" class="btn" type="button">Save creation</button>
+        <button id="lab-back" class="btn secondary" type="button">Back</button>
+      </div>
+      <div id="lab-list" class="muted" style="width:100%;margin-top:0.8rem;text-align:left;"></div>
+    </section>
+
+    <section id="companions-screen" class="card hidden" aria-label="Companions">
+      <h2 style="color:var(--yellow);margin-bottom:0.4rem;">Companions</h2>
+      <p class="howto">Learning friends unlock as you grow. Equip one for encouragement.</p>
+      <div id="companions-list" class="cosmetic-list"></div>
+      <div class="actions" style="margin-top:1rem;">
+        <button id="companions-back" class="btn secondary" type="button">Back</button>
+      </div>
+    </section>
+
+    <div id="celebration-toast" class="celebration-toast" aria-live="polite"></div>
+
     <footer class="site-footer">
       <img src="logo.png" alt="103 Software Solutions LLC">
       <p>&copy; 2026 Word Quest. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
@@ -224,12 +268,14 @@
     </div>
   </div>
 
-  <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
-  <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
-  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+  <audio id="snd-correct" src="assets/audio/ui/correct.mp3" preload="auto"></audio>
+  <audio id="snd-wrong" src="assets/audio/ui/error-soft.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="assets/audio/ui/tick.mp3" preload="auto"></audio>
 
   <script src="wordquest-content.js"></script>
   <script src="wordquest-engine.js"></script>
+  <script src="arcade-assets.js"></script>
+  <script src="arcade-ai.js"></script>
   <script src="wordquest-ai.js"></script>
   <script>
 (function () {
@@ -239,6 +285,9 @@
   const AI = window.WQAI;
   const Engine = window.WQEngine;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const Assets = window.ArcadeAssets;
+  const ASSET_SUBJECT = "reading";
+  if (Assets) Assets.load();
 
   let profile = Engine.loadProfile();
   Engine.ensureChallengeWeek(profile);
@@ -246,6 +295,229 @@
   Engine.saveProfile(profile);
 
   let muted = localStorage.getItem("wordquest_mute") === "1";
+  if (Assets) Assets.setMuted(muted);
+
+  let bossMode = false;
+  let dailyMode = false;
+  let currentBossKey = null;
+
+  function showCelebration(text) {
+    const el = document.getElementById("celebration-toast");
+    if (!el || !text) return;
+    el.textContent = text;
+    el.classList.add("show");
+    setTimeout(function () { el.classList.remove("show"); }, reduceMotionOn() ? 900 : 2200);
+  }
+
+  function renderEngageChrome() {
+    Engine.ensureEngagement(profile);
+    Engine.touchLastPlayed(profile);
+    const name = profile.name || "Explorer";
+    document.getElementById("avatar-label").textContent = name;
+    if (Assets) {
+      Assets.mountAvatar(document.getElementById("avatar-mount"), profile.engagement.avatar);
+    }
+    const comps = Engine.availableCompanions(profile);
+    const equipped = comps.find(function (c) { return c.equipped; });
+    if (Assets) {
+      Assets.mountCompanion(document.getElementById("companion-mount"), equipped ? (equipped.assetId || equipped.id) : "", equipped ? equipped.emoji : "✨");
+    }
+    document.getElementById("companion-label").textContent = equipped ? equipped.name : "No companion yet";
+    const band = Engine.getGradeBandConfig(profile.gradeBand || 1);
+    const worldId = band && band.worldId;
+    if (worldId) {
+      Engine.refreshWorldStage(profile, worldId);
+      const stage = Engine.getWorldStage(profile, worldId);
+      const stages = (Content.WORLD_STAGES && Content.WORLD_STAGES[worldId]) || [];
+      const strip = stages.map(function (s, i) {
+        const cur = (profile.engagement.worldStages[worldId] || 0) === i;
+        return (cur ? "[" : "") + s.icon + (cur ? "]" : "");
+      }).join(" → ");
+      document.getElementById("stage-text").textContent = (stage.icon || "") + " " + (stage.label || "") + (strip ? " · " + strip : "");
+      if (Assets) {
+        const idx = (profile.engagement.worldStages && profile.engagement.worldStages[worldId]) || 0;
+        Assets.mountWorldStage(document.getElementById("stage-art"), ASSET_SUBJECT, idx);
+      }
+    }
+    const mission = Engine.resolveNextMission(profile);
+    const nmTitle = document.getElementById("nm-title");
+    const nmBlurb = document.getElementById("nm-blurb");
+    const nmCard = document.getElementById("next-mission-card");
+    if (!mission) {
+      nmTitle.textContent = "All clear for now!";
+      nmBlurb.textContent = "Explore the map, try Today's Adventure, or visit the Secret Lab.";
+      nmCard.onclick = null;
+    } else {
+      nmTitle.textContent = (mission.emoji || "⭐") + " " + mission.title;
+      nmBlurb.textContent = mission.blurb + (mission.worldName ? " · " + mission.worldName : "");
+      nmCard.onclick = function () {
+        playSfx("click");
+        if (mission.boss) startBoss(mission.worldId, mission.nodeId);
+        else startLesson(mission.worldId, mission.nodeId, mission.lessonId);
+      };
+    }
+    const daily = Engine.getDailyState(profile);
+    document.getElementById("btn-daily").textContent = daily.completed ? "Adventure done ✓" : "Today's Adventure";
+    document.getElementById("btn-lab").disabled = !profile.engagement.labUnlocked;
+    document.getElementById("btn-lab").title = profile.engagement.labUnlocked ? "Secret Lab" : "Unlock by completing lessons";
+    if (Engine.shouldWelcomeBack(profile) && Engine.markCelebration(profile, "welcome-" + Engine.dayKeyNow())) {
+      showCelebration("Welcome back! Your garden kept growing.");
+      Engine.saveProfile(profile);
+    }
+  }
+
+  function setCompanionLine(kind) {
+    const line = Engine.companionLine(profile, kind);
+    let el = document.getElementById("companion-line");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "companion-line";
+      el.className = "companion-line";
+      const play = document.getElementById("play-screen");
+      if (play) play.insertBefore(el, play.querySelector(".hud") ? play.querySelector(".hud").nextSibling : play.firstChild);
+    }
+    el.textContent = line || "";
+  }
+
+  function startBoss(worldId, nodeId) {
+    const boss = Engine.getBoss(worldId, nodeId);
+    if (!boss) return;
+    bossMode = true;
+    dailyMode = false;
+    currentBossKey = worldId + ":" + nodeId;
+    currentWorldId = worldId;
+    currentNodeId = nodeId;
+    currentLesson = { id: "boss-" + nodeId, title: boss.title, reward: boss.reward || { xp: 15, stars: 1 }, activities: boss.activities };
+    activityQueue = (boss.activities || []).slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>" + (boss.emoji || "🐉") + " " + boss.title + "</strong> — " + (boss.blurb || "Show what you know!");
+    }
+    nextActivity();
+  }
+
+  function startDailyAdventure() {
+    const daily = Engine.getDailyState(profile);
+    if (daily.completed) {
+      showOverlay({ title: "Already done", message: "You finished Today's Adventure. Come back tomorrow—no pressure!", button: "OK" });
+      return;
+    }
+    const acts = Engine.getDailyActivities(profile);
+    if (!acts.length) {
+      showOverlay({ title: "Rest day", message: "No adventure ready—play a mission on the map!", button: "OK" });
+      return;
+    }
+    dailyMode = true;
+    bossMode = false;
+    currentLesson = { id: "daily", title: "Today's Adventure", reward: { xp: 10, stars: 1 }, activities: acts };
+    activityQueue = acts.slice();
+    activityIndex = 0;
+    score = 0; lives = 3; streak = 0; stars = 0;
+    lessonStartedAt = Date.now();
+    showScreen("play");
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>🌟 Today's Adventure</strong> — A short optional challenge. Learning only!";
+    }
+    nextActivity();
+  }
+
+  function renderCompanions() {
+    const list = document.getElementById("companions-list");
+    list.replaceChildren();
+    const avatarRow = document.createElement("div");
+    avatarRow.className = "cosmetic-row";
+    avatarRow.innerHTML = "<div><strong>Avatar look</strong><div class='muted'>Outfits unlock as you learn—never required.</div></div>";
+    const avatarActions = document.createElement("div");
+    avatarActions.className = "avatar-equip-row";
+    [["explorer","Explorer"],["wizard","Wizard"],["scientist","Scientist"],["knight","Knight"]].forEach(function (pair) {
+      const btn = document.createElement("button");
+      btn.className = "btn secondary";
+      btn.type = "button";
+      btn.textContent = pair[1];
+      btn.onclick = function () {
+        Engine.ensureEngagement(profile);
+        profile.engagement.avatar.outfit = pair[0];
+        Engine.saveProfile(profile);
+        renderEngageChrome();
+        renderCompanions();
+      };
+      avatarActions.appendChild(btn);
+    });
+    [["","None"],["glasses","Glasses"],["hat","Hat"],["backpack","Pack"],["crown","Crown"]].forEach(function (pair) {
+      const btn = document.createElement("button");
+      btn.className = "btn secondary";
+      btn.type = "button";
+      btn.textContent = pair[1];
+      btn.onclick = function () {
+        Engine.ensureEngagement(profile);
+        profile.engagement.avatar.accessory = pair[0];
+        Engine.saveProfile(profile);
+        renderEngageChrome();
+        renderCompanions();
+      };
+      avatarActions.appendChild(btn);
+    });
+    avatarRow.appendChild(avatarActions);
+    list.appendChild(avatarRow);
+    Engine.availableCompanions(profile).forEach(function (c) {
+      const row = document.createElement("div");
+      row.className = "cosmetic-row";
+      const left = document.createElement("div");
+      left.className = "companion-row-left";
+      const mount = document.createElement("div");
+      mount.className = "asset-companion";
+      if (Assets) Assets.mountCompanion(mount, c.assetId || c.id, c.emoji);
+      else {
+        const span = document.createElement("span");
+        span.className = "emoji";
+        span.textContent = c.emoji || "✨";
+        mount.appendChild(span);
+      }
+      left.appendChild(mount);
+      const meta = document.createElement("div");
+      meta.innerHTML = "<strong>" + c.name + "</strong><div class='muted'>" + (c.owned ? "Unlocked" : "Keep learning to unlock") + "</div>";
+      left.appendChild(meta);
+      row.appendChild(left);
+      const actions = document.createElement("div");
+      if (c.owned) {
+        const btn = document.createElement("button");
+        btn.className = "btn secondary";
+        btn.type = "button";
+        btn.textContent = c.equipped ? "Equipped" : "Equip";
+        btn.onclick = function () {
+          profile.engagement.equippedCompanion = c.id;
+          Engine.saveProfile(profile);
+          renderCompanions();
+          renderEngageChrome();
+        };
+        actions.appendChild(btn);
+      }
+      row.appendChild(actions);
+      list.appendChild(row);
+    });
+  }
+
+  function renderLab() {
+    const prompts = Content.LAB_PROMPTS || ["Create something you learned today."];
+    const prompt = prompts[Math.floor(Math.random() * prompts.length)];
+    document.getElementById("lab-prompt").textContent = prompt;
+    document.getElementById("lab-input").value = "";
+    const list = document.getElementById("lab-list");
+    list.replaceChildren();
+    (profile.engagement.labCreations || []).slice(0, 5).forEach(function (item) {
+      const p = document.createElement("p");
+      p.textContent = "• " + item.text;
+      list.appendChild(p);
+    });
+  }
+
   let leaderboard = JSON.parse(localStorage.getItem("wordquest_lb") || "[]");
   let audioCtx = null;
   let overlayCallback = null;
@@ -305,7 +577,7 @@
     return copy;
   }
   function hideAllScreens() {
-    [mapScreen, pathScreen, nodeScreen, playScreen, parentScreen, rewardsScreen, exportScreen, document.getElementById("grade-screen")]
+    [mapScreen, pathScreen, nodeScreen, playScreen, parentScreen, rewardsScreen, exportScreen, document.getElementById("grade-screen"), document.getElementById("lab-screen"), document.getElementById("companions-screen")]
       .forEach(function (el) { if (el) el.classList.add("hidden"); });
   }
   function showScreen(name) {
@@ -319,6 +591,8 @@
     else if (name === "rewards") rewardsScreen.classList.remove("hidden");
     else if (name === "export") exportScreen.classList.remove("hidden");
     else if (name === "grade") document.getElementById("grade-screen").classList.remove("hidden");
+    else if (name === "lab") document.getElementById("lab-screen").classList.remove("hidden");
+    else if (name === "companions") document.getElementById("companions-screen").classList.remove("hidden");
   }
 
   function getCtx() {
@@ -357,14 +631,28 @@
   }
   function playSfx(kind) {
     if (muted) return;
+    if (Assets) {
+      Assets.setMuted(muted);
+      Assets.play(kind);
+      return;
+    }
     if (kind === "click") tone(880, 0.05, "triangle", 0.05);
-    else if (kind === "buzz") { tone(240, 0.16, "sawtooth", 0.04); tone(310, 0.12, "square", 0.02, 0.04); }
-    else if (kind === "sparkle") { tone(784, 0.12, "sine", 0.06); tone(1174, 0.18, "sine", 0.07, 0.12); }
-    else if (kind === "life") { tone(330, 0.14, "triangle", 0.07); tone(220, 0.2, "triangle", 0.07, 0.12); }
-    else if (kind === "fanfare") { tone(523, 0.12, "square", 0.05); tone(784, 0.14, "square", 0.05, 0.12); tone(1046, 0.24, "square", 0.06, 0.26); }
-    else if (kind === "wrongBuzz") tone(140, 0.22, "sawtooth", 0.05);
+    else if (kind === "sparkle") { tone(784, 0.1, "sine", 0.06); tone(1174, 0.16, "sine", 0.07, 0.1); }
+    else if (kind === "fanfare") { tone(523, 0.12, "square", 0.05); tone(784, 0.2, "square", 0.05, 0.14); }
+    else if (kind === "life") { tone(330, 0.12, "triangle", 0.07); tone(220, 0.18, "triangle", 0.07, 0.1); }
+    else if (kind === "wrongBuzz") tone(140, 0.2, "sawtooth", 0.05);
+    else if (kind === "buzz") tone(180, 0.08, "sawtooth", 0.04);
   }
   function playSound(name) {
+    if (muted) return;
+    if (Assets) {
+      Assets.setMuted(muted);
+      if (name === "correct") { Assets.play("correct"); if (streak >= 3) Assets.play("sparkle"); }
+      else if (name === "wrong") { Assets.play("error-soft"); Assets.play("wrongBuzz"); }
+      else if (name === "tick") Assets.play("tick");
+      else Assets.play(name);
+      return;
+    }
     if (name === "correct") { playMp3("snd-correct", 0.85); if (streak >= 3) playSfx("sparkle"); }
     else if (name === "wrong") { playMp3("snd-wrong", 0.45); playSfx("wrongBuzz"); }
     else if (name === "tick") playMp3("snd-tick", 0.55);
@@ -377,6 +665,7 @@
   muteBtn.onclick = function () {
     muted = !muted;
     localStorage.setItem("wordquest_mute", muted ? "1" : "0");
+    if (Assets) Assets.setMuted(muted);
     updateMuteUi();
     if (!muted) playSfx("click");
   };
@@ -555,6 +844,7 @@
     });
     reviewMap.classList.toggle("hidden", !profile.reviewModeEnabled || reviewMap.childElementCount === 0);
     refreshHeaderStats();
+    renderEngageChrome();
   }
 
   function renderGradePicker() {
@@ -692,6 +982,13 @@
     score = 0; lives = 3; streak = 0; stars = 0;
     lessonStartedAt = Date.now();
     showScreen("play");
+    bossMode = false; dailyMode = false;
+    const meta = Engine.getMissionMeta(worldId, nodeId, lessonId);
+    const banner = document.getElementById("mission-banner");
+    if (banner) {
+      banner.classList.remove("hidden");
+      banner.innerHTML = "<strong>" + (meta.emoji || "⭐") + " " + (meta.title || lesson.title) + "</strong> — " + (meta.blurb || "");
+    }
     nextActivity();
   }
 
@@ -1033,6 +1330,7 @@
     honeyConfetti();
     flashCard("ok");
     playSound("correct");
+    setCompanionLine("correct");
     const localCoach = Engine.coachMessage(profile, "correct", { streak: streak });
     setCoachText(localCoach, "local");
     if (AI && profile.coachEnabled) {
@@ -1058,6 +1356,7 @@
     updateHud();
     flashCard("bad");
     playSound("wrong");
+    setCompanionLine("miss");
     const localCoach = Engine.coachMessage(profile, "miss");
     function showMissOverlay(coachText) {
       if (lives > 0) {
@@ -1140,7 +1439,27 @@
         lessonKey: lessonKey,
         streak: streak
       });
-      Engine.markNodeCompleteIfReady(profile, currentWorldId, currentNodeId);
+      const nodeJustMastered = Engine.markNodeCompleteIfReady(profile, currentWorldId, currentNodeId);
+      if (nodeJustMastered && Engine.markCelebration(profile, "node-" + currentWorldId + ":" + currentNodeId)) showCelebration("Node mastered!");
+      let engageInfo = { newCompanions: [], stageInfo: null, labUnlocked: false };
+      if (bossMode && currentBossKey) {
+        const parts = currentBossKey.split(":");
+        Engine.clearBoss(profile, parts[0], parts[1]);
+        if (Engine.markCelebration(profile, "boss-" + currentBossKey)) showCelebration("Boss cleared! Mastery shines.");
+        setCompanionLine("boss");
+        bossMode = false; currentBossKey = null;
+      } else if (dailyMode) {
+        const dres = Engine.completeDaily(profile);
+        if (!dres.already && Engine.markCelebration(profile, "daily-" + Engine.dayKeyNow())) showCelebration("Adventure Star earned!");
+        dailyMode = false;
+      } else if (currentWorldId && currentNodeId && currentLesson) {
+        engageInfo = Engine.onLessonCompleteEngagement(profile, currentWorldId, currentNodeId, currentLesson.id) || engageInfo;
+        setCompanionLine("complete");
+        if (engageInfo.firstLesson || Engine.countLessonsDone(profile) === 1) showCelebration("First lesson complete!");
+        if (engageInfo.stageInfo && engageInfo.stageInfo.upgraded) showCelebration("World grew: " + (engageInfo.stageInfo.label && engageInfo.stageInfo.label.label));
+        (engageInfo.newCompanions || []).forEach(function (c) { showCelebration("New companion: " + c.emoji + " " + c.name); });
+        if (engageInfo.labUnlocked && Engine.markCelebration(profile, "lab-unlock")) showCelebration("Secret Lab unlocked!");
+      }
       launchCelebration(score >= 8 ? "champion" : "milestone");
       playSfx("fanfare");
       const localTip = Engine.coachMessage(profile, "lesson-complete");
@@ -1164,6 +1483,23 @@
       } else {
         showComplete(localTip);
       }
+    } else if (bossMode) {
+      bossMode = false;
+      currentBossKey = null;
+      showOverlay({
+        title: "Not yet — let's practice",
+        message: "This mastery check is for learning, not losing. Skills were saved. Try a lesson, then retry the challenge anytime.",
+        button: "Back to map",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
+    } else if (dailyMode) {
+      dailyMode = false;
+      showOverlay({
+        title: "Adventure paused",
+        message: (extraMessage || "That's okay!") + " Today's Adventure is optional—try again anytime. Progress was saved.",
+        button: "Back to map",
+        onContinue: function () { renderWorldMap(); showScreen("map"); }
+      });
     } else {
       showOverlay({
         title: "Lesson paused",
@@ -1526,6 +1862,25 @@
     playSfx("click");
     renderRewards();
     showScreen("rewards");
+  };
+  document.getElementById("btn-daily").onclick = function () { playSfx("click"); startDailyAdventure(); };
+  document.getElementById("btn-lab").onclick = function () {
+    playSfx("click");
+    if (!profile.engagement.labUnlocked) {
+      showOverlay({ title: "Lab locked", message: "Complete a few lessons to open the Secret Lab.", button: "OK" });
+      return;
+    }
+    renderLab();
+    showScreen("lab");
+  };
+  document.getElementById("btn-companions").onclick = function () {
+    playSfx("click"); renderCompanions(); showScreen("companions");
+  };
+  document.getElementById("lab-back").onclick = function () { renderWorldMap(); showScreen("map"); };
+  document.getElementById("companions-back").onclick = function () { renderWorldMap(); showScreen("map"); };
+  document.getElementById("lab-save").onclick = function () {
+    const res = Engine.saveLabCreation(profile, document.getElementById("lab-input").value);
+    showOverlay({ title: res.ok ? "Saved!" : "Hmm", message: res.ok ? "Your creation is in the lab." : res.message, button: "OK", onContinue: renderLab });
   };
   document.getElementById("btn-export").onclick = function () {
     playSfx("click");

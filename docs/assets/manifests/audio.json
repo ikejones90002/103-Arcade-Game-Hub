@@ -1,0 +1,332 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "id": "correct",
+      "name": "Correct",
+      "category": "learning",
+      "path": "/assets/audio/ui/correct.mp3",
+      "durationMs": 400
+    },
+    {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "id": "error-soft",
+      "name": "Soft miss",
+      "category": "learning",
+      "path": "/assets/audio/ui/error-soft.mp3",
+      "durationMs": 350
+    },
+    {
+      "source": "internal-legacy",
+      "license": "proprietary",
+      "id": "tick",
+      "name": "Tick",
+      "category": "ui",
+      "path": "/assets/audio/ui/tick.mp3",
+      "durationMs": 80
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "click",
+      "name": "Click",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 50
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "select",
+      "name": "Select",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 80
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "back",
+      "name": "Back",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 70
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "open",
+      "name": "Open",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 120
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "close",
+      "name": "Close",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 100
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "almost",
+      "name": "Almost",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 200
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "hint",
+      "name": "Hint",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 180
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "try-again",
+      "name": "Try again",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 220
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "streak",
+      "name": "Streak",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 280
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "mastery",
+      "name": "Mastery",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 500
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "star",
+      "name": "Star",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 300
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "xp",
+      "name": "XP",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 250
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "unlock",
+      "name": "Unlock",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 400
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "companion",
+      "name": "Companion unlock",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 450
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "badge",
+      "name": "Badge",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 350
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "level-up",
+      "name": "Level up",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 600
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "reward",
+      "name": "Reward",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 400
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "complete",
+      "name": "Complete",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 500
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "sparkle",
+      "name": "Sparkle",
+      "category": "world",
+      "path": null,
+      "synth": true,
+      "durationMs": 260
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "magic",
+      "name": "Magic",
+      "category": "world",
+      "path": null,
+      "synth": true,
+      "durationMs": 350
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "fanfare",
+      "name": "Fanfare",
+      "category": "rewards",
+      "path": null,
+      "synth": true,
+      "durationMs": 700
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "life",
+      "name": "Life lost soft",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 280
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "buzz",
+      "name": "Buzz",
+      "category": "ui",
+      "path": null,
+      "synth": true,
+      "durationMs": 120
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "wrongBuzz",
+      "name": "Wrong soft buzz",
+      "category": "learning",
+      "path": null,
+      "synth": true,
+      "durationMs": 200
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "boss-intro",
+      "name": "Boss intro",
+      "category": "boss",
+      "path": null,
+      "synth": true,
+      "durationMs": 500
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "boss-success",
+      "name": "Boss success",
+      "category": "boss",
+      "path": null,
+      "synth": true,
+      "durationMs": 650
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "boss-retry",
+      "name": "Boss retry",
+      "category": "boss",
+      "path": null,
+      "synth": true,
+      "durationMs": 350
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "create",
+      "name": "Lab create",
+      "category": "lab",
+      "path": null,
+      "synth": true,
+      "durationMs": 220
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "save",
+      "name": "Lab save",
+      "category": "lab",
+      "path": null,
+      "synth": true,
+      "durationMs": 280
+    },
+    {
+      "source": "generated",
+      "license": "proprietary",
+      "id": "discover",
+      "name": "Discover",
+      "category": "lab",
+      "path": null,
+      "synth": true,
+      "durationMs": 400
+    }
+  ]
+}
