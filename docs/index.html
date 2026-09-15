@@ -8,43 +8,50 @@
   <link rel="icon" href="arcade-logo.png" type="image/png">
   <link rel="stylesheet" href="theme.css">
 </head>
-<body>
-  <div class="app">
-    <img class="arcade-logo" src="arcade-logo.png" alt="103 Arcade Gaming Division">
-    <h1 class="hub-title">Select from the 103 Arcade Hub</h1>
-    <div class="picker">
-      <a class="card pick-card" href="spellbuzz.html">
+<body class="hub-page">
+  <div class="hub-atmosphere" aria-hidden="true"></div>
+  <div class="app hub">
+    <header class="hub-hero">
+      <div class="hub-hero-ring">
+        <img class="arcade-logo" src="arcade-logo.png" alt="103 Arcade Gaming Division" width="420" height="420">
+      </div>
+    </header>
+
+    <nav class="picker" aria-label="103 Arcade games">
+      <a class="card pick-card pick-card--magenta" href="spellbuzz.html">
         <img src="bee.svg" alt="">
         <h2>SpellBuzz</h2>
         <p>Spelling World · sounds to words</p>
       </a>
-      <a class="card pick-card" href="numbuzz.html">
+      <a class="card pick-card pick-card--cyan" href="numbuzz.html">
         <img src="numbuzz.svg" alt="">
         <h2>NumBuzz</h2>
         <p>Math World · count to problem-solving</p>
       </a>
-      <a class="card pick-card" href="wordquest.html">
+      <a class="card pick-card pick-card--cyan" href="wordquest.html">
         <img src="wordquest.svg" alt="">
         <h2>Word Quest</h2>
         <p>Reading World · letters to stories</p>
       </a>
-      <a class="card pick-card" href="flipmatch.html">
+      <a class="card pick-card pick-card--magenta" href="flipmatch.html">
         <img src="flipmatch.svg" alt="">
         <h2>FlipMatch</h2>
         <p>Find the pairs</p>
       </a>
-      <a class="card pick-card" href="patternpop.html">
+      <a class="card pick-card pick-card--cyan" href="patternpop.html">
         <img src="patternpop.svg" alt="">
         <h2>PatternPop</h2>
         <p>What comes next?</p>
       </a>
-      <a class="card pick-card" href="rhymetime.html">
+      <a class="card pick-card pick-card--cyan" href="rhymetime.html">
         <img src="rhymetime.svg" alt="">
         <h2>RhymeTime</h2>
         <p>Tap the rhyme</p>
       </a>
-    </div>
-    <footer class="site-footer">
+    </nav>
+
+    <footer class="site-footer hub-footer">
+      <img class="hub-footer-mark" src="arcade-logo.png" alt="">
       <img src="logo.png" alt="103 Software Solutions LLC">
       <p>&copy; 2026 103 Arcade Hub. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
     </footer>
