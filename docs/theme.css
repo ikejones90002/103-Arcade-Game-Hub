@@ -1423,22 +1423,35 @@ body.hub-page .pick-card p {
 body.hub-page .hub-footer {
   margin-top: auto;
   padding-top: 1.5rem;
-  max-width: 420px;
-  gap: 0.55rem;
+  max-width: 480px;
+  gap: 0.65rem;
+}
+
+body.hub-page .hub-footer-logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+body.hub-page .hub-footer-mark,
+body.hub-page .hub-footer-llc {
+  width: 72px !important;
+  height: 72px !important;
+  object-fit: contain;
+  margin: 0;
 }
 
 body.hub-page .hub-footer-mark {
-  width: 72px !important;
-  height: 72px !important;
   border-radius: 50%;
-  margin-bottom: 0.15rem;
   filter: drop-shadow(0 0 12px rgba(0,255,255,.4)) !important;
 }
 
-body.hub-page .hub-footer img:not(.hub-footer-mark) {
-  width: 72px;
-  height: 72px;
-  opacity: 0.92;
+body.hub-page .hub-footer-llc {
+  opacity: 0.95;
+  filter: drop-shadow(0 0 10px rgba(0,255,255,.3)) !important;
 }
 
 body.hub-page .hub-footer p {
