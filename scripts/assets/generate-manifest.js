@@ -83,40 +83,46 @@ const worlds = {
 };
 
 const audio = [
-  entry({ id: "correct", name: "Correct", category: "learning", path: "/assets/audio/ui/correct.mp3", source: "internal-legacy", license: "proprietary", durationMs: 400 }),
-  entry({ id: "error-soft", name: "Soft miss", category: "learning", path: "/assets/audio/ui/error-soft.mp3", source: "internal-legacy", license: "proprietary", durationMs: 350 }),
-  entry({ id: "tick", name: "Tick", category: "ui", path: "/assets/audio/ui/tick.mp3", source: "internal-legacy", license: "proprietary", durationMs: 80 }),
-  // Synth-backed IDs (path null until MP3 added)
-  entry({ id: "click", name: "Click", category: "ui", path: null, synth: true, durationMs: 50 }),
-  entry({ id: "select", name: "Select", category: "ui", path: null, synth: true, durationMs: 80 }),
-  entry({ id: "back", name: "Back", category: "ui", path: null, synth: true, durationMs: 70 }),
-  entry({ id: "open", name: "Open", category: "ui", path: null, synth: true, durationMs: 120 }),
-  entry({ id: "close", name: "Close", category: "ui", path: null, synth: true, durationMs: 100 }),
-  entry({ id: "almost", name: "Almost", category: "learning", path: null, synth: true, durationMs: 200 }),
-  entry({ id: "hint", name: "Hint", category: "learning", path: null, synth: true, durationMs: 180 }),
-  entry({ id: "try-again", name: "Try again", category: "learning", path: null, synth: true, durationMs: 220 }),
-  entry({ id: "streak", name: "Streak", category: "learning", path: null, synth: true, durationMs: 280 }),
-  entry({ id: "mastery", name: "Mastery", category: "learning", path: null, synth: true, durationMs: 500 }),
-  entry({ id: "star", name: "Star", category: "rewards", path: null, synth: true, durationMs: 300 }),
-  entry({ id: "xp", name: "XP", category: "rewards", path: null, synth: true, durationMs: 250 }),
-  entry({ id: "unlock", name: "Unlock", category: "rewards", path: null, synth: true, durationMs: 400 }),
-  entry({ id: "companion", name: "Companion unlock", category: "rewards", path: null, synth: true, durationMs: 450 }),
-  entry({ id: "badge", name: "Badge", category: "rewards", path: null, synth: true, durationMs: 350 }),
-  entry({ id: "level-up", name: "Level up", category: "rewards", path: null, synth: true, durationMs: 600 }),
-  entry({ id: "reward", name: "Reward", category: "rewards", path: null, synth: true, durationMs: 400 }),
-  entry({ id: "complete", name: "Complete", category: "rewards", path: null, synth: true, durationMs: 500 }),
-  entry({ id: "sparkle", name: "Sparkle", category: "world", path: null, synth: true, durationMs: 260 }),
-  entry({ id: "magic", name: "Magic", category: "world", path: null, synth: true, durationMs: 350 }),
-  entry({ id: "fanfare", name: "Fanfare", category: "rewards", path: null, synth: true, durationMs: 700 }),
-  entry({ id: "life", name: "Life lost soft", category: "learning", path: null, synth: true, durationMs: 280 }),
-  entry({ id: "buzz", name: "Buzz", category: "ui", path: null, synth: true, durationMs: 120 }),
-  entry({ id: "wrongBuzz", name: "Wrong soft buzz", category: "learning", path: null, synth: true, durationMs: 200 }),
-  entry({ id: "boss-intro", name: "Boss intro", category: "boss", path: null, synth: true, durationMs: 500 }),
-  entry({ id: "boss-success", name: "Boss success", category: "boss", path: null, synth: true, durationMs: 650 }),
-  entry({ id: "boss-retry", name: "Boss retry", category: "boss", path: null, synth: true, durationMs: 350 }),
-  entry({ id: "create", name: "Lab create", category: "lab", path: null, synth: true, durationMs: 220 }),
-  entry({ id: "save", name: "Lab save", category: "lab", path: null, synth: true, durationMs: 280 }),
-  entry({ id: "discover", name: "Discover", category: "lab", path: null, synth: true, durationMs: 400 })
+  entry({ id: "correct", name: "Correct", category: "learning", type: "sfx", path: "/assets/audio/ui/correct.mp3", source: "internal-legacy", license: "proprietary", volume: 1.0, durationMs: 400 }),
+  entry({ id: "error-soft", name: "Soft miss", category: "learning", type: "sfx", path: "/assets/audio/ui/error-soft.mp3", source: "internal-legacy", license: "proprietary", volume: 0.9, durationMs: 350 }),
+  entry({ id: "tick", name: "Tick", category: "ui", type: "sfx", path: "/assets/audio/ui/tick.mp3", source: "internal-legacy", license: "proprietary", volume: 0.6, durationMs: 80 }),
+  entry({ id: "click", name: "Click", category: "ui", type: "sfx", path: "/assets/audio/ui/click.mp3", synth: true, volume: 0.5, durationMs: 50 }),
+  entry({ id: "select", name: "Select", category: "ui", type: "sfx", path: "/assets/audio/ui/select.mp3", synth: true, volume: 0.6, durationMs: 80 }),
+  entry({ id: "back", name: "Back", category: "ui", type: "chrome", path: "/assets/audio/ui/back.mp3", synth: true, volume: 0.7, durationMs: 70 }),
+  entry({ id: "open", name: "Open", category: "ui", type: "chrome", path: "/assets/audio/ui/open.mp3", synth: true, volume: 0.7, durationMs: 120 }),
+  entry({ id: "close", name: "Close", category: "ui", type: "chrome", path: "/assets/audio/ui/close.mp3", synth: true, volume: 0.7, durationMs: 100 }),
+  entry({ id: "almost", name: "Almost", category: "learning", type: "learning", path: "/assets/audio/ui/almost.mp3", synth: true, volume: 0.8, durationMs: 200 }),
+  entry({ id: "hint", name: "Hint", category: "learning", type: "learning", path: "/assets/audio/ui/hint.mp3", synth: true, volume: 0.8, durationMs: 180 }),
+  entry({ id: "try-again", name: "Try again", category: "learning", type: "learning", path: "/assets/audio/ui/try-again.mp3", synth: true, volume: 0.9, durationMs: 220 }),
+  entry({ id: "streak", name: "Streak", category: "rewards", type: "reward", path: "/assets/audio/ui/streak.mp3", synth: true, volume: 1.0, durationMs: 280 }),
+  entry({ id: "mastery", name: "Mastery", category: "rewards", type: "reward", path: "/assets/audio/ui/mastery.mp3", synth: true, volume: 1.0, durationMs: 500 }),
+  entry({ id: "star", name: "Star", category: "rewards", type: "reward", path: "/assets/audio/ui/star.mp3", synth: true, volume: 1.0, durationMs: 300 }),
+  entry({ id: "xp", name: "XP", category: "rewards", type: "reward", path: "/assets/audio/ui/xp.mp3", synth: true, volume: 0.8, durationMs: 250 }),
+  entry({ id: "unlock", name: "Unlock", category: "rewards", type: "reward", path: "/assets/audio/ui/unlock.mp3", synth: true, volume: 1.0, durationMs: 400 }),
+  entry({ id: "companion", name: "Companion unlock", category: "rewards", type: "reward", path: "/assets/audio/ui/companion.mp3", synth: true, volume: 1.0, durationMs: 450 }),
+  entry({ id: "badge", name: "Badge", category: "rewards", type: "reward", path: "/assets/audio/ui/badge.mp3", synth: true, volume: 1.0, durationMs: 350 }),
+  entry({ id: "level-up", name: "Level up", category: "rewards", type: "reward", path: "/assets/audio/ui/level-up.mp3", synth: true, volume: 1.0, durationMs: 600 }),
+  entry({ id: "reward", name: "Reward", category: "rewards", type: "reward", path: "/assets/audio/ui/reward.mp3", synth: true, volume: 1.0, durationMs: 400 }),
+  entry({ id: "complete", name: "Complete", category: "rewards", type: "reward", path: "/assets/audio/ui/complete.mp3", synth: true, volume: 1.0, durationMs: 500 }),
+  entry({ id: "sparkle", name: "Sparkle", category: "world", type: "world", path: "/assets/audio/ui/sparkle.mp3", synth: true, volume: 0.8, durationMs: 260 }),
+  entry({ id: "magic", name: "Magic", category: "world", type: "world", path: "/assets/audio/ui/magic.mp3", synth: true, volume: 0.8, durationMs: 350 }),
+  entry({ id: "fanfare", name: "Fanfare", category: "rewards", type: "reward", path: "/assets/audio/ui/fanfare.mp3", synth: true, volume: 1.0, durationMs: 700 }),
+  entry({ id: "life", name: "Life lost soft", category: "learning", type: "learning", path: "/assets/audio/ui/life.mp3", synth: true, volume: 0.9, durationMs: 280 }),
+  entry({ id: "buzz", name: "Buzz", category: "ui", type: "ui", path: "/assets/audio/ui/buzz.mp3", synth: true, volume: 0.6, durationMs: 120 }),
+  entry({ id: "wrongBuzz", name: "Wrong soft buzz", category: "learning", type: "learning", path: "/assets/audio/ui/wrongBuzz.mp3", synth: true, volume: 0.7, durationMs: 200 }),
+  entry({ id: "hub-bed", name: "Hub doorway bed", category: "world-bed", type: "bed", path: "/assets/audio/worlds/hub-bed.mp3", synth: true, loop: true, volume: 0.5, durationMs: 30000 }),
+  entry({ id: "reading-bed", name: "Reading World bed", category: "world-bed", type: "bed", path: "/assets/audio/worlds/reading-bed.mp3", synth: true, loop: true, volume: 0.45, durationMs: 30000 }),
+  entry({ id: "spelling-bed", name: "Spelling World bed", category: "world-bed", type: "bed", path: "/assets/audio/worlds/spelling-bed.mp3", synth: true, loop: true, volume: 0.45, durationMs: 30000 }),
+  entry({ id: "math-bed", name: "Math World bed", category: "world-bed", type: "bed", path: "/assets/audio/worlds/math-bed.mp3", synth: true, loop: true, volume: 0.45, durationMs: 30000 }),
+  entry({ id: "owl-stinger", name: "Reading Owl stinger", category: "mascot", type: "stinger", path: "/assets/audio/mascots/owl-stinger.mp3", synth: true, volume: 0.9, durationMs: 400 }),
+  entry({ id: "bee-stinger", name: "Spelling Bee stinger", category: "mascot", type: "stinger", path: "/assets/audio/mascots/bee-stinger.mp3", synth: true, volume: 0.9, durationMs: 400 }),
+  entry({ id: "turtle-stinger", name: "Math Turtle stinger", category: "mascot", type: "stinger", path: "/assets/audio/mascots/turtle-stinger.mp3", synth: true, volume: 0.9, durationMs: 450 }),
+  entry({ id: "boss-intro", name: "Boss intro", category: "boss", type: "learning", path: null, synth: true, volume: 0.8, durationMs: 500 }),
+  entry({ id: "boss-success", name: "Boss success", category: "boss", type: "reward", path: null, synth: true, volume: 1.0, durationMs: 650 }),
+  entry({ id: "boss-retry", name: "Boss retry", category: "boss", type: "learning", path: null, synth: true, volume: 0.8, durationMs: 350 }),
+  entry({ id: "create", name: "Lab create", category: "lab", type: "chrome", path: null, synth: true, volume: 0.7, durationMs: 220 }),
+  entry({ id: "save", name: "Lab save", category: "lab", type: "chrome", path: null, synth: true, volume: 0.7, durationMs: 280 }),
+  entry({ id: "discover", name: "Discover", category: "lab", type: "learning", path: null, synth: true, volume: 0.8, durationMs: 400 })
 ];
 
 const uiExtras = [
@@ -155,7 +161,17 @@ uiExtras.forEach(addSource);
 writeJson("avatars.json", { version: 1, items: avatars });
 writeJson("companions.json", { version: 1, items: companions });
 writeJson("worlds.json", { version: 1, worlds: worlds });
-writeJson("audio.json", { version: 1, items: audio });
+writeJson("audio.json", {
+  version: 1,
+  pack: "1.0.0",
+  category: "103-arcade-audio",
+  groups: {
+    ui: audio.filter(function (e) { return e.category !== "world-bed" && e.category !== "mascot" && e.category !== "boss" && e.category !== "lab"; }).map(function (e) { return e.id; }),
+    worlds: ["hub-bed", "reading-bed", "spelling-bed", "math-bed"],
+    mascots: ["owl-stinger", "bee-stinger", "turtle-stinger"]
+  },
+  items: audio
+});
 writeJson("ui.json", { version: 1, items: uiExtras });
 writeJson("sources.json", { version: 1, assets: sources });
 
@@ -172,8 +188,11 @@ let missing = 0;
   });
 audio.forEach(function (e) {
   if (e.path && !exists(diskPath(e.path))) {
-    console.warn("MISSING audio", e.path);
-    missing++;
+    if (e.synth) console.warn("RESERVED audio (synth until recorded)", e.path);
+    else {
+      console.warn("MISSING audio", e.path);
+      missing++;
+    }
   }
 });
 

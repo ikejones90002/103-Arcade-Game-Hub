@@ -8,13 +8,16 @@
   <link rel="icon" href="flipmatch.svg" type="image/svg+xml">
   <link rel="stylesheet" href="theme.css">
 </head>
-<body>
+<body class="flipmatch-page">
   <div class="app">
     <div class="topbar">
       <div class="brand">
         <div class="brand-row">
           <img src="flipmatch.svg" class="bee-mark" alt="">
-          <h1>FlipMatch</h1>
+          <div>
+            <h1>FlipMatch</h1>
+            <p class="wq-sub">Memory Grove</p>
+          </div>
         </div>
         <p class="byline">Built by 103 Software Solutions LLC</p>
       </div>
@@ -23,25 +26,29 @@
         <button id="mute" class="icon-btn" type="button" aria-label="Mute sounds" title="Mute sounds">🔊</button>
       </div>
     </div>
-    <section id="start-screen" class="card" aria-label="Start">
-      <div class="bee-wrap"><img src="flipmatch.svg" alt="FlipMatch" class="bee hero"></div>
-      <p class="howto">Flip two cards. Find every pair.</p>
+    <section id="start-screen" class="card meadow-card" aria-label="Start">
+      <div class="flipmatch-hero-row" aria-hidden="true">
+        <img src="assets/arcade/flipmatch/flipmatch-card-owl.png" alt="">
+        <img src="assets/arcade/flipmatch/flipmatch-card-back.png" alt="">
+        <img src="assets/arcade/flipmatch/flipmatch-card-fox.png" alt="">
+      </div>
+      <p class="howto">Flip two illustrated cards. Find every pair in Memory Grove.</p>
       <div class="difficulty" role="group" aria-label="Difficulty">
-        <button id="easy" class="active" type="button">Easy<small>Shapes</small></button>
-        <button id="medium" type="button">Medium<small>Letters</small></button>
-        <button id="hard" type="button">Hard<small>Sight words</small></button>
+        <button id="easy" class="active" type="button">Easy<small>4 pairs</small></button>
+        <button id="medium" type="button">Medium<small>6 pairs</small></button>
+        <button id="hard" type="button">Hard<small>9 pairs</small></button>
       </div>
       <button id="play" class="btn" type="button">Play</button>
     </section>
-    <section id="play-screen" class="card hidden" aria-label="Game">
+    <section id="play-screen" class="card meadow-card hidden" aria-label="Game">
       <div class="hud">
         <div class="score" id="score">Score: 0</div>
         <div class="lives" id="lives"></div>
       </div>
       <div class="streak" id="streak"></div>
-      <div class="level-badge" id="level-badge">Easy · Shapes</div>
+      <div class="level-badge" id="level-badge">Easy · 4 pairs</div>
       <div class="timer" id="timer">Timer: 00</div>
-      <div id="board" class="mem-grid"></div>
+      <div id="board" class="mem-grid flipmatch-board"></div>
     </section>
     <div id="leaderboard">
       <div class="lb-head"><h3>Leaderboard</h3><button id="clear-lb" class="btn secondary hidden" type="button">Clear</button></div>
@@ -64,12 +71,24 @@
   </div></div>
   <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
   <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
-  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="assets/audio/ui/tick.mp3" preload="auto"></audio>
   <script>
+    const CARD_BACK = "assets/arcade/flipmatch/flipmatch-card-back.png";
+    const CARD_FACES = {
+      owl: { file: "assets/arcade/flipmatch/flipmatch-card-owl.png", label: "Reading Owl" },
+      fox: { file: "assets/arcade/flipmatch/flipmatch-card-fox.png", label: "Clever Fox" },
+      rabbit: { file: "assets/arcade/flipmatch/flipmatch-card-rabbit.png", label: "Friendly Rabbit" },
+      book: { file: "assets/arcade/flipmatch/flipmatch-card-book.png", label: "Magical Book" },
+      flower: { file: "assets/arcade/flipmatch/flipmatch-card-flower.png", label: "Bright Flower" },
+      tree: { file: "assets/arcade/flipmatch/flipmatch-card-tree.png", label: "Old Oak Tree" },
+      castle: { file: "assets/arcade/flipmatch/flipmatch-card-castle.png", label: "Dream Castle" },
+      star: { file: "assets/arcade/flipmatch/flipmatch-card-star.png", label: "Twinkle Star" },
+      butterfly: { file: "assets/arcade/flipmatch/flipmatch-card-butterfly.png", label: "Painted Butterfly" }
+    };
     const LEVELS = {
-      easy: { label: "Easy", grades: "Shapes", time: 75, cols: 4, pairs: ["O", "[]", "+", "*", "#", "="] },
-      medium: { label: "Medium", grades: "Letters", time: 70, cols: 4, pairs: ["A", "B", "C", "D", "E", "F", "G", "H"] },
-      hard: { label: "Hard", grades: "Sight words", time: 80, cols: 4, pairs: ["the", "and", "you", "can", "sun", "cat", "dog", "run"] }
+      easy: { label: "Easy", grades: "4 pairs", time: 75, cols: 4, pairs: ["owl", "fox", "rabbit", "book"] },
+      medium: { label: "Medium", grades: "6 pairs", time: 80, cols: 4, pairs: ["owl", "fox", "rabbit", "book", "flower", "tree"] },
+      hard: { label: "Hard", grades: "9 pairs", time: 100, cols: 6, pairs: ["owl", "fox", "rabbit", "book", "flower", "tree", "castle", "star", "butterfly"] }
     };
     const PARTY = 5, CHAMP = 10;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -134,9 +153,21 @@
       boardEl.replaceChildren();
       cards.forEach((c, idx)=>{
         const b=document.createElement("button");
-        b.className="btn mem-card"+(c.matched?" matched": c.open?"":" back");
+        b.className="btn mem-card flip-card"+(c.matched?" matched": c.open?" open":" back");
         b.type="button";
-        b.textContent=c.open||c.matched?c.value:"?";
+        b.setAttribute("aria-label", (c.open||c.matched) ? ((CARD_FACES[c.value]&&CARD_FACES[c.value].label)||c.value) : "Hidden card");
+        const img=document.createElement("img");
+        img.alt="";
+        img.draggable=false;
+        if(c.open||c.matched){
+          const face=CARD_FACES[c.value];
+          img.src=face?face.file:CARD_BACK;
+          img.className="flip-card-face";
+        } else {
+          img.src=CARD_BACK;
+          img.className="flip-card-back";
+        }
+        b.appendChild(img);
         b.disabled=c.matched||lock;
         b.onclick=function(){ flip(idx); };
         boardEl.appendChild(b);

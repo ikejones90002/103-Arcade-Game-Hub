@@ -63,7 +63,8 @@
   </div></div>
   <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
   <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
-  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="assets/audio/ui/tick.mp3" preload="auto"></audio>
+  <script src="arcade-assets.js"></script>
   <script>
     const BANK={
       easy:{ label:"Easy", grades:"CVC rhymes", time:20, items:[
@@ -81,6 +82,8 @@
     };
     const PARTY=5, CHAMP=10;
     const reduceMotion=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const Assets=window.ArcadeAssets;
+    if (Assets) Assets.load();
     const muteBtn=document.getElementById("mute"), startScreen=document.getElementById("start-screen"), playScreen=document.getElementById("play-screen");
     const scoreDisplay=document.getElementById("score"), livesEl=document.getElementById("lives"), streakDisplay=document.getElementById("streak");
     const timerDisplay=document.getElementById("timer"), levelBadge=document.getElementById("level-badge");
@@ -90,6 +93,7 @@
     const clearLbBtn=document.getElementById("clear-lb"), confirmEl=document.getElementById("confirm"), celebrateEl=document.getElementById("celebrate");
     const diffBtns={ easy:document.getElementById("easy"), medium:document.getElementById("medium"), hard:document.getElementById("hard") };
     let muted=localStorage.getItem("rhymetime_mute")==="1";
+    if (Assets) Assets.setMuted(muted);
     let leaderboard=JSON.parse(localStorage.getItem("rhymetime_lb")||"[]");
     let difficulty="easy", score=0, lives=3, streak=0, timer=null, timeLeft=0, audioCtx=null, overlayCallback=null, roundActive=false, current=null, used=[];
 
@@ -100,7 +104,7 @@
     function playSfx(k){ if(muted) return; if(k==="click") tone(880,0.05,"triangle",0.05); else if(k==="sparkle"){tone(784,0.1,"sine",0.06);tone(1174,0.16,"sine",0.07,0.1);} else if(k==="fanfare"){tone(523,0.12,"square",0.05);tone(784,0.2,"square",0.05,0.14);} else if(k==="life"){tone(330,0.12,"triangle",0.07);tone(220,0.18,"triangle",0.07,0.1);} else if(k==="wrongBuzz") tone(140,0.2,"sawtooth",0.05); }
     function playSound(n){ if(n==="correct"){ playMp3("snd-correct",0.85); if(streak>=3) playSfx("sparkle"); } else if(n==="wrong"){ playMp3("snd-wrong",0.45); playSfx("wrongBuzz"); } else if(n==="tick") playMp3("snd-tick",0.55); else playSfx(n); }
     function updateMuteUi(){ muteBtn.textContent=muted?"🔇":"🔊"; }
-    muteBtn.onclick=function(){ muted=!muted; localStorage.setItem("rhymetime_mute", muted?"1":"0"); updateMuteUi(); if(!muted) playSfx("click"); };
+    muteBtn.onclick=function(){ muted=!muted; localStorage.setItem("rhymetime_mute", muted?"1":"0"); if (Assets) Assets.setMuted(muted); updateMuteUi(); if(!muted) playSfx("click"); };
     document.querySelectorAll("button").forEach(b=>{ if(b.id!=="mute") b.addEventListener("click",()=>playSfx("click")); });
     function sanitize(n){ return String(n||"").replace(/<[^>]*>/g,"").replace(/[^\w\s'-]/g,"").trim().slice(0,16); }
     function saveScore(name,val){ const c=sanitize(name); if(!c) return; leaderboard.push({name:c,score:val,date:Date.now()}); leaderboard.sort((a,b)=>b.score-a.score); leaderboard=leaderboard.slice(0,10); localStorage.setItem("rhymetime_lb", JSON.stringify(leaderboard)); }
@@ -115,7 +119,16 @@
     function showOverlay(o){ overlayTitle.textContent=o.title; overlayMsg.textContent=o.message; overlayBtn.textContent=o.button||"Continue"; overlayForm.classList.toggle("hidden", !o.askName); overlay.classList.remove("hidden"); overlayCallback=o.onContinue||null; if(o.askName){ nameInput.value=""; nameInput.focus(); } else overlayBtn.focus(); }
     function hideOverlay(){ overlay.classList.add("hidden"); const cb=overlayCallback; overlayCallback=null; if(cb) cb(); }
     overlayBtn.onclick=function(){ if(!overlayForm.classList.contains("hidden")){ saveScore(sanitize(nameInput.value)||"Player", score); renderLeaderboard(); } hideOverlay(); };
-    function speak(text){ if(!window.speechSynthesis||!text) return; speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=0.8; u.lang="en-US"; speechSynthesis.speak(u); }
+    function speak(text){
+      if(!text) return;
+      if(Assets&&Assets.playVoice){
+        const run=function(){ Assets.playVoice(text,{ type:"sprint", kind:"word" }); };
+        if(Assets.load) Assets.load().then(run); else run();
+        return;
+      }
+      if(muted||!window.speechSynthesis) return;
+      speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.rate=0.8; u.lang="en-US"; speechSynthesis.speak(u);
+    }
     function nextRound(){
       const pack=BANK[difficulty].items;
       let pool=pack.filter(x=>used.indexOf(x.p)===-1); if(!pool.length){ used=[]; pool=pack; }
@@ -131,7 +144,7 @@
     function handleCorrect(){ if(!roundActive) return; roundActive=false; stopTimer(); score++; streak++; updateHud(); playSound("correct"); confetti(); flash("ok"); if(score===PARTY||score===CHAMP) celebrate(score>=CHAMP); setTimeout(()=>{ if(lives>0) nextRound(); },800); }
     function handleMiss(msg){ if(!roundActive) return; roundActive=false; stopTimer(); streak=0; lives--; updateHud(); flash("bad"); if(lives>0){ playSfx("life"); playSound("wrong"); showOverlay({ title:"Oops!", message:msg+" Lives left: "+lives+".", button:"Next", onContinue:nextRound }); } else { playSound("wrong"); endGame(msg); } }
     function startRound(){ getCtx(); score=0; lives=3; streak=0; used=[]; startScreen.classList.add("hidden"); playScreen.classList.remove("hidden"); updateHud(); nextRound(); }
-    function goHome(){ if(window.speechSynthesis) speechSynthesis.cancel(); stopTimer(); roundActive=false; playScreen.classList.add("hidden"); startScreen.classList.remove("hidden"); }
+    function goHome(){ if(Assets&&Assets.stopVoice) Assets.stopVoice(); else if(window.speechSynthesis) speechSynthesis.cancel(); stopTimer(); roundActive=false; playScreen.classList.add("hidden"); startScreen.classList.remove("hidden"); }
     function endGame(msg){ stopTimer(); if(score>=CHAMP) celebrate(true); else if(score>=PARTY) celebrate(false); playSfx("fanfare"); showOverlay({ title:score>=CHAMP?"Champion!":"RhymeTime over!", message:(msg?msg+" ":"")+"You scored "+score+" point"+(score===1?"":"s")+". Add your name to the leaderboard.", button:"Save score", askName:true, onContinue:goHome }); }
     document.getElementById("play").onclick=startRound;
     document.getElementById("speak").onclick=function(){ if(current) speak(current.p); };

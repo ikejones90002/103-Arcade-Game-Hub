@@ -28,9 +28,21 @@
     </div>
 
     <!-- Home / world map -->
-    <section id="map-screen" class="card" aria-label="Spelling World map">
-      <div class="bee-wrap" id="hero-wrap">
-        <img src="bee.svg" alt="SpellBuzz" class="bee hero">
+    <section id="map-screen" class="card spelling-universe" aria-label="Spelling World map">
+      <div class="world-scene spelling-scene" id="spelling-universe-scene" aria-hidden="true">
+        <div class="world-scene-layer world-scene-layer--sky" data-layer="spelling-sky"></div>
+        <div class="world-scene-layer world-scene-layer--hills" data-layer="spelling-hills"></div>
+        <div class="world-scene-layer world-scene-layer--meadow" data-layer="spelling-meadow"></div>
+        <div class="world-scene-layer world-scene-layer--village" data-layer="spelling-village"></div>
+        <div class="world-scene-layer world-scene-layer--foreground" data-layer="spelling-foreground"></div>
+        <div class="world-scene-master" style="background-image:url('assets/worlds/spelling/backgrounds/spelling-scene-master.webp')"></div>
+        <div class="world-scene-content">
+          <div class="universe-mascot" id="world-mascot" aria-hidden="true"></div>
+          <div class="universe-caption">
+            <strong>Spelling World</strong>
+            <span>Bee village meadow · sound out words and grow the path</span>
+          </div>
+        </div>
       </div>
       <p class="howto">A spelling adventure that grows with you. Explore worlds, sound out words, earn XP.</p>
       <div class="wq-profile-row">
@@ -319,6 +331,24 @@
     setTimeout(function () { el.classList.remove("show"); }, reduceMotionOn() ? 900 : 2200);
   }
 
+  function cueWorldBee(mood) {
+    const el = document.getElementById("world-mascot");
+    if (!el) return;
+    const pose = mood === "success" ? "celebrating" : mood === "miss" ? "gentle-error" : "idle";
+    el.dataset.mood = mood || "idle";
+    if (Assets) Assets.mountWorldMascot(el, ASSET_SUBJECT, { pose: pose, mood: mood || "idle" });
+    if (mood === "success" || mood === "miss") {
+      const host = document.getElementById("spelling-universe-scene");
+      if (Assets && Assets.playVfx) {
+        Assets.playVfx(host, mood === "success" ? "success-sparkle" : "soft-error-puff");
+      }
+      setTimeout(function () {
+        el.dataset.mood = "idle";
+        if (Assets) Assets.mountWorldMascot(el, ASSET_SUBJECT, { pose: "idle", mood: "idle" });
+      }, 900);
+    }
+  }
+
   function renderEngageChrome() {
     Engine.ensureEngagement(profile);
     Engine.touchLastPlayed(profile);
@@ -326,6 +356,10 @@
     document.getElementById("avatar-label").textContent = name;
     if (Assets) {
       Assets.mountAvatar(document.getElementById("avatar-mount"), profile.engagement.avatar);
+      Assets.mountWorldMascot(document.getElementById("world-mascot"), ASSET_SUBJECT, { pose: "idle", mood: "idle" });
+      document.querySelectorAll("#spelling-universe-scene [data-layer]").forEach(function (layerEl) {
+        Assets.mountWorldLayer(layerEl, layerEl.getAttribute("data-layer"));
+      });
     }
     const comps = Engine.availableCompanions(profile);
     const equipped = comps.find(function (c) { return c.equipped; });
@@ -712,8 +746,16 @@
     body.appendChild(list);
   }
 
-  function speakText(text) {
-    if (!text || !window.speechSynthesis) return;
+  function speakText(text, act) {
+    if (!text) return;
+    const opts = act || currentItem || {};
+    if (Assets && Assets.playVoice) {
+      const run = function () { Assets.playVoice(text, opts); };
+      if (Assets.load) Assets.load().then(run);
+      else run();
+      return;
+    }
+    if (muted || !window.speechSynthesis) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 0.75;
@@ -1116,7 +1158,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
-      if (act.speak) speakText(act.speak);
+      if (act.speak) speakText(act.speak, act);
       startTimer(placementMode ? 40 : (type === "spell" ? 35 : 30));
       return;
     }
@@ -1143,6 +1185,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
+      speakText(act.speak || act.prompt, act);
       startTimer(placementMode ? 45 : 40);
       return;
     }
@@ -1164,6 +1207,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
+      speakText(act.speak || act.prompt, act);
       startTimer(25);
       return;
     }
@@ -1173,7 +1217,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
-      if (act.speak) speakText(act.speak);
+      if (act.speak) speakText(act.speak, act);
       startTimer(type === "sentence" ? 30 : 25);
       return;
     }
@@ -1184,6 +1228,7 @@
     tryAgainBtn.classList.remove("hidden");
     gotItBtn.textContent = type === "action" ? "I did it" : "I got it";
     tryAgainBtn.textContent = type === "action" ? "Need help" : "Try again";
+    speakText(act.speak || act.prompt, act);
     startTimer(type === "sprint" && String(act.prompt).indexOf(" ") !== -1 ? 20 : 12);
   }
 
@@ -1427,7 +1472,8 @@
 
   function finishLesson(success, extraMessage) {
     setPlayingOff();
-    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (Assets && Assets.stopVoice) Assets.stopVoice();
+    else if (window.speechSynthesis) speechSynthesis.cancel();
     const elapsed = Date.now() - lessonStartedAt;
     Engine.addTime(profile, elapsed || Engine.estimateLessonMs(activityQueue.length));
 
@@ -1504,6 +1550,7 @@
       }
       launchCelebration(score >= 8 ? "champion" : "milestone");
       playSfx("fanfare");
+      cueWorldBee("success");
       const localTip = Engine.coachMessage(profile, "lesson-complete");
       function showComplete(tip) {
         showOverlay({
@@ -1796,7 +1843,8 @@
   };
   document.getElementById("quit-lesson").onclick = function () {
     setPlayingOff();
-    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (Assets && Assets.stopVoice) Assets.stopVoice();
+    else if (window.speechSynthesis) speechSynthesis.cancel();
     if (placementMode) {
       placementMode = false;
       placementResults = [];
@@ -1994,9 +2042,9 @@
 
   speakBtn.onclick = function () {
     if (!currentItem) return;
-    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text);
-    else if (currentItem.type === "equation" && currentItem.payload && currentItem.payload.equation) speakText(currentItem.speak || currentItem.payload.equation);
-    else speakText(currentItem.speak || currentItem.prompt);
+    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text, currentItem);
+    else if (currentItem.type === "equation" && currentItem.payload && currentItem.payload.equation) speakText(currentItem.speak || currentItem.payload.equation, currentItem);
+    else speakText(currentItem.speak || currentItem.prompt, currentItem);
   };
   gotItBtn.onclick = function () {
     if (!roundActive || !currentItem) return;

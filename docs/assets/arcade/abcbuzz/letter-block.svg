@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
+  <rect x="8" y="8" width="80" height="80" rx="12" fill="#fff6d6" stroke="#1a1a28" stroke-width="4"/>
+  <text id="letter" x="48" y="66" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="48" font-weight="800" fill="#e07a2f">A</text>
+</svg>

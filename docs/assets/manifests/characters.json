@@ -1,0 +1,798 @@
+{
+  "version": 2,
+  "items": [
+    {
+      "id": "arcade-hub-background",
+      "name": "Arcade Hub Background",
+      "category": "hub-layer",
+      "path": "/assets/hub/arcade-hub-background.webp",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "reading-hub-card",
+      "name": "Reading World Card",
+      "category": "hub-card",
+      "path": "/assets/worlds/reading/backgrounds/reading-hub-card.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "spelling-hub-card",
+      "name": "Spelling World Card",
+      "category": "hub-card",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-hub-card.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "math-hub-card",
+      "name": "Math World Card",
+      "category": "hub-card",
+      "path": "/assets/worlds/math/backgrounds/math-hub-card.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "reading-scene-master",
+      "name": "Reading Scene Master",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-scene-master.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "reading-sky",
+      "name": "Reading Sky",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-sky.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "reading-mountains",
+      "name": "Reading Mountains",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-mountains.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "reading-forest",
+      "name": "Reading Forest",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-forest.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "reading-castle",
+      "name": "Reading Castle",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-castle.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "reading-foreground",
+      "name": "Reading Foreground",
+      "category": "environment-layer",
+      "path": "/assets/worlds/reading/backgrounds/reading-foreground.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "spelling-sky",
+      "name": "Spelling Sky",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-sky.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-hills",
+      "name": "Spelling Hills",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-hills.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-meadow",
+      "name": "Spelling Meadow",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-meadow.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-village",
+      "name": "Spelling Village",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-village.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-foreground",
+      "name": "Spelling Foreground",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-foreground.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "math-sky",
+      "name": "Math Sky",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-sky.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-mountains",
+      "name": "Math Mountains",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-mountains.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-valley",
+      "name": "Math Valley",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-valley.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-castle",
+      "name": "Math Castle",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-castle.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-foreground",
+      "name": "Math Foreground",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-foreground.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "reading-owl",
+      "name": "Reading Owl",
+      "category": "character",
+      "path": "/assets/worlds/reading/characters/reading-owl-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-idle",
+      "name": "Reading Owl idle",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-happy",
+      "name": "Reading Owl happy",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-happy.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-thinking",
+      "name": "Reading Owl thinking",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-thinking.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-flying",
+      "name": "Reading Owl flying",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-flying.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-celebrating",
+      "name": "Reading Owl celebrating",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-celebrating.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "reading-owl-gentle-error",
+      "name": "Reading Owl gentle-error",
+      "category": "character-pose",
+      "path": "/assets/worlds/reading/characters/reading-owl-gentle-error.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "spelling-bee",
+      "name": "Spelling Bee",
+      "category": "character",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-idle",
+      "name": "Spelling Bee idle",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-happy",
+      "name": "Spelling Bee happy",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-happy.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-thinking",
+      "name": "Spelling Bee thinking",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-thinking.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-flying",
+      "name": "Spelling Bee flying",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-flying.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-celebrating",
+      "name": "Spelling Bee celebrating",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-celebrating.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "spelling-bee-gentle-error",
+      "name": "Spelling Bee gentle-error",
+      "category": "character-pose",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-gentle-error.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling",
+      "fallbackEmoji": "\ud83d\udc1d"
+    },
+    {
+      "id": "math-turtle",
+      "name": "Math Turtle",
+      "category": "character",
+      "path": "/assets/worlds/math/characters/math-turtle-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-idle",
+      "name": "Math Turtle idle",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-idle.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-happy",
+      "name": "Math Turtle happy",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-happy.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-thinking",
+      "name": "Math Turtle thinking",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-thinking.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-walking",
+      "name": "Math Turtle walking",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-walking.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-celebrating",
+      "name": "Math Turtle celebrating",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-celebrating.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "math-turtle-gentle-error",
+      "name": "Math Turtle gentle-error",
+      "category": "character-pose",
+      "path": "/assets/worlds/math/characters/math-turtle-gentle-error.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math",
+      "fallbackEmoji": "\ud83d\udc22"
+    },
+    {
+      "id": "flipmatch-card-back",
+      "name": "Card Back",
+      "category": "flipmatch-card",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-back.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "flipmatch-card-owl",
+      "name": "Reading Owl Card",
+      "category": "flipmatch-card",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-owl.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading",
+      "fallbackEmoji": "\ud83e\udd89"
+    },
+    {
+      "id": "flipmatch-card-fox",
+      "name": "Clever Fox Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-fox.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-rabbit",
+      "name": "Friendly Rabbit Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-rabbit.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-book",
+      "name": "Magical Book Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-book.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-flower",
+      "name": "Bright Flower Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-flower.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-tree",
+      "name": "Old Oak Tree Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-tree.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-castle",
+      "name": "Dream Castle Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-castle.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-star",
+      "name": "Twinkle Star Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-star.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "flipmatch-card-butterfly",
+      "name": "Painted Butterfly Card",
+      "category": "flipmatch-card",
+      "world": "reading",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-butterfly.png",
+      "source": "derived-sheet",
+      "license": "proprietary"
+    },
+    {
+      "id": "arcade-hub-mountains",
+      "name": "Arcade Hub Mountains",
+      "category": "hub-layer",
+      "path": "/assets/hub/arcade-hub-mountains.webp",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "arcade-hub-floating-islands",
+      "name": "Arcade Hub Islands",
+      "category": "hub-layer",
+      "path": "/assets/hub/arcade-hub-floating-islands.webp",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "arcade-hub-foreground",
+      "name": "Arcade Hub Foreground",
+      "category": "hub-layer",
+      "path": "/assets/hub/arcade-hub-foreground.webp",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "arcade-hub-sparkles",
+      "name": "Arcade Hub Sparkles",
+      "category": "hub-layer",
+      "path": "/assets/hub/arcade-hub-sparkles.webp",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "spelling-scene-master",
+      "name": "Spelling Scene Master",
+      "category": "environment-layer",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-scene-master.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "math-scene-master",
+      "name": "Math Scene Master",
+      "category": "environment-layer",
+      "path": "/assets/worlds/math/backgrounds/math-scene-master.webp",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "reading-props-sheet",
+      "name": "Reading Props Sheet",
+      "category": "prop-sheet",
+      "path": "/assets/worlds/reading/props/reading-props-sheet.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "reading"
+    },
+    {
+      "id": "spelling-props-sheet",
+      "name": "Spelling Props Sheet",
+      "category": "prop-sheet",
+      "path": "/assets/worlds/spelling/props/spelling-props-sheet.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "math-props-sheet",
+      "name": "Math Props Sheet",
+      "category": "prop-sheet",
+      "path": "/assets/worlds/math/props/math-props-sheet.png",
+      "source": "gemini-import",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "effects-sheet",
+      "name": "Effects Sheet",
+      "category": "effect-sheet",
+      "path": "/assets/ui/effects-sheet.png",
+      "source": "gemini-import",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-sparkle-success",
+      "name": "Success Sparkle",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-sparkle-success.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-flower-bloom",
+      "name": "Flower Bloom",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-flower-bloom.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-letter-pop",
+      "name": "Letter Pop",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-letter-pop.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-unlock-glow",
+      "name": "Unlock Glow",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-unlock-glow.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-celebrate-burst",
+      "name": "Celebrate Burst",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-celebrate-burst.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "fx-soft-miss-puff",
+      "name": "Soft Miss Puff",
+      "category": "vfx",
+      "path": "/assets/ui/vfx/fx-soft-miss-puff.png",
+      "source": "gemini-crop",
+      "license": "proprietary"
+    },
+    {
+      "id": "spelling-letter-blocks",
+      "name": "letter-blocks",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-blocks.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-honeycomb",
+      "name": "honeycomb",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/honeycomb.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-hive",
+      "name": "hive",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/hive.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-flower-letter",
+      "name": "flower-letter",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/flower-letter.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-word-book",
+      "name": "word-book",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/word-book.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-letter-a",
+      "name": "letter-a",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-a.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-letter-b",
+      "name": "letter-b",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-b.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-letter-c",
+      "name": "letter-c",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-c.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-letter-w",
+      "name": "letter-w",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-w.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "spelling-letter-f",
+      "name": "letter-f",
+      "category": "prop",
+      "path": "/assets/worlds/spelling/props/crops/letter-f.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "spelling"
+    },
+    {
+      "id": "math-number-0",
+      "name": "number-0",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/number-0.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-number-1",
+      "name": "number-1",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/number-1.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-number-2",
+      "name": "number-2",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/number-2.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-number-3",
+      "name": "number-3",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/number-3.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-crystal",
+      "name": "crystal",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/crystal.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-plus",
+      "name": "plus",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/plus.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-minus",
+      "name": "minus",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/minus.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-times",
+      "name": "times",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/times.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-division",
+      "name": "division",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/division.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    },
+    {
+      "id": "math-fraction-pie",
+      "name": "fraction-pie",
+      "category": "prop",
+      "path": "/assets/worlds/math/props/crops/fraction-pie.png",
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "world": "math"
+    }
+  ]
+}

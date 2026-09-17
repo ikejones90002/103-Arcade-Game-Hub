@@ -1,0 +1,2896 @@
+{
+  "version": 1,
+  "pack": "1.0.0",
+  "base_path": "/assets/audio/voice/",
+  "fallback": "speechSynthesis",
+  "role": "source-of-truth learning-voice script for 103 Arcade",
+  "status": "script-only — no audio files generated in this batch",
+  "canon": "docs/assets/canon/GENERATE-NOW-AUDIO.md",
+  "voice": {
+    "role": "Warm adult storyteller, American English, smile in the voice, never baby-talk. Same person for the entire manifest.",
+    "rate": "0.85 conversational on words; clipped on phonemes",
+    "locale": "en-US",
+    "performance": "Dry studio. Isolated phonemes as pure as audible. No character voices. No music bed."
+  },
+  "playback": {
+    "muteStopsAll": true,
+    "composePromptsInEngine": true,
+    "doNotRecordFullSentences": true
+  },
+  "counts": {
+    "total": 232,
+    "byKind": {
+      "letter-name": 26,
+      "phoneme-short": 5,
+      "phoneme-long": 5,
+      "phoneme-consonant": 21,
+      "phoneme-digraph": 8,
+      "word-cvc": 37,
+      "word-sight": 23,
+      "word-blend": 13,
+      "word-digraph": 15,
+      "word-silent-e": 11,
+      "word-long-vowel": 15,
+      "word-vocab": 10,
+      "word-multisyllable": 10,
+      "word-tricky": 10,
+      "word-root": 10,
+      "word-action": 2,
+      "word-color": 6,
+      "stem-optional": 5
+    }
+  },
+  "clips": [
+    {
+      "id": "letter-name-a",
+      "text": "A",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-a.mp3",
+      "ipa": "/eɪ/",
+      "cue": "ay",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-b",
+      "text": "B",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-b.mp3",
+      "ipa": "/bi/",
+      "cue": "bee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-c",
+      "text": "C",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-c.mp3",
+      "ipa": "/si/",
+      "cue": "see",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-d",
+      "text": "D",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-d.mp3",
+      "ipa": "/di/",
+      "cue": "dee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-e",
+      "text": "E",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-e.mp3",
+      "ipa": "/i/",
+      "cue": "ee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-f",
+      "text": "F",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-f.mp3",
+      "ipa": "/ɛf/",
+      "cue": "eff",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-g",
+      "text": "G",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-g.mp3",
+      "ipa": "/dʒi/",
+      "cue": "jee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-h",
+      "text": "H",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-h.mp3",
+      "ipa": "/eɪtʃ/",
+      "cue": "aych",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-i",
+      "text": "I",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-i.mp3",
+      "ipa": "/aɪ/",
+      "cue": "eye",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-j",
+      "text": "J",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-j.mp3",
+      "ipa": "/dʒeɪ/",
+      "cue": "jay",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-k",
+      "text": "K",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-k.mp3",
+      "ipa": "/keɪ/",
+      "cue": "kay",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-l",
+      "text": "L",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-l.mp3",
+      "ipa": "/ɛl/",
+      "cue": "ell",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-m",
+      "text": "M",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-m.mp3",
+      "ipa": "/ɛm/",
+      "cue": "em",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-n",
+      "text": "N",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-n.mp3",
+      "ipa": "/ɛn/",
+      "cue": "en",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-o",
+      "text": "O",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-o.mp3",
+      "ipa": "/oʊ/",
+      "cue": "oh",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-p",
+      "text": "P",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-p.mp3",
+      "ipa": "/pi/",
+      "cue": "pee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-q",
+      "text": "Q",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-q.mp3",
+      "ipa": "/kju/",
+      "cue": "cue",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-r",
+      "text": "R",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-r.mp3",
+      "ipa": "/ɑr/",
+      "cue": "ar",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-s",
+      "text": "S",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-s.mp3",
+      "ipa": "/ɛs/",
+      "cue": "ess",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-t",
+      "text": "T",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-t.mp3",
+      "ipa": "/ti/",
+      "cue": "tee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-u",
+      "text": "U",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-u.mp3",
+      "ipa": "/ju/",
+      "cue": "you",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-v",
+      "text": "V",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-v.mp3",
+      "ipa": "/vi/",
+      "cue": "vee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-w",
+      "text": "W",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-w.mp3",
+      "ipa": "/ˈdʌbəlju/",
+      "cue": "double-you",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-x",
+      "text": "X",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-x.mp3",
+      "ipa": "/ɛks/",
+      "cue": "ex",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-y",
+      "text": "Y",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-y.mp3",
+      "ipa": "/waɪ/",
+      "cue": "why",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "letter-name-z",
+      "text": "Z",
+      "kind": "letter-name",
+      "path": "/assets/audio/voice/letter-name-z.mp3",
+      "ipa": "/zi/",
+      "cue": "zee",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-short-a",
+      "text": "ă",
+      "kind": "phoneme-short",
+      "path": "/assets/audio/voice/phoneme-short-a.mp3",
+      "ipa": "/æ/",
+      "cue": "apple, cat",
+      "proof": "cat, map, hat",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-short-e",
+      "text": "ĕ",
+      "kind": "phoneme-short",
+      "path": "/assets/audio/voice/phoneme-short-e.mp3",
+      "ipa": "/ɛ/",
+      "cue": "egg, bed",
+      "proof": "bed, red, pen",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-short-i",
+      "text": "ĭ",
+      "kind": "phoneme-short",
+      "path": "/assets/audio/voice/phoneme-short-i.mp3",
+      "ipa": "/ɪ/",
+      "cue": "igloo, pig",
+      "proof": "pig, sit, win",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-short-o",
+      "text": "ŏ",
+      "kind": "phoneme-short",
+      "path": "/assets/audio/voice/phoneme-short-o.mp3",
+      "ipa": "/ɑ/",
+      "cue": "octopus, hop (US ah)",
+      "proof": "hop, dog, box",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-short-u",
+      "text": "ŭ",
+      "kind": "phoneme-short",
+      "path": "/assets/audio/voice/phoneme-short-u.mp3",
+      "ipa": "/ʌ/",
+      "cue": "umbrella, cup",
+      "proof": "cup, sun, bug",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-long-a",
+      "text": "ā",
+      "kind": "phoneme-long",
+      "path": "/assets/audio/voice/phoneme-long-a.mp3",
+      "ipa": "/eɪ/",
+      "cue": "cake, rain",
+      "proof": "cake, name, rain",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "phoneme-long-e",
+      "text": "ē",
+      "kind": "phoneme-long",
+      "path": "/assets/audio/voice/phoneme-long-e.mp3",
+      "ipa": "/i/",
+      "cue": "feet, seed",
+      "proof": "feet, leaf, keep",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "phoneme-long-i",
+      "text": "ī",
+      "kind": "phoneme-long",
+      "path": "/assets/audio/voice/phoneme-long-i.mp3",
+      "ipa": "/aɪ/",
+      "cue": "bike, time",
+      "proof": "bike, like, light",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "phoneme-long-o",
+      "text": "ō",
+      "kind": "phoneme-long",
+      "path": "/assets/audio/voice/phoneme-long-o.mp3",
+      "ipa": "/oʊ/",
+      "cue": "home, boat",
+      "proof": "home, rope, boat",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "phoneme-long-u",
+      "text": "ū",
+      "kind": "phoneme-long",
+      "path": "/assets/audio/voice/phoneme-long-u.mp3",
+      "ipa": "/ju/",
+      "cue": "cute",
+      "proof": "cute",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "phoneme-b",
+      "text": "b",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-b.mp3",
+      "ipa": "/b/",
+      "cue": "ball, clipped",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-c-k",
+      "text": "c",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-c-k.mp3",
+      "ipa": "/k/",
+      "cue": "cat, can — hard C",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-d",
+      "text": "d",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-d.mp3",
+      "ipa": "/d/",
+      "cue": "dog",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-f",
+      "text": "f",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-f.mp3",
+      "ipa": "/f/",
+      "cue": "fan",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-g",
+      "text": "g",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-g.mp3",
+      "ipa": "/g/",
+      "cue": "go, pig — hard G",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-h",
+      "text": "h",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-h.mp3",
+      "ipa": "/h/",
+      "cue": "hat",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-j",
+      "text": "j",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-j.mp3",
+      "ipa": "/dʒ/",
+      "cue": "jam",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-k",
+      "text": "k",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-k.mp3",
+      "ipa": "/k/",
+      "cue": "kite",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-l",
+      "text": "l",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-l.mp3",
+      "ipa": "/l/",
+      "cue": "leaf, lll",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-m",
+      "text": "m",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-m.mp3",
+      "ipa": "/m/",
+      "cue": "map, mmm",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-n",
+      "text": "n",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-n.mp3",
+      "ipa": "/n/",
+      "cue": "net, nnn",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-p",
+      "text": "p",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-p.mp3",
+      "ipa": "/p/",
+      "cue": "pig",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-q",
+      "text": "qu",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-q.mp3",
+      "ipa": "/kw/",
+      "cue": "queen, kw",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-r",
+      "text": "r",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-r.mp3",
+      "ipa": "/ɹ/",
+      "cue": "red, American rrr",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-s",
+      "text": "s",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-s.mp3",
+      "ipa": "/s/",
+      "cue": "sun, sss",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-t",
+      "text": "t",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-t.mp3",
+      "ipa": "/t/",
+      "cue": "top",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-v",
+      "text": "v",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-v.mp3",
+      "ipa": "/v/",
+      "cue": "van, vvv",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-w",
+      "text": "w",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-w.mp3",
+      "ipa": "/w/",
+      "cue": "win",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-x",
+      "text": "x",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-x.mp3",
+      "ipa": "/ks/",
+      "cue": "box, ks",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-y",
+      "text": "y",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-y.mp3",
+      "ipa": "/j/",
+      "cue": "yellow, onset",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-z",
+      "text": "z",
+      "kind": "phoneme-consonant",
+      "path": "/assets/audio/voice/phoneme-z.mp3",
+      "ipa": "/z/",
+      "cue": "zip, zzz",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "phoneme-sh",
+      "text": "sh",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-sh.mp3",
+      "ipa": "/ʃ/",
+      "cue": "ship, fish",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-ch",
+      "text": "ch",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-ch.mp3",
+      "ipa": "/tʃ/",
+      "cue": "chair, chip",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-th-unvoiced",
+      "text": "th",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-th-unvoiced.mp3",
+      "ipa": "/θ/",
+      "cue": "thin, path",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-th-voiced",
+      "text": "th",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-th-voiced.mp3",
+      "ipa": "/ð/",
+      "cue": "the",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-wh",
+      "text": "wh",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-wh.mp3",
+      "ipa": "/w/",
+      "cue": "when",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-ng",
+      "text": "ng",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-ng.mp3",
+      "ipa": "/ŋ/",
+      "cue": "ring",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-ph",
+      "text": "ph",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-ph.mp3",
+      "ipa": "/f/",
+      "cue": "phone",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "phoneme-ck",
+      "text": "ck",
+      "kind": "phoneme-digraph",
+      "path": "/assets/audio/voice/phoneme-ck.mp3",
+      "ipa": "/k/",
+      "cue": "duck, kick",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bag",
+      "text": "bag",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-bag.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bat",
+      "text": "bat",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-bat.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bed",
+      "text": "bed",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-bed.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-box",
+      "text": "box",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-box.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bug",
+      "text": "bug",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-bug.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bus",
+      "text": "bus",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-bus.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-cab",
+      "text": "cab",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-cab.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-cat",
+      "text": "cat",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-cat.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-cup",
+      "text": "cup",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-cup.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-dog",
+      "text": "dog",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-dog.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-fan",
+      "text": "fan",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-fan.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-fin",
+      "text": "fin",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-fin.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-fox",
+      "text": "fox",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-fox.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-hat",
+      "text": "hat",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-hat.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-hen",
+      "text": "hen",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-hen.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-hop",
+      "text": "hop",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-hop.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-jam",
+      "text": "jam",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-jam.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-leg",
+      "text": "leg",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-leg.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-log",
+      "text": "log",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-log.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-man",
+      "text": "man",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-man.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-map",
+      "text": "map",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-map.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-mop",
+      "text": "mop",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-mop.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-mud",
+      "text": "mud",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-mud.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-net",
+      "text": "net",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-net.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-pen",
+      "text": "pen",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-pen.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-pig",
+      "text": "pig",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-pig.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-red",
+      "text": "red",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-red.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-rim",
+      "text": "rim",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-rim.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-rug",
+      "text": "rug",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-rug.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-run",
+      "text": "run",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-run.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-sip",
+      "text": "sip",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-sip.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-sit",
+      "text": "sit",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-sit.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-sun",
+      "text": "sun",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-sun.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-top",
+      "text": "top",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-top.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-van",
+      "text": "van",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-van.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-win",
+      "text": "win",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-win.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-zip",
+      "text": "zip",
+      "kind": "word-cvc",
+      "path": "/assets/audio/voice/word-zip.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-a",
+      "text": "a",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-a.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-all",
+      "text": "all",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-all.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-and",
+      "text": "and",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-and.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-are",
+      "text": "are",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-are.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-but",
+      "text": "but",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-but.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-can",
+      "text": "can",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-can.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-for",
+      "text": "for",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-for.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-go",
+      "text": "go",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-go.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-had",
+      "text": "had",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-had.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-her",
+      "text": "her",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-her.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-i",
+      "text": "I",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-i.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-in",
+      "text": "in",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-in.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-is",
+      "text": "is",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-is.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-me",
+      "text": "me",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-me.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-my",
+      "text": "my",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-my.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-not",
+      "text": "not",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-not.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-on",
+      "text": "on",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-on.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-see",
+      "text": "see",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-see.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-the",
+      "text": "the",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-the.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-to",
+      "text": "to",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-to.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-was",
+      "text": "was",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-was.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-we",
+      "text": "we",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-we.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-you",
+      "text": "you",
+      "kind": "word-sight",
+      "path": "/assets/audio/voice/word-you.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-clap",
+      "text": "clap",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-clap.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-crab",
+      "text": "crab",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-crab.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-drum",
+      "text": "drum",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-drum.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-flag",
+      "text": "flag",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-flag.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-frog",
+      "text": "frog",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-frog.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-grip",
+      "text": "grip",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-grip.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-plan",
+      "text": "plan",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-plan.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-slip",
+      "text": "slip",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-slip.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-snap",
+      "text": "snap",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-snap.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-stop",
+      "text": "stop",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-stop.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-swim",
+      "text": "swim",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-swim.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-trap",
+      "text": "trap",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-trap.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-tree",
+      "text": "tree",
+      "kind": "word-blend",
+      "path": "/assets/audio/voice/word-tree.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-chair",
+      "text": "chair",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-chair.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-chat",
+      "text": "chat",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-chat.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-chip",
+      "text": "chip",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-chip.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-dish",
+      "text": "dish",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-dish.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-duck",
+      "text": "duck",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-duck.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-fish",
+      "text": "fish",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-fish.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-kick",
+      "text": "kick",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-kick.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-much",
+      "text": "much",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-much.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-path",
+      "text": "path",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-path.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-phone",
+      "text": "phone",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-phone.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-ring",
+      "text": "ring",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-ring.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-ship",
+      "text": "ship",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-ship.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-thin",
+      "text": "thin",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-thin.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-when",
+      "text": "when",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-when.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-wish",
+      "text": "wish",
+      "kind": "word-digraph",
+      "path": "/assets/audio/voice/word-wish.mp3",
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bike",
+      "text": "bike",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-bike.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-bone",
+      "text": "bone",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-bone.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-cake",
+      "text": "cake",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-cake.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-cute",
+      "text": "cute",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-cute.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-home",
+      "text": "home",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-home.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-hope",
+      "text": "hope",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-hope.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-like",
+      "text": "like",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-like.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-made",
+      "text": "made",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-made.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-name",
+      "text": "name",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-name.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-rope",
+      "text": "rope",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-rope.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-time",
+      "text": "time",
+      "kind": "word-silent-e",
+      "path": "/assets/audio/voice/word-time.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime"
+      ]
+    },
+    {
+      "id": "word-blue",
+      "text": "blue",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-blue.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-boat",
+      "text": "boat",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-boat.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-coat",
+      "text": "coat",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-coat.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-feet",
+      "text": "feet",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-feet.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-hair",
+      "text": "hair",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-hair.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-keep",
+      "text": "keep",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-keep.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-leaf",
+      "text": "leaf",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-leaf.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-light",
+      "text": "light",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-light.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-mail",
+      "text": "mail",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-mail.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-night",
+      "text": "night",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-night.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-rain",
+      "text": "rain",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-rain.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-road",
+      "text": "road",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-road.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-seed",
+      "text": "seed",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-seed.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-shoe",
+      "text": "shoe",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-shoe.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-team",
+      "text": "team",
+      "kind": "word-long-vowel",
+      "path": "/assets/audio/voice/word-team.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "rhymetime",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-ancient",
+      "text": "ancient",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-ancient.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-brave",
+      "text": "brave",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-brave.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-eager",
+      "text": "eager",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-eager.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-gentle",
+      "text": "gentle",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-gentle.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-hidden",
+      "text": "hidden",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-hidden.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-narrow",
+      "text": "narrow",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-narrow.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-quiet",
+      "text": "quiet",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-quiet.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-rapid",
+      "text": "rapid",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-rapid.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-sturdy",
+      "text": "sturdy",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-sturdy.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-vivid",
+      "text": "vivid",
+      "kind": "word-vocab",
+      "path": "/assets/audio/voice/word-vivid.mp3",
+      "usedBy": [
+        "spellbuzz",
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-basket",
+      "text": "basket",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-basket.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-garden",
+      "text": "garden",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-garden.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-helmet",
+      "text": "helmet",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-helmet.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-magnet",
+      "text": "magnet",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-magnet.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-pencil",
+      "text": "pencil",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-pencil.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-picnic",
+      "text": "picnic",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-picnic.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-rabbit",
+      "text": "rabbit",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-rabbit.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-rocket",
+      "text": "rocket",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-rocket.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-sunset",
+      "text": "sunset",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-sunset.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-window",
+      "text": "window",
+      "kind": "word-multisyllable",
+      "path": "/assets/audio/voice/word-window.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-because",
+      "text": "because",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-because.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-beautiful",
+      "text": "beautiful",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-beautiful.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-enough",
+      "text": "enough",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-enough.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-friend",
+      "text": "friend",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-friend.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-people",
+      "text": "people",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-people.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-their",
+      "text": "their",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-their.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-there",
+      "text": "there",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-there.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-theyre",
+      "text": "they're",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-theyre.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-though",
+      "text": "though",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-though.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-through",
+      "text": "through",
+      "kind": "word-tricky",
+      "path": "/assets/audio/voice/word-through.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-careful",
+      "text": "careful",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-careful.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-complete",
+      "text": "complete",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-complete.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-construct",
+      "text": "construct",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-construct.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-helpful",
+      "text": "helpful",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-helpful.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-inspect",
+      "text": "inspect",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-inspect.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-predict",
+      "text": "predict",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-predict.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-preview",
+      "text": "preview",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-preview.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-rewrite",
+      "text": "rewrite",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-rewrite.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-transport",
+      "text": "transport",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-transport.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-unhappy",
+      "text": "unhappy",
+      "kind": "word-root",
+      "path": "/assets/audio/voice/word-unhappy.mp3",
+      "usedBy": [
+        "spellbuzz"
+      ]
+    },
+    {
+      "id": "word-jump",
+      "text": "jump",
+      "kind": "word-action",
+      "path": "/assets/audio/voice/word-jump.mp3",
+      "usedBy": [
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-wave",
+      "text": "wave",
+      "kind": "word-action",
+      "path": "/assets/audio/voice/word-wave.mp3",
+      "usedBy": [
+        "wordquest"
+      ]
+    },
+    {
+      "id": "word-green",
+      "text": "green",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-green.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-orange",
+      "text": "orange",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-orange.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-pink",
+      "text": "pink",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-pink.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-purple",
+      "text": "purple",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-purple.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-white",
+      "text": "white",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-white.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "word-yellow",
+      "text": "yellow",
+      "kind": "word-color",
+      "path": "/assets/audio/voice/word-yellow.mp3",
+      "usedBy": [
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "stem-find-letter",
+      "text": "Find the letter",
+      "kind": "stem-optional",
+      "path": "/assets/audio/voice/stem-find-letter.mp3",
+      "required": false,
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "stem-the-sound",
+      "text": "The sound",
+      "kind": "stem-optional",
+      "path": "/assets/audio/voice/stem-the-sound.mp3",
+      "required": false,
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "stem-build-word",
+      "text": "Build the word",
+      "kind": "stem-optional",
+      "path": "/assets/audio/voice/stem-build-word.mp3",
+      "required": false,
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "stem-spell",
+      "text": "Spell",
+      "kind": "stem-optional",
+      "path": "/assets/audio/voice/stem-spell.mp3",
+      "required": false,
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    },
+    {
+      "id": "stem-which-letter-starts",
+      "text": "What letter starts",
+      "kind": "stem-optional",
+      "path": "/assets/audio/voice/stem-which-letter-starts.mp3",
+      "required": false,
+      "usedBy": [
+        "wordquest",
+        "spellbuzz",
+        "abcbuzz"
+      ]
+    }
+  ],
+  "groups": {
+    "letter_names": [
+      "letter-name-a",
+      "letter-name-b",
+      "letter-name-c",
+      "letter-name-d",
+      "letter-name-e",
+      "letter-name-f",
+      "letter-name-g",
+      "letter-name-h",
+      "letter-name-i",
+      "letter-name-j",
+      "letter-name-k",
+      "letter-name-l",
+      "letter-name-m",
+      "letter-name-n",
+      "letter-name-o",
+      "letter-name-p",
+      "letter-name-q",
+      "letter-name-r",
+      "letter-name-s",
+      "letter-name-t",
+      "letter-name-u",
+      "letter-name-v",
+      "letter-name-w",
+      "letter-name-x",
+      "letter-name-y",
+      "letter-name-z"
+    ],
+    "phonemes": [
+      "phoneme-short-a",
+      "phoneme-short-e",
+      "phoneme-short-i",
+      "phoneme-short-o",
+      "phoneme-short-u",
+      "phoneme-long-a",
+      "phoneme-long-e",
+      "phoneme-long-i",
+      "phoneme-long-o",
+      "phoneme-long-u",
+      "phoneme-b",
+      "phoneme-c-k",
+      "phoneme-d",
+      "phoneme-f",
+      "phoneme-g",
+      "phoneme-h",
+      "phoneme-j",
+      "phoneme-k",
+      "phoneme-l",
+      "phoneme-m",
+      "phoneme-n",
+      "phoneme-p",
+      "phoneme-q",
+      "phoneme-r",
+      "phoneme-s",
+      "phoneme-t",
+      "phoneme-v",
+      "phoneme-w",
+      "phoneme-x",
+      "phoneme-y",
+      "phoneme-z",
+      "phoneme-sh",
+      "phoneme-ch",
+      "phoneme-th-unvoiced",
+      "phoneme-th-voiced",
+      "phoneme-wh",
+      "phoneme-ng",
+      "phoneme-ph",
+      "phoneme-ck"
+    ],
+    "words": [
+      "word-bag",
+      "word-bat",
+      "word-bed",
+      "word-box",
+      "word-bug",
+      "word-bus",
+      "word-cab",
+      "word-cat",
+      "word-cup",
+      "word-dog",
+      "word-fan",
+      "word-fin",
+      "word-fox",
+      "word-hat",
+      "word-hen",
+      "word-hop",
+      "word-jam",
+      "word-leg",
+      "word-log",
+      "word-man",
+      "word-map",
+      "word-mop",
+      "word-mud",
+      "word-net",
+      "word-pen",
+      "word-pig",
+      "word-red",
+      "word-rim",
+      "word-rug",
+      "word-run",
+      "word-sip",
+      "word-sit",
+      "word-sun",
+      "word-top",
+      "word-van",
+      "word-win",
+      "word-zip",
+      "word-a",
+      "word-all",
+      "word-and",
+      "word-are",
+      "word-but",
+      "word-can",
+      "word-for",
+      "word-go",
+      "word-had",
+      "word-her",
+      "word-i",
+      "word-in",
+      "word-is",
+      "word-me",
+      "word-my",
+      "word-not",
+      "word-on",
+      "word-see",
+      "word-the",
+      "word-to",
+      "word-was",
+      "word-we",
+      "word-you",
+      "word-clap",
+      "word-crab",
+      "word-drum",
+      "word-flag",
+      "word-frog",
+      "word-grip",
+      "word-plan",
+      "word-slip",
+      "word-snap",
+      "word-stop",
+      "word-swim",
+      "word-trap",
+      "word-tree",
+      "word-chair",
+      "word-chat",
+      "word-chip",
+      "word-dish",
+      "word-duck",
+      "word-fish",
+      "word-kick",
+      "word-much",
+      "word-path",
+      "word-phone",
+      "word-ring",
+      "word-ship",
+      "word-thin",
+      "word-when",
+      "word-wish",
+      "word-bike",
+      "word-bone",
+      "word-cake",
+      "word-cute",
+      "word-home",
+      "word-hope",
+      "word-like",
+      "word-made",
+      "word-name",
+      "word-rope",
+      "word-time",
+      "word-blue",
+      "word-boat",
+      "word-coat",
+      "word-feet",
+      "word-hair",
+      "word-keep",
+      "word-leaf",
+      "word-light",
+      "word-mail",
+      "word-night",
+      "word-rain",
+      "word-road",
+      "word-seed",
+      "word-shoe",
+      "word-team",
+      "word-ancient",
+      "word-brave",
+      "word-eager",
+      "word-gentle",
+      "word-hidden",
+      "word-narrow",
+      "word-quiet",
+      "word-rapid",
+      "word-sturdy",
+      "word-vivid",
+      "word-basket",
+      "word-garden",
+      "word-helmet",
+      "word-magnet",
+      "word-pencil",
+      "word-picnic",
+      "word-rabbit",
+      "word-rocket",
+      "word-sunset",
+      "word-window",
+      "word-because",
+      "word-beautiful",
+      "word-enough",
+      "word-friend",
+      "word-people",
+      "word-their",
+      "word-there",
+      "word-theyre",
+      "word-though",
+      "word-through",
+      "word-careful",
+      "word-complete",
+      "word-construct",
+      "word-helpful",
+      "word-inspect",
+      "word-predict",
+      "word-preview",
+      "word-rewrite",
+      "word-transport",
+      "word-unhappy",
+      "word-jump",
+      "word-wave",
+      "word-green",
+      "word-orange",
+      "word-pink",
+      "word-purple",
+      "word-white",
+      "word-yellow"
+    ],
+    "stems": [
+      "stem-find-letter",
+      "stem-the-sound",
+      "stem-build-word",
+      "stem-spell",
+      "stem-which-letter-starts"
+    ]
+  }
+}

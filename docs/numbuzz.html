@@ -28,9 +28,21 @@
     </div>
 
     <!-- Home / world map -->
-    <section id="map-screen" class="card" aria-label="Math World map">
-      <div class="bee-wrap" id="hero-wrap">
-        <img src="numbuzz.svg" alt="NumBuzz" class="bee hero">
+    <section id="map-screen" class="card math-universe" aria-label="Math World map">
+      <div class="world-scene math-scene" id="math-universe-scene" aria-hidden="true">
+        <div class="world-scene-layer world-scene-layer--sky" data-layer="math-sky"></div>
+        <div class="world-scene-layer world-scene-layer--mountains" data-layer="math-mountains"></div>
+        <div class="world-scene-layer world-scene-layer--valley" data-layer="math-valley"></div>
+        <div class="world-scene-layer world-scene-layer--castle" data-layer="math-castle"></div>
+        <div class="world-scene-layer world-scene-layer--foreground" data-layer="math-foreground"></div>
+        <div class="world-scene-master" style="background-image:url('assets/worlds/math/backgrounds/math-scene-master.webp')"></div>
+        <div class="world-scene-content">
+          <div class="universe-mascot" id="world-mascot" aria-hidden="true"></div>
+          <div class="universe-caption">
+            <strong>Math World</strong>
+            <span>Number kingdom · count, operate, and grow your power</span>
+          </div>
+        </div>
       </div>
       <p class="howto">A math adventure that grows with you. Explore worlds, solve challenges, earn XP.</p>
       <div class="wq-profile-row">
@@ -326,6 +338,10 @@
     document.getElementById("avatar-label").textContent = name;
     if (Assets) {
       Assets.mountAvatar(document.getElementById("avatar-mount"), profile.engagement.avatar);
+      Assets.mountWorldMascot(document.getElementById("world-mascot"), ASSET_SUBJECT, { pose: "idle", mood: "idle" });
+      document.querySelectorAll("#math-universe-scene [data-layer]").forEach(function (layerEl) {
+        Assets.mountWorldLayer(layerEl, layerEl.getAttribute("data-layer"));
+      });
     }
     const comps = Engine.availableCompanions(profile);
     const equipped = comps.find(function (c) { return c.equipped; });
@@ -1504,6 +1520,13 @@
       }
       launchCelebration(score >= 8 ? "champion" : "milestone");
       playSfx("fanfare");
+      if (Assets) {
+        Assets.mountWorldMascot(document.getElementById("world-mascot"), ASSET_SUBJECT, { pose: "celebrating", mood: "success" });
+        Assets.playVfx(document.getElementById("math-universe-scene"), "celebration");
+        setTimeout(function () {
+          Assets.mountWorldMascot(document.getElementById("world-mascot"), ASSET_SUBJECT, { pose: "idle", mood: "idle" });
+        }, 1000);
+      }
       const localTip = Engine.coachMessage(profile, "lesson-complete");
       function showComplete(tip) {
         showOverlay({

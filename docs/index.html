@@ -11,56 +11,171 @@
 <body class="hub-page">
   <div class="hub-atmosphere" aria-hidden="true"></div>
   <div class="app hub">
-    <header class="hub-hero">
-      <div class="hub-hero-ring">
-        <img class="arcade-logo" src="arcade-logo.png" alt="103 Arcade Gaming Division" width="420" height="420" onerror="this.onerror=null;this.src='arcade-logo.svg'">
+    <header class="hub-topbar">
+      <a class="hub-brand" href="index.html" aria-label="103 Arcade home">
+        <img class="hub-brand-logo" src="arcade-logo.png" alt="" width="72" height="72" onerror="this.onerror=null;this.src='arcade-logo.svg'">
+        <span class="visually-hidden">103 Arcade</span>
+      </a>
+      <nav class="hub-nav" aria-label="Hub">
+        <a class="hub-nav-link is-active" href="index.html">
+          <span class="hub-nav-ico" aria-hidden="true">⌂</span>
+          Home
+        </a>
+        <a class="hub-nav-link" href="#games">
+          <span class="hub-nav-ico" aria-hidden="true">▶</span>
+          Games
+        </a>
+        <button class="hub-nav-link" type="button" id="hub-nav-profile">
+          <span class="hub-nav-ico" aria-hidden="true">☺</span>
+          Profile
+        </button>
+        <button class="hub-nav-link" type="button" id="hub-nav-settings">
+          <span class="hub-nav-ico" aria-hidden="true">⚙</span>
+          Settings
+        </button>
+      </nav>
+      <div class="hub-userchip">
+        <button class="hub-userchip-btn" type="button" id="hub-userchip-btn" aria-haspopup="dialog">
+          <img class="hub-userchip-avatar" src="assets/hub/player-hero.png" alt="" onerror="this.onerror=null;this.src='assets/hub/player-hero.svg'">
+          <span id="hub-userchip-name">Explorer</span>
+          <span aria-hidden="true">▾</span>
+        </button>
+        <button class="icon-btn hub-mute" id="hub-mute" type="button" aria-label="Mute sounds">🔊</button>
       </div>
     </header>
 
-    <nav class="picker" aria-label="103 Arcade games">
-      <a class="card pick-card pick-card--magenta" href="spellbuzz.html">
-        <img src="bee.svg" alt="">
-        <h2>SpellBuzz</h2>
-        <p>Spelling World · sounds to words</p>
-      </a>
-      <a class="card pick-card pick-card--cyan" href="numbuzz.html">
-        <img src="numbuzz.svg" alt="">
-        <h2>NumBuzz</h2>
-        <p>Math World · count to problem-solving</p>
-      </a>
-      <a class="card pick-card pick-card--cyan" href="wordquest.html">
-        <img src="wordquest.svg" alt="">
-        <h2>Word Quest</h2>
-        <p>Reading World · letters to stories</p>
-      </a>
-      <a class="card pick-card pick-card--magenta" href="abcbuzz.html">
-        <img src="abcbuzz.svg" alt="">
-        <h2>AbcBuzz</h2>
-        <p>ABCs &amp; colors · first learners</p>
-      </a>
-      <a class="card pick-card pick-card--cyan" href="sentencequest.html">
-        <img src="sentencequest.svg" alt="">
-        <h2>SentenceQuest</h2>
-        <p>Build complete sentences</p>
-      </a>
-      <a class="card pick-card pick-card--magenta" href="flipmatch.html">
-        <img src="flipmatch.svg" alt="">
-        <h2>FlipMatch</h2>
-        <p>Find the pairs</p>
-      </a>
-      <a class="card pick-card pick-card--cyan" href="patternpop.html">
-        <img src="patternpop.svg" alt="">
-        <h2>PatternPop</h2>
-        <p>What comes next?</p>
-      </a>
-      <a class="card pick-card pick-card--cyan" href="rhymetime.html">
-        <img src="rhymetime.svg" alt="">
-        <h2>RhymeTime</h2>
-        <p>Tap the rhyme</p>
-      </a>
-    </nav>
+    <div class="hub-board">
+      <aside class="hub-rail hub-rail--left" aria-label="Your journey">
+        <section class="hub-glass">
+          <h2>Your Journey</h2>
+          <ul class="hub-journey-stats">
+            <li>
+              <span class="hub-stat-ico hub-stat-ico--xp" aria-hidden="true">✦</span>
+              <span>XP</span>
+              <strong id="hub-stat-xp">0</strong>
+            </li>
+            <li>
+              <span class="hub-stat-ico hub-stat-ico--stars" aria-hidden="true">★</span>
+              <span>Stars</span>
+              <strong id="hub-stat-stars">0</strong>
+            </li>
+            <li>
+              <span class="hub-stat-ico hub-stat-ico--companions" aria-hidden="true">🐾</span>
+              <span>Companions</span>
+              <strong id="hub-stat-companions">0</strong>
+            </li>
+          </ul>
+          <p class="hub-journey-foot"><span aria-hidden="true">🌱</span> Keep going!</p>
+        </section>
+      </aside>
+
+      <main class="hub-main">
+        <section class="hub-hero" aria-label="Welcome">
+          <div class="hub-hero-party" aria-hidden="true">
+            <img class="hub-hero-kid" src="assets/hub/player-hero.png" alt="" onerror="this.onerror=null;this.src='assets/hub/player-hero.svg'">
+            <img class="hub-hero-dog" src="assets/hub/companion-hero.png" alt="" onerror="this.onerror=null;this.src='assets/hub/companion-hero.svg'">
+          </div>
+          <div class="hub-welcome">
+            <h1 class="hub-welcome-title">Welcome back<span id="hub-player-greet">, Explorer</span>!</h1>
+            <p class="hub-welcome-sub">Three worlds. Endless adventures. Choose a world and keep exploring!</p>
+            <div class="hub-xp" role="img" id="hub-xp" aria-label="Level progress">
+              <span class="hub-xp-star" aria-hidden="true">★</span>
+              <span class="hub-xp-label" id="hub-xp-label">Level 1 Adventurer</span>
+              <div class="hub-xp-track">
+                <div class="hub-xp-fill" id="hub-xp-fill"></div>
+              </div>
+              <span class="hub-xp-count" id="hub-xp-count">0 / 500 XP</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="hub-worlds" aria-label="Enter a Learning World">
+          <div class="world-card-grid">
+            <a class="world-card world-card--reading" href="wordquest.html">
+              <div class="world-card-art" style="background-image:url('assets/worlds/reading/backgrounds/reading-hub-card.webp')"></div>
+              <div class="world-card-body">
+                <p class="world-card-kicker"><span aria-hidden="true">📖</span></p>
+                <h2>Reading World</h2>
+                <p class="world-card-tags">Stories • Comprehension • Vocabulary</p>
+                <span class="world-card-cta">Enter World →</span>
+              </div>
+            </a>
+            <a class="world-card world-card--spelling" href="spellbuzz.html">
+              <div class="world-card-art" style="background-image:url('assets/worlds/spelling/backgrounds/spelling-hub-card.webp')"></div>
+              <div class="world-card-body">
+                <p class="world-card-kicker"><span aria-hidden="true">🔤</span></p>
+                <h2>Spelling World</h2>
+                <p class="world-card-tags">Sounds • Letters • Words</p>
+                <span class="world-card-cta">Enter World →</span>
+              </div>
+            </a>
+            <a class="world-card world-card--math" href="numbuzz.html">
+              <div class="world-card-art" style="background-image:url('assets/worlds/math/backgrounds/math-hub-card.webp')"></div>
+              <div class="world-card-body">
+                <p class="world-card-kicker"><span aria-hidden="true">🧮</span></p>
+                <h2>Math World</h2>
+                <p class="world-card-tags">Counting • Operations • Problem Solving</p>
+                <span class="world-card-cta">Enter World →</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="hub-arcade" id="games" aria-label="Arcade titles">
+          <h2 class="hub-section-label">Arcade Adventures</h2>
+          <div class="arcade-card-row">
+            <a class="arcade-mini arcade-mini--spelling" href="abcbuzz.html">
+              <img src="abcbuzz.svg" alt="">
+              <span>AbcBuzz</span>
+              <small>Spelling · colors &amp; letters</small>
+            </a>
+            <a class="arcade-mini arcade-mini--reading" href="sentencequest.html">
+              <img src="sentencequest.svg" alt="">
+              <span>SentenceQuest</span>
+              <small>Reading · build sentences</small>
+            </a>
+            <a class="arcade-mini arcade-mini--reading" href="flipmatch.html">
+              <img src="flipmatch.svg" alt="">
+              <span>FlipMatch</span>
+              <small>Memory pairs</small>
+            </a>
+            <a class="arcade-mini arcade-mini--math" href="patternpop.html">
+              <img src="patternpop.svg" alt="">
+              <span>PatternPop</span>
+              <small>Math · what comes next</small>
+            </a>
+            <a class="arcade-mini arcade-mini--reading" href="rhymetime.html">
+              <img src="rhymetime.svg" alt="">
+              <span>RhymeTime</span>
+              <small>Reading · tap the rhyme</small>
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <aside class="hub-rail hub-rail--right" aria-label="Adventures and shortcuts">
+        <section class="hub-glass hub-adventure">
+          <h2>Today’s Adventure</h2>
+          <p class="hub-adventure-world" id="hub-adventure-world">Reading World</p>
+          <div class="hub-adventure-art" style="background-image:url('assets/worlds/reading/backgrounds/reading-hub-card.webp')"></div>
+          <h3 id="hub-adventure-title">The Missing Map Pieces</h3>
+          <p id="hub-adventure-blurb">Find the next story clue and keep your streak going.</p>
+          <a class="btn hub-adventure-btn" id="hub-adventure-btn" href="wordquest.html">Start Adventure</a>
+        </section>
+        <section class="hub-glass">
+          <h2>Quick Access</h2>
+          <div class="hub-quick">
+            <a class="hub-quick-link" href="wordquest.html">Companions</a>
+            <a class="hub-quick-link" href="wordquest.html">Trophies</a>
+            <span class="hub-quick-link is-locked" title="Unlock by completing lessons">Secret Lab 🔒</span>
+            <span class="hub-quick-link is-locked" title="Coming soon on the hub">Parent Mode 🔒</span>
+          </div>
+        </section>
+      </aside>
+    </div>
 
     <footer class="site-footer hub-footer">
+      <p class="hub-tagline">Big dreams + Better skills + Brighter future.</p>
       <div class="hub-footer-logos">
         <img class="hub-footer-mark" src="arcade-logo.png" alt="103 Arcade Gaming Division" onerror="this.onerror=null;this.src='arcade-logo.svg'">
         <img class="hub-footer-llc" src="logo.png" alt="103 Software Solutions LLC">
@@ -68,5 +183,196 @@
       <p>&copy; 2026 103 Arcade Hub. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
     </footer>
   </div>
+
+  <div class="overlay hidden" id="hub-profile-overlay" role="dialog" aria-modal="true" aria-labelledby="hub-profile-title">
+    <div class="overlay-card hub-overlay-card">
+      <h2 id="hub-profile-title">Your Profile</h2>
+      <p>This name shows on the dashboard. Worlds keep their own progress.</p>
+      <label for="hub-name-input">Player name</label>
+      <input id="hub-name-input" maxlength="24" autocomplete="nickname" placeholder="Explorer">
+      <div class="actions">
+        <button class="btn" type="button" id="hub-profile-save">Save</button>
+        <button class="btn secondary" type="button" id="hub-profile-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay hidden" id="hub-settings-overlay" role="dialog" aria-modal="true" aria-labelledby="hub-settings-title">
+    <div class="overlay-card hub-overlay-card">
+      <h2 id="hub-settings-title">Settings</h2>
+      <p>Sound on the hub. Each World still has its own mute button inside the game.</p>
+      <div class="actions">
+        <button class="btn" type="button" id="hub-settings-mute">Mute sounds</button>
+        <button class="btn secondary" type="button" id="hub-settings-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+(function () {
+  var HUB_NAME_KEY = "arcade_hub_profile";
+  var MUTE_KEY = "arcade_hub_mute";
+  var WORLD_KEYS = [
+    { key: "wordquest_profile", href: "wordquest.html", label: "Reading World" },
+    { key: "spellbuzz_profile", href: "spellbuzz.html", label: "Spelling World" },
+    { key: "numbuzz_profile", href: "numbuzz.html", label: "Math World" }
+  ];
+
+  function readJson(key) {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function hubProfile() {
+    var p = readJson(HUB_NAME_KEY);
+    return p && typeof p === "object" ? p : {};
+  }
+
+  function worldName() {
+    for (var i = 0; i < WORLD_KEYS.length; i++) {
+      var p = readJson(WORLD_KEYS[i].key);
+      if (p && p.name && String(p.name).trim()) return String(p.name).trim();
+    }
+    return "";
+  }
+
+  function playerName() {
+    var hub = hubProfile().name;
+    if (hub && String(hub).trim()) return String(hub).trim();
+    return worldName() || "Explorer";
+  }
+
+  function xpOf(p) {
+    if (!p) return 0;
+    if (typeof p.xp === "number") return p.xp;
+    if (p.stats && typeof p.stats.xp === "number") return p.stats.xp;
+    return 0;
+  }
+
+  function starsOf(p) {
+    if (!p) return 0;
+    if (typeof p.stars === "number") return p.stars;
+    if (p.stats && typeof p.stats.stars === "number") return p.stats.stars;
+    return 0;
+  }
+
+  function companionsOf(p) {
+    if (!p || !p.engagement) return 0;
+    var list = p.engagement.companions;
+    return Array.isArray(list) ? list.length : 0;
+  }
+
+  function setText(id, value) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  var name = playerName();
+  setText("hub-player-greet", ", " + name);
+  setText("hub-userchip-name", name);
+  var nameInput = document.getElementById("hub-name-input");
+  if (nameInput) nameInput.value = name === "Explorer" && !hubProfile().name && !worldName() ? "" : name;
+
+  var totalXp = 0;
+  var totalStars = 0;
+  var totalCompanions = 0;
+  var richest = WORLD_KEYS[0];
+  var richestXp = -1;
+  WORLD_KEYS.forEach(function (world) {
+    var p = readJson(world.key);
+    var xp = xpOf(p);
+    totalXp += xp;
+    totalStars += starsOf(p);
+    totalCompanions += companionsOf(p);
+    if (xp > richestXp) {
+      richestXp = xp;
+      richest = world;
+    }
+  });
+
+  var level = Math.max(1, Math.floor(totalXp / 500) + 1);
+  var intoLevel = totalXp % 500;
+  var fill = document.getElementById("hub-xp-fill");
+  if (fill) fill.style.width = Math.round((intoLevel / 500) * 100) + "%";
+  setText("hub-xp-label", "Level " + level + " Adventurer");
+  setText("hub-xp-count", intoLevel + " / 500 XP");
+  var xpWrap = document.getElementById("hub-xp");
+  if (xpWrap) xpWrap.setAttribute("aria-label", "Level " + level + ", " + intoLevel + " of 500 XP");
+  setText("hub-stat-xp", String(totalXp));
+  setText("hub-stat-stars", String(totalStars));
+  setText("hub-stat-companions", String(totalCompanions));
+
+  setText("hub-adventure-world", richest.label);
+  var adventureBtn = document.getElementById("hub-adventure-btn");
+  if (adventureBtn) adventureBtn.href = richest.href;
+  var adventureArt = document.querySelector(".hub-adventure-art");
+  if (adventureArt) {
+    var art = {
+      "wordquest.html": "assets/worlds/reading/backgrounds/reading-hub-card.webp",
+      "spellbuzz.html": "assets/worlds/spelling/backgrounds/spelling-hub-card.webp",
+      "numbuzz.html": "assets/worlds/math/backgrounds/math-hub-card.webp"
+    };
+    adventureArt.style.backgroundImage = "url('" + (art[richest.href] || art["wordquest.html"]) + "')";
+  }
+
+  var muted = localStorage.getItem(MUTE_KEY) === "1";
+  function syncMute() {
+    var muteBtn = document.getElementById("hub-mute");
+    var settingsMute = document.getElementById("hub-settings-mute");
+    if (muteBtn) {
+      muteBtn.textContent = muted ? "🔇" : "🔊";
+      muteBtn.setAttribute("aria-label", muted ? "Unmute sounds" : "Mute sounds");
+    }
+    if (settingsMute) settingsMute.textContent = muted ? "Unmute sounds" : "Mute sounds";
+  }
+  function toggleMute() {
+    muted = !muted;
+    localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
+    syncMute();
+  }
+  syncMute();
+  document.getElementById("hub-mute").addEventListener("click", toggleMute);
+  document.getElementById("hub-settings-mute").addEventListener("click", toggleMute);
+
+  function openOverlay(id) {
+    document.getElementById(id).classList.remove("hidden");
+  }
+  function closeOverlay(id) {
+    document.getElementById(id).classList.add("hidden");
+  }
+  document.getElementById("hub-nav-profile").addEventListener("click", function () {
+    openOverlay("hub-profile-overlay");
+    nameInput && nameInput.focus();
+  });
+  document.getElementById("hub-userchip-btn").addEventListener("click", function () {
+    openOverlay("hub-profile-overlay");
+    nameInput && nameInput.focus();
+  });
+  document.getElementById("hub-nav-settings").addEventListener("click", function () {
+    openOverlay("hub-settings-overlay");
+  });
+  document.getElementById("hub-profile-close").addEventListener("click", function () {
+    closeOverlay("hub-profile-overlay");
+  });
+  document.getElementById("hub-settings-close").addEventListener("click", function () {
+    closeOverlay("hub-settings-overlay");
+  });
+  document.getElementById("hub-profile-save").addEventListener("click", function () {
+    var next = (nameInput && nameInput.value || "").trim() || "Explorer";
+    localStorage.setItem(HUB_NAME_KEY, JSON.stringify({ name: next }));
+    setText("hub-player-greet", ", " + next);
+    setText("hub-userchip-name", next);
+    closeOverlay("hub-profile-overlay");
+  });
+  document.querySelectorAll(".overlay").forEach(function (el) {
+    el.addEventListener("click", function (ev) {
+      if (ev.target === el) el.classList.add("hidden");
+    });
+  });
+})();
+  </script>
 </body>
 </html>

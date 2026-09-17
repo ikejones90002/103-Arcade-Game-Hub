@@ -2,6 +2,34 @@
 
 Offline educational mini-games from **103 Software Solutions LLC**. Open [`docs/index.html`](docs/index.html) (or GitHub Pages `/docs`) to pick a title.
 
+## Canonical World Rule
+
+```text
+Dashboard = doorway
+Games = places inside the same illustrated universe
+```
+
+The hub is the entrance into one shared **illustrated** art language. Mandatory art context:
+
+- [`docs/ART-BIBLE.md`](docs/ART-BIBLE.md) · [`docs/WORLD-BIBLE.md`](docs/WORLD-BIBLE.md) · [`docs/CHARACTER-BIBLE.md`](docs/CHARACTER-BIBLE.md) · [`docs/ASSET-BIBLE.md`](docs/ASSET-BIBLE.md)
+- Production sheet: [`docs/assets/canon/PRODUCTION-SHEET.md`](docs/assets/canon/PRODUCTION-SHEET.md)
+- Audio prompt pack: [`docs/assets/canon/GENERATE-NOW-AUDIO.md`](docs/assets/canon/GENERATE-NOW-AUDIO.md)
+- Master reference: [`docs/assets/canon/dashboard-reference.jpg`](docs/assets/canon/dashboard-reference.jpg)
+
+Neon UI chrome may stay arcade-bright; **world / environment / character art** must be real layered illustrations from the dashboard language—not geometric SVG/CSS substitutes.
+
+| Franchise | Identity | Mascot | Palette |
+|---|---|---|---|
+| Reading World | Blue storybook castle / forest / books | Owl | Blue, white, green, gold |
+| Spelling World | Warm golden bee village / alphabet / meadow | Bee | Orange/gold, honey yellow, green, cream |
+| Math World | Purple/blue number kingdom / islands / castle | Turtle | Purple, lavender, cyan, gold |
+
+Architecture stays independent (no shared engines or profiles across Worlds). Visual coherence only.
+
+### Production art pipeline
+
+Asset library first (sheets → crops → wire). **Reading World layered scene is the visual gate** before Spelling/Math/arcade rebuilds. Primitive SVG hub cards are deprecated once P1 raster layers are wired.
+
 ## Live games
 
 | Game | File | Skill |
@@ -9,7 +37,7 @@ Offline educational mini-games from **103 Software Solutions LLC**. Open [`docs/
 | SpellBuzz | [`docs/spellbuzz.html`](docs/spellbuzz.html) | Spelling World (curriculum adventure) |
 | NumBuzz | [`docs/numbuzz.html`](docs/numbuzz.html) | Math World (curriculum adventure) |
 | Word Quest | [`docs/wordquest.html`](docs/wordquest.html) | Reading World (curriculum adventure) |
-| AbcBuzz | [`docs/abcbuzz.html`](docs/abcbuzz.html) | Colors, letters, letter sounds (toddlers) |
+| AbcBuzz | [`docs/abcbuzz.html`](docs/abcbuzz.html) | Alphabet Meadow · colors, letters, sounds |
 | SentenceQuest | [`docs/sentencequest.html`](docs/sentencequest.html) | Pick, fill, and build complete sentences |
 | FlipMatch | [`docs/flipmatch.html`](docs/flipmatch.html) | Memory pairs |
 | PatternPop | [`docs/patternpop.html`](docs/patternpop.html) | Patterns / logic |
@@ -55,16 +83,19 @@ Shared **platform** library (like theme + AI)—not a shared game engine. Served
 
 | Piece | Path |
 |---|---|
-| Art bible | [`docs/ART-DIRECTION.md`](docs/ART-DIRECTION.md) |
+| Art bible | [`docs/ART-BIBLE.md`](docs/ART-BIBLE.md) (+ WORLD / CHARACTER / ASSET bibles) |
+| Character bibles | [`docs/CHARACTER-BIBLE.md`](docs/CHARACTER-BIBLE.md) |
+| Production sheet | [`docs/assets/canon/PRODUCTION-SHEET.md`](docs/assets/canon/PRODUCTION-SHEET.md) |
 | Loader | [`docs/arcade-assets.js`](docs/arcade-assets.js) (`window.ArcadeAssets`) |
-| Manifests | [`docs/assets/manifests/`](docs/assets/manifests/) (`avatars`, `companions`, `worlds`, `audio`, `sources`) |
-| Tooling | `npm run assets:validate` · `assets:manifest` · `assets:svgs` |
+| Manifests | [`docs/assets/manifests/`](docs/assets/manifests/) (`avatars`, `companions`, `worlds`, `characters`, `audio`, `ui`, `sources`) |
+| Worlds / arcade | `docs/assets/worlds/{reading,spelling,math}/backgrounds|characters|props|effects/` · `docs/assets/hub/` · `docs/assets/arcade/` |
+| Tooling | `npm run assets:validate` · `assets:manifest` · `assets:svgs` · `assets:voice` |
 
-**Contract:** content and shells reference assets by **stable ID** (`ArcadeAssets.play("unlock")`, `mountAvatar`, `mountCompanion`, `mountWorldStage`). No hotlinks, no random internet downloads. Every production asset needs a `sources.json` entry.
+**Contract:** content and shells reference assets by **stable ID** (`ArcadeAssets.play("unlock")`, `mountAvatar`, `mountCompanion`, `mountWorldMascot`, `mountWorldLayer`, `mountWorldScene`, `mountWorldStage`). No hotlinks. Every production asset needs a `sources.json` entry. Raster WebP/PNG env layers are first-class.
 
-**Visuals:** layered SVG avatars (body/hair/outfit/accessory), subject companions, world-stage vignettes. Emoji fallback if a file is missing.
+**Visuals:** dashboard-derived hub cards + generated layered world plates and canonical mascot poses. Emoji fallback if a file is missing.
 
-**Audio:** curated SFX IDs in `audio.json`. Existing `correct` / `error-soft` / `tick` MP3s live under `assets/audio/ui/`; other IDs use an internal Web Audio synth bank until real files are added. Educational speech stays on browser TTS—not this library.
+**Audio:** curated SFX IDs in `audio.json`. Existing `correct` / `error-soft` / `tick` MP3s live under `assets/audio/ui/`; other IDs use an internal Web Audio synth bank until real files are added. Learning-voice source of truth: [`docs/assets/canon/GENERATE-NOW-AUDIO.md`](docs/assets/canon/GENERATE-NOW-AUDIO.md) + [`docs/assets/manifests/voice-script.json`](docs/assets/manifests/voice-script.json). Prototype MP3s: `npm run assets:voice` (OpenAI `tts-1` / Shimmer, or ElevenLabs). Until those clips exist on disk, educational speech stays on browser TTS.
 
 **Independence:** shared assets ≠ shared profiles. Spell/Math still do not import `wordquest-engine.js`.
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320">
+  <defs>
+    <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2b1b4d"/>
+      <stop offset="50%" stop-color="#5b3d9e"/>
+      <stop offset="100%" stop-color="#8ec5ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="480" height="320" fill="url(#sky3)"/>
+  <ellipse cx="340" cy="120" rx="90" ry="28" fill="#6a4caf"/>
+  <rect x="300" y="70" width="80" height="70" fill="#b9a7e0" stroke="#2b1b4d" stroke-width="3"/>
+  <path d="M290 70 L340 35 L390 70" fill="#d4c4ff" stroke="#2b1b4d" stroke-width="3"/>
+  <ellipse cx="140" cy="240" rx="70" ry="28" fill="#4a7c59"/>
+  <ellipse cx="160" cy="210" rx="48" ry="34" fill="#32cd32" stroke="#1a3a28" stroke-width="3"/>
+  <circle cx="160" cy="175" r="28" fill="#32cd32" stroke="#1a3a28" stroke-width="3"/>
+  <circle cx="150" cy="172" r="4" fill="#1a3a28"/>
+  <circle cx="170" cy="172" r="4" fill="#1a3a28"/>
+  <path d="M150 185 Q160 192 170 185" stroke="#1a3a28" stroke-width="2" fill="none"/>
+  <rect x="220" y="160" width="40" height="40" rx="6" fill="#7cf0ff" stroke="#1a1a28" stroke-width="2"/>
+  <text x="240" y="188" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800" fill="#1a1a28">1</text>
+  <rect x="270" y="145" width="40" height="40" rx="6" fill="#ffd24d" stroke="#1a1a28" stroke-width="2"/>
+  <text x="290" y="173" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800" fill="#1a1a28">2</text>
+  <rect x="320" y="175" width="40" height="40" rx="6" fill="#ff7bd5" stroke="#1a1a28" stroke-width="2"/>
+  <text x="340" y="203" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800" fill="#1a1a28">3</text>
+</svg>

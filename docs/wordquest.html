@@ -28,9 +28,22 @@
     </div>
 
     <!-- Home / world map -->
-    <section id="map-screen" class="card" aria-label="Reading World map">
-      <div class="bee-wrap" id="hero-wrap">
-        <img src="wordquest.svg" alt="Word Quest" class="bee hero">
+    <section id="map-screen" class="card reading-universe" aria-label="Reading World map">
+      <div class="world-scene reading-scene" id="reading-world-scene" aria-hidden="true">
+        <div class="world-scene-layer world-scene-layer--sky" data-layer="reading-sky"></div>
+        <div class="world-scene-layer world-scene-layer--mountains" data-layer="reading-mountains"></div>
+        <div class="world-scene-layer world-scene-layer--forest" data-layer="reading-forest"></div>
+        <div class="world-scene-layer world-scene-layer--castle" data-layer="reading-castle"></div>
+        <div class="world-scene-layer world-scene-layer--foreground" data-layer="reading-foreground"></div>
+        <div class="world-scene-master" style="background-image:url('assets/worlds/reading/backgrounds/reading-scene-master.webp')"></div>
+        <div class="world-scene-content">
+          <div class="universe-mascot" id="world-mascot" aria-hidden="true"></div>
+          <div class="universe-caption">
+            <strong>Reading World</strong>
+            <span>Storybook kingdom · forest, castle, and the Reading Owl</span>
+          </div>
+          <div class="reading-book-glow" aria-hidden="true"></div>
+        </div>
       </div>
       <p class="howto">A reading adventure that grows with you. Explore worlds, complete challenges, earn XP.</p>
       <div class="wq-profile-row">
@@ -316,6 +329,10 @@
     document.getElementById("avatar-label").textContent = name;
     if (Assets) {
       Assets.mountAvatar(document.getElementById("avatar-mount"), profile.engagement.avatar);
+      Assets.mountWorldMascot(document.getElementById("world-mascot"), ASSET_SUBJECT, { pose: "idle" });
+      document.querySelectorAll("#reading-world-scene [data-layer]").forEach(function (layerEl) {
+        Assets.mountWorldLayer(layerEl, layerEl.getAttribute("data-layer"));
+      });
     }
     const comps = Engine.availableCompanions(profile);
     const equipped = comps.find(function (c) { return c.equipped; });
@@ -702,8 +719,16 @@
     body.appendChild(list);
   }
 
-  function speakText(text) {
-    if (!text || !window.speechSynthesis) return;
+  function speakText(text, act) {
+    if (!text) return;
+    const opts = act || currentItem || {};
+    if (Assets && Assets.playVoice) {
+      const run = function () { Assets.playVoice(text, opts); };
+      if (Assets.load) Assets.load().then(run);
+      else run();
+      return;
+    }
+    if (muted || !window.speechSynthesis) return;
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.rate = 0.75;
@@ -1103,6 +1128,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
+      speakText(act.speak || act.prompt, act);
       startTimer(placementMode ? 45 : 40);
       return;
     }
@@ -1124,6 +1150,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
+      speakText(act.speak || act.prompt, act);
       startTimer(25);
       return;
     }
@@ -1133,6 +1160,7 @@
       honorActions.classList.remove("hidden");
       gotItBtn.classList.add("hidden");
       tryAgainBtn.classList.add("hidden");
+      if (type !== "sentence") speakText(act.speak || act.prompt, act);
       startTimer(type === "sentence" ? 30 : 20);
       return;
     }
@@ -1143,6 +1171,7 @@
     tryAgainBtn.classList.remove("hidden");
     gotItBtn.textContent = type === "action" ? "I did it" : "I got it";
     tryAgainBtn.textContent = type === "action" ? "Need help" : "Try again";
+    speakText(act.speak || act.prompt, act);
     startTimer(type === "sprint" && String(act.prompt).indexOf(" ") !== -1 ? 20 : 12);
   }
 
@@ -1385,7 +1414,8 @@
 
   function finishLesson(success, extraMessage) {
     setPlayingOff();
-    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (Assets && Assets.stopVoice) Assets.stopVoice();
+    else if (window.speechSynthesis) speechSynthesis.cancel();
     const elapsed = Date.now() - lessonStartedAt;
     Engine.addTime(profile, elapsed || Engine.estimateLessonMs(activityQueue.length));
 
@@ -1754,7 +1784,8 @@
   };
   document.getElementById("quit-lesson").onclick = function () {
     setPlayingOff();
-    if (window.speechSynthesis) speechSynthesis.cancel();
+    if (Assets && Assets.stopVoice) Assets.stopVoice();
+    else if (window.speechSynthesis) speechSynthesis.cancel();
     if (placementMode) {
       placementMode = false;
       placementResults = [];
@@ -1945,8 +1976,8 @@
 
   speakBtn.onclick = function () {
     if (!currentItem) return;
-    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text);
-    else speakText(currentItem.speak || currentItem.prompt);
+    if (currentItem.type === "story" && currentItem.payload) speakText(currentItem.payload.text, currentItem);
+    else speakText(currentItem.speak || currentItem.prompt, currentItem);
   };
   gotItBtn.onclick = function () {
     if (!roundActive || !currentItem) return;

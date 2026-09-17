@@ -245,199 +245,331 @@
       "source": "internal-legacy",
       "license": "proprietary",
       "path": "/assets/audio/ui/correct.mp3",
-      "category": "learning"
+      "category": "learning",
+      "type": "sfx",
+      "synth": false,
+      "volume": 1,
+      "loop": false
     },
     "error-soft": {
       "source": "internal-legacy",
       "license": "proprietary",
       "path": "/assets/audio/ui/error-soft.mp3",
-      "category": "learning"
+      "category": "learning",
+      "type": "sfx",
+      "synth": false,
+      "volume": 0.9,
+      "loop": false
     },
     "tick": {
       "source": "internal-legacy",
       "license": "proprietary",
       "path": "/assets/audio/ui/tick.mp3",
-      "category": "ui"
+      "category": "ui",
+      "type": "sfx",
+      "synth": false,
+      "volume": 0.6,
+      "loop": false
     },
     "click": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/click.mp3",
+      "category": "ui",
+      "type": "sfx",
+      "synth": true,
+      "volume": 0.5,
+      "loop": false
     },
     "select": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/select.mp3",
+      "category": "ui",
+      "type": "sfx",
+      "synth": true,
+      "volume": 0.6,
+      "loop": false
     },
     "back": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/back.mp3",
+      "category": "ui",
+      "type": "chrome",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "open": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/open.mp3",
+      "category": "ui",
+      "type": "chrome",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "close": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/close.mp3",
+      "category": "ui",
+      "type": "chrome",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "almost": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/almost.mp3",
+      "category": "learning",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "hint": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/hint.mp3",
+      "category": "learning",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "try-again": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/try-again.mp3",
+      "category": "learning",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.9,
+      "loop": false
     },
     "streak": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/streak.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "mastery": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/mastery.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "star": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/star.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "xp": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/xp.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "unlock": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/unlock.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "companion": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/companion.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "badge": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/badge.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "level-up": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/level-up.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "reward": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/reward.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "complete": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/complete.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "sparkle": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "world"
+      "path": "/assets/audio/ui/sparkle.mp3",
+      "category": "world",
+      "type": "world",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "magic": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "world"
+      "path": "/assets/audio/ui/magic.mp3",
+      "category": "world",
+      "type": "world",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "fanfare": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "rewards"
+      "path": "/assets/audio/ui/fanfare.mp3",
+      "category": "rewards",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "life": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/life.mp3",
+      "category": "learning",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.9,
+      "loop": false
     },
     "buzz": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "ui"
+      "path": "/assets/audio/ui/buzz.mp3",
+      "category": "ui",
+      "type": "ui",
+      "synth": true,
+      "volume": 0.6,
+      "loop": false
     },
     "wrongBuzz": {
       "source": "generated",
       "license": "proprietary",
-      "path": null,
-      "category": "learning"
+      "path": "/assets/audio/ui/wrongBuzz.mp3",
+      "category": "learning",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "boss-intro": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "boss"
+      "category": "boss",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "boss-success": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "boss"
+      "category": "boss",
+      "type": "reward",
+      "synth": true,
+      "volume": 1,
+      "loop": false
     },
     "boss-retry": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "boss"
+      "category": "boss",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "create": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "lab"
+      "category": "lab",
+      "type": "chrome",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "save": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "lab"
+      "category": "lab",
+      "type": "chrome",
+      "synth": true,
+      "volume": 0.7,
+      "loop": false
     },
     "discover": {
       "source": "generated",
       "license": "proprietary",
       "path": null,
-      "category": "lab"
+      "category": "lab",
+      "type": "learning",
+      "synth": true,
+      "volume": 0.8,
+      "loop": false
     },
     "sparkle-icon": {
       "source": "generated",
@@ -450,6 +582,628 @@
       "license": "proprietary",
       "path": "/assets/images/badges/star-badge.svg",
       "category": "badge"
+    },
+    "spelling-bee": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-idle.png",
+      "category": "character"
+    },
+    "reading-owl": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-idle.png",
+      "category": "character"
+    },
+    "math-turtle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-idle.png",
+      "category": "character"
+    },
+    "reading-hub-card": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-hub-card.webp",
+      "category": "hub-card"
+    },
+    "spelling-hub-card": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-hub-card.webp",
+      "category": "hub-card"
+    },
+    "math-hub-card": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-hub-card.webp",
+      "category": "hub-card"
+    },
+    "spelling-meadow-sky": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/environments/meadow-sky.svg",
+      "category": "environment-layer"
+    },
+    "spelling-meadow-hills": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/environments/meadow-hills.svg",
+      "category": "environment-layer"
+    },
+    "spelling-meadow-village": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/environments/meadow-village.svg",
+      "category": "environment-layer"
+    },
+    "abcbuzz-letter-block": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/arcade/abcbuzz/letter-block.svg",
+      "category": "prop"
+    },
+    "abcbuzz-flower": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/arcade/abcbuzz/flower.svg",
+      "category": "prop"
+    },
+    "arcade-hub-background": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/hub/arcade-hub-background.webp",
+      "category": "hub-layer"
+    },
+    "reading-scene-master": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-scene-master.webp",
+      "category": "environment-layer"
+    },
+    "reading-sky": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-sky.webp",
+      "category": "environment-layer"
+    },
+    "reading-mountains": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-mountains.webp",
+      "category": "environment-layer"
+    },
+    "reading-forest": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-forest.webp",
+      "category": "environment-layer"
+    },
+    "reading-castle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-castle.webp",
+      "category": "environment-layer"
+    },
+    "reading-foreground": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/backgrounds/reading-foreground.webp",
+      "category": "environment-layer"
+    },
+    "spelling-sky": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-sky.webp",
+      "category": "environment-layer"
+    },
+    "spelling-hills": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-hills.webp",
+      "category": "environment-layer"
+    },
+    "spelling-meadow": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-meadow.webp",
+      "category": "environment-layer"
+    },
+    "spelling-village": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-village.webp",
+      "category": "environment-layer"
+    },
+    "spelling-foreground": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-foreground.webp",
+      "category": "environment-layer"
+    },
+    "math-sky": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-sky.webp",
+      "category": "environment-layer"
+    },
+    "math-mountains": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-mountains.webp",
+      "category": "environment-layer"
+    },
+    "math-valley": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-valley.webp",
+      "category": "environment-layer"
+    },
+    "math-castle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-castle.webp",
+      "category": "environment-layer"
+    },
+    "math-foreground": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-foreground.webp",
+      "category": "environment-layer"
+    },
+    "reading-owl-idle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-idle.png",
+      "category": "character-pose"
+    },
+    "reading-owl-happy": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-happy.png",
+      "category": "character-pose"
+    },
+    "reading-owl-thinking": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-thinking.png",
+      "category": "character-pose"
+    },
+    "reading-owl-flying": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-flying.png",
+      "category": "character-pose"
+    },
+    "reading-owl-celebrating": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-celebrating.png",
+      "category": "character-pose"
+    },
+    "reading-owl-gentle-error": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/characters/reading-owl-gentle-error.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-idle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-idle.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-happy": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-happy.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-thinking": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-thinking.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-flying": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-flying.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-celebrating": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-celebrating.png",
+      "category": "character-pose"
+    },
+    "spelling-bee-gentle-error": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/characters/spelling-bee-gentle-error.png",
+      "category": "character-pose"
+    },
+    "math-turtle-idle": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-idle.png",
+      "category": "character-pose"
+    },
+    "math-turtle-happy": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-happy.png",
+      "category": "character-pose"
+    },
+    "math-turtle-thinking": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-thinking.png",
+      "category": "character-pose"
+    },
+    "math-turtle-walking": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-walking.png",
+      "category": "character-pose"
+    },
+    "math-turtle-celebrating": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-celebrating.png",
+      "category": "character-pose"
+    },
+    "math-turtle-gentle-error": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/characters/math-turtle-gentle-error.png",
+      "category": "character-pose"
+    },
+    "flipmatch-card-back": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-back.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-owl": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-owl.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-fox": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-fox.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-rabbit": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-rabbit.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-book": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-book.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-flower": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-flower.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-tree": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-tree.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-castle": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-castle.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-star": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-star.png",
+      "category": "flipmatch-card"
+    },
+    "flipmatch-card-butterfly": {
+      "source": "derived-sheet",
+      "license": "proprietary",
+      "path": "/assets/arcade/flipmatch/flipmatch-card-butterfly.png",
+      "category": "flipmatch-card"
+    },
+    "arcade-hub-mountains": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/hub/arcade-hub-mountains.webp",
+      "category": "hub-layer"
+    },
+    "arcade-hub-floating-islands": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/hub/arcade-hub-floating-islands.webp",
+      "category": "hub-layer"
+    },
+    "arcade-hub-foreground": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/hub/arcade-hub-foreground.webp",
+      "category": "hub-layer"
+    },
+    "arcade-hub-sparkles": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/hub/arcade-hub-sparkles.webp",
+      "category": "hub-layer"
+    },
+    "spelling-scene-master": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/backgrounds/spelling-scene-master.webp",
+      "category": "environment-layer"
+    },
+    "math-scene-master": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/backgrounds/math-scene-master.webp",
+      "category": "environment-layer"
+    },
+    "reading-props-sheet": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/reading/props/reading-props-sheet.png",
+      "category": "prop-sheet"
+    },
+    "spelling-props-sheet": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/spelling-props-sheet.png",
+      "category": "prop-sheet"
+    },
+    "math-props-sheet": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/math-props-sheet.png",
+      "category": "prop-sheet"
+    },
+    "effects-sheet": {
+      "source": "gemini-import",
+      "license": "proprietary",
+      "path": "/assets/ui/effects-sheet.png",
+      "category": "effect-sheet"
+    },
+    "fx-sparkle-success": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-sparkle-success.png",
+      "category": "vfx"
+    },
+    "fx-flower-bloom": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-flower-bloom.png",
+      "category": "vfx"
+    },
+    "fx-letter-pop": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-letter-pop.png",
+      "category": "vfx"
+    },
+    "fx-unlock-glow": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-unlock-glow.png",
+      "category": "vfx"
+    },
+    "fx-celebrate-burst": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-celebrate-burst.png",
+      "category": "vfx"
+    },
+    "fx-soft-miss-puff": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/ui/vfx/fx-soft-miss-puff.png",
+      "category": "vfx"
+    },
+    "spelling-letter-blocks": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-blocks.png",
+      "category": "prop"
+    },
+    "spelling-honeycomb": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/honeycomb.png",
+      "category": "prop"
+    },
+    "spelling-hive": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/hive.png",
+      "category": "prop"
+    },
+    "spelling-flower-letter": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/flower-letter.png",
+      "category": "prop"
+    },
+    "spelling-word-book": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/word-book.png",
+      "category": "prop"
+    },
+    "spelling-letter-a": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-a.png",
+      "category": "prop"
+    },
+    "spelling-letter-b": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-b.png",
+      "category": "prop"
+    },
+    "spelling-letter-c": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-c.png",
+      "category": "prop"
+    },
+    "spelling-letter-w": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-w.png",
+      "category": "prop"
+    },
+    "spelling-letter-f": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/spelling/props/crops/letter-f.png",
+      "category": "prop"
+    },
+    "math-number-0": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/number-0.png",
+      "category": "prop"
+    },
+    "math-number-1": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/number-1.png",
+      "category": "prop"
+    },
+    "math-number-2": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/number-2.png",
+      "category": "prop"
+    },
+    "math-number-3": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/number-3.png",
+      "category": "prop"
+    },
+    "math-crystal": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/crystal.png",
+      "category": "prop"
+    },
+    "math-plus": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/plus.png",
+      "category": "prop"
+    },
+    "math-minus": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/minus.png",
+      "category": "prop"
+    },
+    "math-times": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/times.png",
+      "category": "prop"
+    },
+    "math-division": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/division.png",
+      "category": "prop"
+    },
+    "math-fraction-pie": {
+      "source": "gemini-crop",
+      "license": "proprietary",
+      "path": "/assets/worlds/math/props/crops/fraction-pie.png",
+      "category": "prop"
+    },
+    "hub-bed": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/worlds/hub-bed.mp3",
+      "category": "world-bed",
+      "type": "bed",
+      "synth": true,
+      "volume": 0.5,
+      "loop": true
+    },
+    "reading-bed": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/worlds/reading-bed.mp3",
+      "category": "world-bed",
+      "type": "bed",
+      "synth": true,
+      "volume": 0.45,
+      "loop": true
+    },
+    "spelling-bed": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/worlds/spelling-bed.mp3",
+      "category": "world-bed",
+      "type": "bed",
+      "synth": true,
+      "volume": 0.45,
+      "loop": true
+    },
+    "math-bed": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/worlds/math-bed.mp3",
+      "category": "world-bed",
+      "type": "bed",
+      "synth": true,
+      "volume": 0.45,
+      "loop": true
+    },
+    "owl-stinger": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/mascots/owl-stinger.mp3",
+      "category": "mascot",
+      "type": "stinger",
+      "synth": true,
+      "volume": 0.9,
+      "loop": false
+    },
+    "bee-stinger": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/mascots/bee-stinger.mp3",
+      "category": "mascot",
+      "type": "stinger",
+      "synth": true,
+      "volume": 0.9,
+      "loop": false
+    },
+    "turtle-stinger": {
+      "source": "generated",
+      "license": "proprietary",
+      "path": "/assets/audio/mascots/turtle-stinger.mp3",
+      "category": "mascot",
+      "type": "stinger",
+      "synth": true,
+      "volume": 0.9,
+      "loop": false
     }
   }
 }

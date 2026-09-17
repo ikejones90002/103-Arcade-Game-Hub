@@ -8,7 +8,9 @@
     "start": "vercel dev",
     "assets:svgs": "node scripts/assets/generate-starter-svgs.js",
     "assets:manifest": "node scripts/assets/generate-manifest.js",
-    "assets:validate": "node scripts/assets/validate.js"
+    "assets:validate": "node scripts/assets/validate.js",
+    "assets:voice": "node scripts/assets/generate-voice.js",
+    "assets:voice:dry": "node scripts/assets/generate-voice.js --dry-run"
   },
   "engines": {
     "node": ">=18"

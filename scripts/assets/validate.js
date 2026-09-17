@@ -10,6 +10,9 @@ const ASSETS = path.join(ROOT, "docs", "assets");
 const MANIFESTS = path.join(ASSETS, "manifests");
 const MAX_SVG = 80 * 1024;
 const MAX_MP3 = 500 * 1024;
+const MAX_RASTER = 4 * 1024 * 1024; // webp/png production art
+
+const RASTER_EXT = { ".webp": true, ".png": true, ".jpg": true, ".jpeg": true };
 
 let errors = 0;
 let warnings = 0;
@@ -54,7 +57,7 @@ function checkFile(urlPath, maxBytes) {
   const st = fs.statSync(disk);
   if (st.size > maxBytes) err("File too large (" + st.size + "): " + urlPath);
   const ext = path.extname(disk).toLowerCase();
-  if (ext !== ".svg" && ext !== ".mp3" && ext !== ".json") {
+  if (ext !== ".svg" && ext !== ".mp3" && ext !== ".json" && !RASTER_EXT[ext]) {
     err("Unexpected extension: " + urlPath);
   }
 }
@@ -78,6 +81,7 @@ function trackId(id, where) {
 const avatars = readJson("avatars.json");
 const companions = readJson("companions.json");
 const worlds = readJson("worlds.json");
+const characters = readJson("characters.json");
 const audio = readJson("audio.json");
 const sources = readJson("sources.json");
 const ui = readJson("ui.json");
@@ -88,7 +92,9 @@ function checkItems(list, label) {
     if (!item.name) warn(label + " " + item.id + " missing name");
     if (!item.category) warn(label + " " + item.id + " missing category");
     if (item.path) {
-      checkFile(item.path, item.path.endsWith(".mp3") ? MAX_MP3 : MAX_SVG);
+      const isAudio = item.path.endsWith(".mp3");
+      const isRaster = /\.(webp|png|jpe?g)$/i.test(item.path);
+      checkFile(item.path, isAudio ? MAX_MP3 : isRaster ? MAX_RASTER : MAX_SVG);
     }
     if (!sources || !sources.assets || !sources.assets[item.id]) {
       err("sources.json missing entry for " + item.id);
@@ -98,14 +104,36 @@ function checkItems(list, label) {
 
 if (avatars) checkItems(avatars.items, "avatars");
 if (companions) checkItems(companions.items, "companions");
+if (characters) checkItems(characters.items, "characters");
 if (ui) checkItems(ui.items, "ui");
 if (audio) {
   audio.items.forEach(function (item) {
     trackId(item.id, "audio");
-    if (item.path) checkFile(item.path, MAX_MP3);
-    else if (!item.synth) warn("audio " + item.id + " has no path and no synth flag");
+    if (item.path) {
+      const disk = diskFromUrl(item.path);
+      if (disk && fs.existsSync(disk)) checkFile(item.path, MAX_MP3);
+      else if (item.synth) warn("audio " + item.id + " reserved path, synth until recorded: " + item.path);
+      else err("File missing for " + item.path);
+    } else if (!item.synth) warn("audio " + item.id + " has no path and no synth flag");
     if (!sources.assets[item.id]) err("sources.json missing audio " + item.id);
   });
+}
+const voice = readJson("voice-script.json");
+if (voice) {
+  if (!Array.isArray(voice.clips)) err("voice-script.json missing clips[]");
+  else {
+    const seenVoice = new Set();
+    voice.clips.forEach(function (clip) {
+      if (!clip || !clip.id) {
+        err("voice clip missing id");
+        return;
+      }
+      if (seenVoice.has(clip.id)) err("Duplicate voice id: " + clip.id);
+      seenVoice.add(clip.id);
+      if (!clip.text) warn("voice " + clip.id + " missing text (TTS fallback)");
+    });
+    ok("voice-script " + voice.clips.length + " clips");
+  }
 }
 if (worlds && worlds.worlds) {
   Object.keys(worlds.worlds).forEach(function (key) {

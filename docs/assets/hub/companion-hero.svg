@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" width="220" height="220" fill="none">
+  <ellipse cx="110" cy="204" rx="70" ry="12" fill="rgba(0,0,0,.2)"/>
+  <!-- tail -->
+  <path d="M168 128 Q206 110 198 78 Q186 104 160 118Z" fill="#e8eef6" stroke="#4a5568" stroke-width="3"/>
+  <path d="M176 112 Q192 100 190 88" fill="#9aa7b8"/>
+  <!-- hind legs -->
+  <path d="M70 150 L62 192 Q64 200 78 200 L90 198 L92 156Z" fill="#d7dee8" stroke="#4a5568" stroke-width="3"/>
+  <path d="M138 154 L146 192 Q146 200 132 200 L120 198 L122 158Z" fill="#cfd8e4" stroke="#4a5568" stroke-width="3"/>
+  <!-- body -->
+  <ellipse cx="108" cy="142" rx="58" ry="42" fill="#eef3f8" stroke="#4a5568" stroke-width="3"/>
+  <ellipse cx="108" cy="150" rx="34" ry="24" fill="#f7fafc"/>
+  <path d="M62 138 Q70 118 90 122" fill="#8b97a8"/>
+  <path d="M154 136 Q148 116 128 120" fill="#8b97a8"/>
+  <!-- chest fluff -->
+  <ellipse cx="108" cy="136" rx="22" ry="18" fill="#fff"/>
+  <!-- head -->
+  <ellipse cx="108" cy="78" rx="44" ry="40" fill="#eef3f8" stroke="#4a5568" stroke-width="3"/>
+  <!-- ears -->
+  <path d="M66 62 L58 18 Q78 28 86 58Z" fill="#d5dce6" stroke="#4a5568" stroke-width="3"/>
+  <path d="M150 62 L162 18 Q142 28 130 58Z" fill="#d5dce6" stroke="#4a5568" stroke-width="3"/>
+  <path d="M68 50 L64 28 Q76 34 80 52Z" fill="#c9a089"/>
+  <path d="M148 50 L156 28 Q144 34 136 52Z" fill="#c9a089"/>
+  <!-- face mask -->
+  <ellipse cx="108" cy="86" rx="28" ry="24" fill="#fff"/>
+  <path d="M78 70 Q88 52 108 56 Q128 52 138 70 Q128 62 108 64 Q88 62 78 70Z" fill="#6d7b8c"/>
+  <!-- eyes -->
+  <ellipse cx="92" cy="80" rx="8" ry="9" fill="#1c2a4a"/>
+  <ellipse cx="124" cy="80" rx="8" ry="9" fill="#1c2a4a"/>
+  <ellipse cx="92" cy="80" rx="5" ry="6" fill="#3ec6ff"/>
+  <ellipse cx="124" cy="80" rx="5" ry="6" fill="#3ec6ff"/>
+  <circle cx="94" cy="78" r="2" fill="#fff"/>
+  <circle cx="126" cy="78" r="2" fill="#fff"/>
+  <!-- snout -->
+  <ellipse cx="108" cy="98" rx="14" ry="10" fill="#f4f7ff"/>
+  <ellipse cx="108" cy="94" rx="7" ry="5" fill="#2a2218"/>
+  <path d="M108 99 L108 104" stroke="#2a2218" stroke-width="2"/>
+  <path d="M100 108 Q108 114 116 108" stroke="#2a2218" stroke-width="2.2" stroke-linecap="round"/>
+  <!-- collar -->
+  <path d="M78 112 Q108 124 138 112" stroke="#3a7dff" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="108" cy="122" r="5" fill="#ffd060" stroke="#b8860b" stroke-width="1.5"/>
+</svg>
