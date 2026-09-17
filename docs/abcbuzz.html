@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>AbcBuzz — by 103 Software Solutions LLC</title>
+  <link rel="icon" href="abcbuzz.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-row">
+          <img src="abcbuzz.svg" class="bee-mark" alt="">
+          <h1>AbcBuzz</h1>
+        </div>
+        <p class="byline">Built by 103 Software Solutions LLC</p>
+      </div>
+      <div class="topbar-actions">
+        <a class="btn secondary hub-link" href="index.html">103 Arcade</a>
+        <button id="mute" class="icon-btn" type="button" aria-label="Mute sounds" title="Mute sounds">🔊</button>
+      </div>
+    </div>
+    <section id="start-screen" class="card">
+      <div class="bee-wrap"><img src="abcbuzz.svg" alt="AbcBuzz" class="bee hero"></div>
+      <p class="howto">Tap colors and letters. Speak helps you hear each answer.</p>
+      <div class="difficulty" role="group">
+        <button id="easy" class="active" type="button">Easy<small>Colors</small></button>
+        <button id="medium" type="button">Medium<small>Letters</small></button>
+        <button id="hard" type="button">Hard<small>Sounds</small></button>
+      </div>
+      <button id="play" class="btn" type="button">Play</button>
+    </section>
+    <section id="play-screen" class="card hidden">
+      <div class="hud"><div class="score" id="score">Score: 0</div><div class="lives" id="lives"></div></div>
+      <div class="streak" id="streak"></div>
+      <div class="level-badge" id="level-badge">Easy · Colors</div>
+      <div class="timer" id="timer">Timer: 00</div>
+      <div class="prompt-word" id="prompt"></div>
+      <div id="choices" class="choice-grid toddler"></div>
+      <div class="actions"><button id="speak" class="btn secondary" type="button">Speak</button></div>
+    </section>
+    <div id="leaderboard">
+      <div class="lb-head"><h3>Leaderboard</h3><button id="clear-lb" class="btn secondary hidden" type="button">Clear</button></div>
+      <div id="lb-body"></div>
+    </div>
+    <footer class="site-footer">
+      <img src="logo.png" alt="103 Software Solutions LLC">
+      <p>&copy; 2026 AbcBuzz. Built by <strong>103 Software Solutions LLC</strong>. All Rights Reserved.</p>
+    </footer>
+  </div>
+  <div id="celebrate" aria-hidden="true"></div>
+  <div id="confirm" class="overlay hidden"><div class="overlay-card">
+    <h2>Clear leaderboard?</h2><p>This removes all saved scores on this device.</p>
+    <div class="actions"><button id="confirm-no" class="btn secondary" type="button">Cancel</button><button id="confirm-yes" class="btn" type="button">Clear</button></div>
+  </div></div>
+  <div id="overlay" class="overlay hidden"><div class="overlay-card">
+    <h2 id="overlay-title"></h2><p id="overlay-msg"></p>
+    <div id="overlay-form" class="hidden"><label for="name-input">Your name</label><input id="name-input" maxlength="16" placeholder="Your name"></div>
+    <button id="overlay-btn" class="btn" type="button">Continue</button>
+  </div></div>
+  <audio id="snd-correct" src="sounds/correct.mp3" preload="auto"></audio>
+  <audio id="snd-wrong" src="sounds/wrong.mp3" preload="auto"></audio>
+  <audio id="snd-tick" src="sounds/tick.mp3" preload="auto"></audio>
+  <script>
+(function () {
+  "use strict";
+  const COLORS = [
+    { id: "red", label: "Red", hex: "#ff4d6d" },
+    { id: "blue", label: "Blue", hex: "#00ffff" },
+    { id: "yellow", label: "Yellow", hex: "#ffff00" },
+    { id: "green", label: "Green", hex: "#32cd32" },
+    { id: "orange", label: "Orange", hex: "#ff8c00" },
+    { id: "purple", label: "Purple", hex: "#b14dff" },
+    { id: "pink", label: "Pink", hex: "#ff00ff" },
+    { id: "white", label: "White", hex: "#f4f7ff" }
+  ];
+  const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+  const SOUND_MAP = {
+    A: "ay", B: "buh", C: "kuh", D: "duh", E: "eh", F: "fff", G: "guh", H: "huh",
+    I: "ih", J: "juh", K: "kuh", L: "lll", M: "mmm", N: "nnn", O: "oh", P: "puh",
+    Q: "kwuh", R: "rrr", S: "sss", T: "tuh", U: "uh", V: "vvv", W: "wuh", X: "ks",
+    Y: "yuh", Z: "zzz"
+  };
+
+  function colorItems() {
+    return COLORS.map(function (c) {
+      const distractors = shuffle(COLORS.filter(function (x) { return x.id !== c.id; })).slice(0, 3).map(function (x) { return x.id; });
+      return { key: c.id, prompt: c.label, speak: c.label, answer: c.id, kind: "color", distractors: distractors };
+    });
+  }
+  function letterItems() {
+    return LETTERS.map(function (L) {
+      const distractors = shuffle(LETTERS.filter(function (x) { return x !== L; })).slice(0, 3);
+      return { key: L, prompt: "Find " + L, speak: "Find the letter " + L, answer: L, kind: "letter", distractors: distractors };
+    });
+  }
+  function soundItems() {
+    const pick = shuffle(LETTERS).slice(0, 12);
+    return pick.map(function (L) {
+      const distractors = shuffle(LETTERS.filter(function (x) { return x !== L; })).slice(0, 3);
+      return {
+        key: L,
+        prompt: "Which letter?",
+        speak: "Which letter makes the sound " + SOUND_MAP[L] + "?",
+        answer: L,
+        kind: "sound",
+        soundHint: SOUND_MAP[L],
+        distractors: distractors
+      };
+    });
+  }
+
+  const BANK = {
+    easy: { label: "Easy", grades: "Colors", time: 22, items: colorItems() },
+    medium: { label: "Medium", grades: "Letters", time: 18, items: letterItems() },
+    hard: { label: "Hard", grades: "Sounds", time: 16, items: soundItems() }
+  };
+
+  const PARTY = 5, CHAMP = 10;
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const muteBtn = document.getElementById("mute");
+  const startScreen = document.getElementById("start-screen");
+  const playScreen = document.getElementById("play-screen");
+  const scoreDisplay = document.getElementById("score");
+  const livesEl = document.getElementById("lives");
+  const streakDisplay = document.getElementById("streak");
+  const timerDisplay = document.getElementById("timer");
+  const levelBadge = document.getElementById("level-badge");
+  const promptEl = document.getElementById("prompt");
+  const choicesEl = document.getElementById("choices");
+  const overlay = document.getElementById("overlay");
+  const overlayTitle = document.getElementById("overlay-title");
+  const overlayMsg = document.getElementById("overlay-msg");
+  const overlayForm = document.getElementById("overlay-form");
+  const overlayBtn = document.getElementById("overlay-btn");
+  const nameInput = document.getElementById("name-input");
+  const clearLbBtn = document.getElementById("clear-lb");
+  const confirmEl = document.getElementById("confirm");
+  const celebrateEl = document.getElementById("celebrate");
+  const diffBtns = {
+    easy: document.getElementById("easy"),
+    medium: document.getElementById("medium"),
+    hard: document.getElementById("hard")
+  };
+
+  let muted = localStorage.getItem("abcbuzz_mute") === "1";
+  let leaderboard = JSON.parse(localStorage.getItem("abcbuzz_lb") || "[]");
+  let difficulty = "easy";
+  let score = 0, lives = 3, streak = 0, timer = null, timeLeft = 0, audioCtx = null;
+  let overlayCallback = null, roundActive = false, current = null, used = [];
+
+  function shuffle(a) {
+    const c = a.slice();
+    for (let i = c.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = c[i]; c[i] = c[j]; c[j] = t;
+    }
+    return c;
+  }
+  function getCtx() {
+    const C = window.AudioContext || window.webkitAudioContext;
+    if (!C) return null;
+    if (!audioCtx) audioCtx = new C();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+  function tone(f, d, t, g, s) {
+    if (muted) return;
+    try {
+      const ctx = getCtx();
+      if (!ctx) return;
+      const now = ctx.currentTime + (s || 0);
+      const o = ctx.createOscillator(), gn = ctx.createGain();
+      o.type = t || "sine";
+      o.frequency.setValueAtTime(f, now);
+      gn.gain.setValueAtTime(g || 0.07, now);
+      gn.gain.exponentialRampToValueAtTime(0.001, now + d);
+      o.connect(gn); gn.connect(ctx.destination);
+      o.start(now); o.stop(now + d);
+    } catch (e) {}
+  }
+  function playMp3(id, v) {
+    if (muted) return;
+    const el = document.getElementById(id);
+    try {
+      el.volume = v == null ? 1 : v;
+      el.currentTime = 0;
+      const p = el.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) {}
+  }
+  function playSfx(k) {
+    if (muted) return;
+    if (k === "click") tone(880, 0.05, "triangle", 0.05);
+    else if (k === "sparkle") { tone(784, 0.1, "sine", 0.06); tone(1174, 0.16, "sine", 0.07, 0.1); }
+    else if (k === "fanfare") { tone(523, 0.12, "square", 0.05); tone(784, 0.2, "square", 0.05, 0.14); }
+    else if (k === "life") { tone(330, 0.12, "triangle", 0.07); tone(220, 0.18, "triangle", 0.07, 0.1); }
+    else if (k === "wrongBuzz") tone(140, 0.2, "sawtooth", 0.05);
+  }
+  function playSound(n) {
+    if (n === "correct") { playMp3("snd-correct", 0.85); if (streak >= 3) playSfx("sparkle"); }
+    else if (n === "wrong") { playMp3("snd-wrong", 0.45); playSfx("wrongBuzz"); }
+    else if (n === "tick") playMp3("snd-tick", 0.55);
+    else playSfx(n);
+  }
+  function updateMuteUi() { muteBtn.textContent = muted ? "🔇" : "🔊"; }
+  muteBtn.onclick = function () {
+    muted = !muted;
+    localStorage.setItem("abcbuzz_mute", muted ? "1" : "0");
+    updateMuteUi();
+    if (!muted) playSfx("click");
+  };
+  document.querySelectorAll("button").forEach(function (b) {
+    if (b.id !== "mute") b.addEventListener("click", function () { playSfx("click"); });
+  });
+  function sanitize(n) {
+    return String(n || "").replace(/<[^>]*>/g, "").replace(/[^\w\s'-]/g, "").trim().slice(0, 16);
+  }
+  function saveScore(name, val) {
+    const c = sanitize(name);
+    if (!c) return;
+    leaderboard.push({ name: c, score: val, date: Date.now() });
+    leaderboard.sort(function (a, b) { return b.score - a.score; });
+    leaderboard = leaderboard.slice(0, 10);
+    localStorage.setItem("abcbuzz_lb", JSON.stringify(leaderboard));
+  }
+  function renderLeaderboard() {
+    const body = document.getElementById("lb-body");
+    body.replaceChildren();
+    clearLbBtn.classList.toggle("hidden", !leaderboard.length);
+    if (!leaderboard.length) {
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = "No scores yet. Play a round to get on the board!";
+      body.appendChild(p);
+      return;
+    }
+    const ol = document.createElement("ol");
+    leaderboard.forEach(function (e) {
+      const li = document.createElement("li");
+      li.textContent = e.name + ": " + e.score;
+      ol.appendChild(li);
+    });
+    body.appendChild(ol);
+  }
+  function setDiff(d) {
+    difficulty = d;
+    for (const k in diffBtns) diffBtns[k].classList.remove("active");
+    diffBtns[d].classList.add("active");
+    const L = BANK[d];
+    levelBadge.textContent = L.label + " · " + L.grades;
+  }
+  diffBtns.easy.onclick = function () { setDiff("easy"); };
+  diffBtns.medium.onclick = function () { setDiff("medium"); };
+  diffBtns.hard.onclick = function () { setDiff("hard"); };
+
+  function renderLives() {
+    livesEl.replaceChildren();
+    for (let i = 0; i < 3; i++) {
+      const s = document.createElement("span");
+      s.className = "life" + (i >= lives ? " gone" : "");
+      s.textContent = "💛";
+      livesEl.appendChild(s);
+    }
+  }
+  function updateHud() {
+    scoreDisplay.textContent = "Score: " + score;
+    streakDisplay.textContent = streak >= 2 ? "Streak: " + streak : "";
+    renderLives();
+  }
+  function flash(kind) {
+    playScreen.classList.remove("ok", "bad", "shake");
+    playScreen.classList.add(kind === "ok" ? "ok" : "bad");
+    if (kind !== "ok" && !reduceMotion) playScreen.classList.add("shake");
+    setTimeout(function () { playScreen.classList.remove("ok", "bad", "shake"); }, 700);
+  }
+  function confetti() {
+    if (reduceMotion) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff"];
+    for (let i = 0; i < 16; i++) {
+      const d = document.createElement("span");
+      d.className = "confetti";
+      d.style.left = Math.random() * 90 + 5 + "%";
+      d.style.background = colors[i % colors.length];
+      playScreen.appendChild(d);
+      setTimeout(function () { d.remove(); }, 1000);
+    }
+  }
+  function celebrate(big) {
+    if (reduceMotion) return;
+    const colors = ["#ff8c00", "#ffff00", "#32cd32", "#00ffff", "#ff00ff"];
+    celebrateEl.replaceChildren();
+    for (let i = 0; i < (big ? 16 : 10); i++) {
+      const r = document.createElement("span");
+      r.className = "streamer";
+      r.style.left = (4 + i * 6) + "%";
+      r.style.height = 40 + Math.random() * 24 + "vh";
+      r.style.background = "linear-gradient(180deg," + colors[i % colors.length] + ",transparent)";
+      celebrateEl.appendChild(r);
+    }
+    for (let i = 0; i < (big ? 80 : 40); i++) {
+      const b = document.createElement("span");
+      b.className = "party-confetti";
+      b.style.left = Math.random() * 100 + "%";
+      b.style.background = colors[i % colors.length];
+      b.style.setProperty("--drift", (Math.random() * 160 - 80) + "px");
+      celebrateEl.appendChild(b);
+    }
+    playSfx(big ? "fanfare" : "sparkle");
+    setTimeout(function () { celebrateEl.replaceChildren(); }, big ? 4500 : 3000);
+  }
+  function showOverlay(o) {
+    overlayTitle.textContent = o.title;
+    overlayMsg.textContent = o.message;
+    overlayBtn.textContent = o.button || "Continue";
+    overlayForm.classList.toggle("hidden", !o.askName);
+    overlay.classList.remove("hidden");
+    overlayCallback = o.onContinue || null;
+    if (o.askName) { nameInput.value = ""; nameInput.focus(); }
+    else overlayBtn.focus();
+  }
+  function hideOverlay() {
+    overlay.classList.add("hidden");
+    const cb = overlayCallback;
+    overlayCallback = null;
+    if (cb) cb();
+  }
+  overlayBtn.onclick = function () {
+    if (!overlayForm.classList.contains("hidden")) {
+      saveScore(sanitize(nameInput.value) || "Player", score);
+      renderLeaderboard();
+    }
+    hideOverlay();
+  };
+  function speak(text) {
+    if (!window.speechSynthesis || !text) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.85;
+    u.lang = "en-US";
+    speechSynthesis.speak(u);
+  }
+  function colorById(id) {
+    return COLORS.find(function (c) { return c.id === id; });
+  }
+  function missMessage() {
+    if (!current) return "Try again.";
+    if (current.kind === "color") return "It was " + current.prompt + ".";
+    if (current.kind === "sound") return "The letter was " + current.answer + ".";
+    return "The letter was " + current.answer + ".";
+  }
+  function nextRound() {
+    const pack = BANK[difficulty].items;
+    let pool = pack.filter(function (x) { return used.indexOf(x.key) === -1; });
+    if (!pool.length) { used = []; pool = pack; }
+    current = pool[Math.floor(Math.random() * pool.length)];
+    used.push(current.key);
+    promptEl.textContent = current.prompt;
+    promptEl.style.color = "";
+    if (current.kind === "color") {
+      const c = colorById(current.answer);
+      if (c) promptEl.style.color = c.hex;
+    }
+    const opts = shuffle([current.answer].concat(current.distractors));
+    choicesEl.replaceChildren();
+    opts.forEach(function (opt) {
+      const b = document.createElement("button");
+      b.className = "btn choice-btn";
+      b.type = "button";
+      if (current.kind === "color") {
+        const c = colorById(opt);
+        b.classList.add("color-swatch");
+        b.style.background = c ? c.hex : "#333";
+        b.style.color = (opt === "yellow" || opt === "white") ? "#111" : "#fff";
+        b.textContent = c ? c.label : opt;
+        b.setAttribute("aria-label", c ? c.label : opt);
+      } else {
+        b.textContent = opt;
+      }
+      b.onclick = function () {
+        if (!roundActive) return;
+        if (opt === current.answer) handleCorrect();
+        else handleMiss(missMessage());
+      };
+      choicesEl.appendChild(b);
+    });
+    roundActive = true;
+    speak(current.speak);
+    startTimer(BANK[difficulty].time);
+  }
+  function startTimer(sec) {
+    if (timer) clearInterval(timer);
+    timeLeft = sec;
+    timerDisplay.classList.remove("urgent");
+    timerDisplay.textContent = "Timer: " + timeLeft;
+    timer = setInterval(function () {
+      timeLeft--;
+      if (timeLeft <= 5) { timerDisplay.classList.add("urgent"); playSound("tick"); }
+      timerDisplay.textContent = "Timer: " + (timeLeft < 10 ? "0" : "") + Math.max(timeLeft, 0);
+      if (timeLeft <= 0) { clearInterval(timer); handleMiss("Time is up! " + missMessage()); }
+    }, 1000);
+  }
+  function stopTimer() {
+    if (timer) clearInterval(timer);
+    timer = null;
+    timerDisplay.classList.remove("urgent");
+  }
+  function handleCorrect() {
+    if (!roundActive) return;
+    roundActive = false;
+    stopTimer();
+    score++;
+    streak++;
+    updateHud();
+    playSound("correct");
+    confetti();
+    flash("ok");
+    if (score === PARTY || score === CHAMP) celebrate(score >= CHAMP);
+    setTimeout(function () { if (lives > 0) nextRound(); }, 800);
+  }
+  function handleMiss(msg) {
+    if (!roundActive) return;
+    roundActive = false;
+    stopTimer();
+    streak = 0;
+    lives--;
+    updateHud();
+    flash("bad");
+    if (lives > 0) {
+      playSfx("life");
+      playSound("wrong");
+      showOverlay({ title: "Oops!", message: msg + " Lives left: " + lives + ".", button: "Next", onContinue: nextRound });
+    } else {
+      playSound("wrong");
+      endGame(msg);
+    }
+  }
+  function startRound() {
+    getCtx();
+    score = 0; lives = 3; streak = 0; used = [];
+    startScreen.classList.add("hidden");
+    playScreen.classList.remove("hidden");
+    updateHud();
+    nextRound();
+  }
+  function goHome() {
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    stopTimer();
+    roundActive = false;
+    playScreen.classList.add("hidden");
+    startScreen.classList.remove("hidden");
+  }
+  function endGame(msg) {
+    stopTimer();
+    if (score >= CHAMP) celebrate(true);
+    else if (score >= PARTY) celebrate(false);
+    playSfx("fanfare");
+    showOverlay({
+      title: score >= CHAMP ? "Champion!" : "AbcBuzz over!",
+      message: (msg ? msg + " " : "") + "You scored " + score + " point" + (score === 1 ? "" : "s") + ". Add your name to the leaderboard.",
+      button: "Save score",
+      askName: true,
+      onContinue: goHome
+    });
+  }
+  document.getElementById("play").onclick = startRound;
+  document.getElementById("speak").onclick = function () { if (current) speak(current.speak); };
+  clearLbBtn.onclick = function () { confirmEl.classList.remove("hidden"); };
+  document.getElementById("confirm-no").onclick = function () { confirmEl.classList.add("hidden"); };
+  document.getElementById("confirm-yes").onclick = function () {
+    leaderboard = [];
+    localStorage.removeItem("abcbuzz_lb");
+    renderLeaderboard();
+    confirmEl.classList.add("hidden");
+  };
+  document.addEventListener("keydown", function (e) {
+    if (e.key !== "Escape") return;
+    if (!confirmEl.classList.contains("hidden")) { confirmEl.classList.add("hidden"); return; }
+    if (!overlay.classList.contains("hidden")) overlayBtn.click();
+  });
+  nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") overlayBtn.click(); });
+  updateMuteUi();
+  renderLeaderboard();
+  setDiff("easy");
+})();
+  </script>
+</body>
+</html>

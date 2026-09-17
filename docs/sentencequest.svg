@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="sqTitle">
+  <title id="sqTitle">SentenceQuest</title>
+  <defs>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M52 44 H188 Q200 44 200 56 V184 Q200 196 188 196 H52 Q40 196 40 184 V56 Q40 44 52 44 Z" fill="#0b0b12" stroke="#00ffff" stroke-width="4" filter="url(#glow)"/>
+  <path d="M120 44 V196" stroke="#ff00ff" stroke-width="3" opacity=".7"/>
+  <rect x="56" y="70" width="50" height="14" rx="4" fill="#05050a" stroke="#ffff00" stroke-width="2"/>
+  <rect x="56" y="98" width="42" height="14" rx="4" fill="#05050a" stroke="#32cd32" stroke-width="2"/>
+  <rect x="56" y="126" width="48" height="14" rx="4" fill="#05050a" stroke="#ff8c00" stroke-width="2"/>
+  <rect x="132" y="70" width="52" height="14" rx="4" fill="#05050a" stroke="#00ffff" stroke-width="2"/>
+  <rect x="132" y="98" width="46" height="14" rx="4" fill="#05050a" stroke="#ff00ff" stroke-width="2"/>
+  <text x="120" y="178" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="800" fill="#ffff00" filter="url(#glow)">. ! ?</text>
+</svg>

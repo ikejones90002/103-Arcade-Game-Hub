@@ -570,6 +570,59 @@
       padding: 0.5rem;
     }
     .choice-btn { font-size: 1.05rem; }
+    .choice-grid.toddler {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+    .choice-grid.toddler .choice-btn {
+      min-height: 96px;
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+    .choice-btn.color-swatch {
+      border-width: 2px;
+      text-shadow: 0 1px 2px rgba(0,0,0,.35);
+    }
+    .sq-clue {
+      width: 100%;
+      text-align: center;
+      color: var(--cyan);
+      font-size: 0.95rem;
+      margin: 0.2rem 0 0.35rem;
+      letter-spacing: 0.03em;
+    }
+    .sentence-tray {
+      width: 100%;
+      min-height: 56px;
+      margin: 0.35rem 0 0.55rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 12px;
+      border: 1px dashed rgba(0,255,255,.4);
+      background: rgba(0,20,30,.35);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      justify-content: center;
+    }
+    .word-chip {
+      font-size: 1rem !important;
+      min-height: 48px !important;
+      padding: 0.4rem 0.75rem !important;
+    }
+    .word-chip.placed {
+      border: 1px solid var(--yellow);
+      background: #05050a;
+      color: var(--yellow);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .sentence-choice {
+      font-size: 0.95rem !important;
+      min-height: 64px !important;
+      grid-column: 1 / -1;
+    }
     .chest {
       width: 100%;
       max-width: 520px;
@@ -1479,12 +1532,6 @@ body.hub-page .hub-footer p {
   body.hub-page .picker {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1.15rem;
-  }
-  body.hub-page .pick-card:nth-child(5) {
-    grid-column: 2;
-  }
-  body.hub-page .pick-card:nth-child(6) {
-    grid-column: 3;
   }
 }
 

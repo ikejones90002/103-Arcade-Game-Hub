@@ -9,6 +9,8 @@ Offline educational mini-games from **103 Software Solutions LLC**. Open [`docs/
 | SpellBuzz | [`docs/spellbuzz.html`](docs/spellbuzz.html) | Spelling World (curriculum adventure) |
 | NumBuzz | [`docs/numbuzz.html`](docs/numbuzz.html) | Math World (curriculum adventure) |
 | Word Quest | [`docs/wordquest.html`](docs/wordquest.html) | Reading World (curriculum adventure) |
+| AbcBuzz | [`docs/abcbuzz.html`](docs/abcbuzz.html) | Colors, letters, letter sounds (toddlers) |
+| SentenceQuest | [`docs/sentencequest.html`](docs/sentencequest.html) | Pick, fill, and build complete sentences |
 | FlipMatch | [`docs/flipmatch.html`](docs/flipmatch.html) | Memory pairs |
 | PatternPop | [`docs/patternpop.html`](docs/patternpop.html) | Patterns / logic |
 | RhymeTime | [`docs/rhymetime.html`](docs/rhymetime.html) | Phonemic awareness |
