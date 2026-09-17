@@ -7,6 +7,5 @@ package-lock.json
 *.key
 .cursor/
 docs/_logo-source.png
-docs/arcade-logo.png
 
 .vercel
